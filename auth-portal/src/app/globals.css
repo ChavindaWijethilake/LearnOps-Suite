@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: 0 0% 100%; /* Preserved from existing */
+  --foreground: 0 0% 5%; /* Preserved from existing */
+  --card: 0 0% 100%; /* Preserved from existing */
+  --card-foreground: 0 0% 5%; /* Preserved from existing */
+  --primary: 217 100% 34%; /* Preserved from existing */
+  --primary-foreground: 0 0% 100%; /* Preserved from existing */
+  --secondary: 0 0% 95%; /* Preserved from existing */
+  --secondary-foreground: 0 0% 5%; /* Preserved from existing */
+  --muted: 0 0% 90%; /* Preserved from existing */
+  --muted-foreground: 0 0% 45%; /* Preserved from existing */
+  --accent: 217 100% 34%; /* Preserved from existing */
+  --accent-foreground: 0 0% 100%; /* Preserved from existing */
+  --destructive: 0 84% 60%; /* Preserved from existing */
+  --destructive-foreground: 0 0% 100%; /* Preserved from existing */
+  --border: 0 0% 92%; /* Preserved from existing */
+  --input: 0 0% 98%; /* Preserved from existing */
+  --ring: 217 100% 34%; /* Preserved from existing */
+
+  --popover: oklch(1 0 0); /* Added from default */
+  --popover-foreground: oklch(0.145 0 0); /* Added from default */
+  --chart-1: oklch(0.646 0.222 41.116); /* Added from default */
+  --chart-2: oklch(0.6 0.118 184.704); /* Added from default */
+  --chart-3: oklch(0.398 0.07 227.392); /* Added from default */
+  --chart-4: oklch(0.828 0.189 84.429); /* Added from default */
+  --chart-5: oklch(0.769 0.188 70.08); /* Added from default */
+  --radius: 0.625rem; /* Added from default */
+  --sidebar: oklch(0.985 0 0); /* Added from default */
+  --sidebar-foreground: oklch(0.145 0 0); /* Added from default */
+  --sidebar-primary: oklch(0.205 0 0); /* Added from default */
+  --sidebar-primary-foreground: oklch(0.985 0 0); /* Added from default */
+  --sidebar-accent: oklch(0.97 0 0); /* Added from default */
+  --sidebar-accent-foreground: oklch(0.205 0 0); /* Added from default */
+  --sidebar-border: oklch(0.922 0 0); /* Added from default */
+  --sidebar-ring: oklch(0.708 0 0); /* Added from default */
+}
+
+.dark {
+  --background: 0 0% 5%; /* Preserved from existing */
+  --foreground: 0 0% 95%; /* Preserved from existing */
+  --card: 0 0% 10%; /* Preserved from existing */
+  --card-foreground: 0 0% 95%; /* Preserved from existing */
+  --primary: 217 100% 48%; /* Preserved from existing */
+  --primary-foreground: 0 0% 5%; /* Preserved from existing */
+  --secondary: 0 0% 20%; /* Preserved from existing */
+  --secondary-foreground: 0 0% 95%; /* Preserved from existing */
+  --muted: 0 0% 30%; /* Preserved from existing */
+  --muted-foreground: 0 0% 65%; /* Preserved from existing */
+  --accent: 217 100% 48%; /* Preserved from existing */
+  --accent-foreground: 0 0% 5%; /* Preserved from existing */
+  --destructive: 0 84% 60%; /* Preserved from existing */
+  --destructive-foreground: 0 0% 5%; /* Preserved from existing */
+  --border: 0 0% 20%; /* Preserved from existing */
+  --input: 0 0% 15%; /* Preserved from existing */
+  --ring: 217 100% 48%; /* Preserved from existing */
+
+  --popover: oklch(0.145 0 0); /* Added from default */
+  --popover-foreground: oklch(0.985 0 0); /* Added from default */
+  --chart-1: oklch(0.488 0.243 264.376); /* Added from default */
+  --chart-2: oklch(0.696 0.17 162.48); /* Added from default */
+  --chart-3: oklch(0.769 0.188 70.08); /* Added from default */
+  --chart-4: oklch(0.627 0.265 303.9); /* Added from default */
+  --chart-5: oklch(0.645 0.246 16.439); /* Added from default */
+  --sidebar: oklch(0.205 0 0); /* Added from default */
+  --sidebar-foreground: oklch(0.985 0 0); /* Added from default */
+  --sidebar-primary: oklch(0.488 0.243 264.376); /* Added from default */
+  --sidebar-primary-foreground: oklch(0.985 0 0); /* Added from default */
+  --sidebar-accent: oklch(0.269 0 0); /* Added from default */
+  --sidebar-accent-foreground: oklch(0.985 0 0); /* Added from default */
+  --sidebar-border: oklch(0.269 0 0); /* Added from default */
+  --sidebar-ring: oklch(0.439 0 0); /* Added from default */
+}
+
+@theme inline {
+  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50; /* Updated from existing */
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* Removed specific background-color and color properties as @apply handles them */
+  }
+
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+}

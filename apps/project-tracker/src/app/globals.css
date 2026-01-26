@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+* {
+  @apply antialiased;
+}
+
+html {
+  @apply scroll-smooth;
+}

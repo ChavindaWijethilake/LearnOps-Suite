@@ -1,0 +1,238 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  enrollments CourseEnrollment[]
+  assignments AssignmentSubmission[]
+}
+
+enum UserRole {
+  STUDENT
+  TEACHER
+  INSTITUTION_ADMIN
+  SUPER_ADMIN
+}
+
+model Institution {
+  id        String     @id @default(cuid())
+  name      String
+  code      String     @unique
+  email     String
+  phone     String?
+  address   String?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  users User[]
+  courses Course[]
+  fees Fee[]
+  scholarships Scholarship[]
+}
+
+model Course {
+  id        String     @id @default(cuid())
+  name      String
+  code      String
+  description String?
+  teacher   User       @relation(fields: [teacherId], references: [id])
+  teacherId String
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  enrollments CourseEnrollment[]
+  assignments Assignment[]
+  attendance Attendance[]
+  exams Exam[]
+  
+  @@unique([code, institutionId])
+}
+
+model CourseEnrollment {
+  id        String     @id @default(cuid())
+  student   User       @relation(fields: [studentId], references: [id])
+  studentId String
+  course    Course     @relation(fields: [courseId], references: [id])
+  courseId  String
+  grade     Float?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  @@unique([studentId, courseId])
+}
+
+model Assignment {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  course      Course     @relation(fields: [courseId], references: [id])
+  courseId    String
+  dueDate     DateTime
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  submissions AssignmentSubmission[]
+}
+
+model AssignmentSubmission {
+  id          String     @id @default(cuid())
+  student     User       @relation(fields: [studentId], references: [id])
+  studentId   String
+  assignment  Assignment @relation(fields: [assignmentId], references: [id])
+  assignmentId String
+  content     String
+  grade       Float?
+  feedback    String?
+  
+  submittedAt DateTime
+  gradedAt    DateTime?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Attendance {
+  id        String     @id @default(cuid())
+  course    Course     @relation(fields: [courseId], references: [id])
+  courseId  String
+  date      DateTime
+  presentCount Int @default(0)
+  totalCount Int @default(0)
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Exam {
+  id        String     @id @default(cuid())
+  name      String
+  course    Course     @relation(fields: [courseId], references: [id])
+  courseId  String
+  date      DateTime
+  duration  Int // in minutes
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Fee {
+  id        String     @id @default(cuid())
+  studentId String
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  amount    Float
+  term      String
+  dueDate   DateTime
+  paidDate  DateTime?
+  status    FeeStatus @default(UNPAID)
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum FeeStatus {
+  UNPAID
+  PAID
+  OVERDUE
+  PARTIAL
+}
+
+model Payment {
+  id        String     @id @default(cuid())
+  feeId     String
+  studentId String
+  amount    Float
+  method    PaymentMethod
+  receipt   String
+  status    String @default("completed")
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  BANK_TRANSFER
+  CHECK
+  CASH
+}
+
+model Scholarship {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  amount      Float
+  institution Institution @relation(fields: [institutionId], references: [id])
+  institutionId String
+  criteria    String?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  
+  applications ScholarshipApplication[]
+}
+
+model ScholarshipApplication {
+  id            String     @id @default(cuid())
+  studentId     String
+  scholarship   Scholarship @relation(fields: [scholarshipId], references: [id])
+  scholarshipId String
+  status        ApplicationStatus @default(PENDING)
+  appliedAt     DateTime   @default(now())
+  decidedAt     DateTime?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  APPROVED_WITH_CONDITIONS
+}
+
+model Disbursement {
+  id            String     @id @default(cuid())
+  studentId     String
+  scholarshipId String
+  amount        Float
+  status        DisbursementStatus @default(PENDING)
+  disbursedAt   DateTime?
+  
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum DisbursementStatus {
+  PENDING
+  PROCESSED
+  PAID
+  CANCELLED
+}
