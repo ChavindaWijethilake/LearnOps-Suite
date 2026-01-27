@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from '../utils/cn';
 
 interface GlassButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

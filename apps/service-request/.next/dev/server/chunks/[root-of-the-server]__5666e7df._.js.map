@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///E:/Projects/Web%20Application/education-portal-design/apps/service-request/src/app/api/requests/route.ts"],"sourcesContent":["import { NextResponse } from 'next/server';\r\n\r\nlet requests: any[] = [];\r\n\r\nexport async function GET() {\r\n  return NextResponse.json({ requests });\r\n}\r\n\r\nexport async function POST(request: Request) {\r\n  const data = await request.json();\r\n\r\n  const newRequest = {\r\n    id: Math.random().toString(36).substr(2, 9),\r\n    ...data,\r\n    createdAt: new Date().toISOString(),\r\n    updatedAt: new Date().toISOString(),\r\n  };\r\n\r\n  requests.push(newRequest);\r\n  return NextResponse.json({ success: true, request: newRequest }, { status: 201 });\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAA;;AAEA,IAAI,WAAkB,EAAE;AAEjB,eAAe;IACpB,OAAO,gRAAY,CAAC,IAAI,CAAC;QAAE;IAAS;AACtC;AAEO,eAAe,KAAK,OAAgB;IACzC,MAAM,OAAO,MAAM,QAAQ,IAAI;IAE/B,MAAM,aAAa;QACjB,IAAI,KAAK,MAAM,GAAG,QAAQ,CAAC,IAAI,MAAM,CAAC,GAAG;QACzC,GAAG,IAAI;QACP,WAAW,IAAI,OAAO,WAAW;QACjC,WAAW,IAAI,OAAO,WAAW;IACnC;IAEA,SAAS,IAAI,CAAC;IACd,OAAO,gRAAY,CAAC,IAAI,CAAC;QAAE,SAAS;QAAM,SAAS;IAAW,GAAG;QAAE,QAAQ;IAAI;AACjF"}}]
-}

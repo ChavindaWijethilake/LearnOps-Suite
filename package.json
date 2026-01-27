@@ -1,22 +1,16 @@
 {
-  "name": "education-portal",
+  "name": "learnops-suite",
   "version": "1.0.0",
   "private": true,
-  "description": "Modern education portal with service requests, projects, learning, and resources",
+  "description": "LearnOps Suite - Unified learning and service management platform",
   "scripts": {
-    "dev": "pnpm -r dev",
+    "dev": "pnpm -r --parallel dev",
     "build": "pnpm -r build",
     "start": "pnpm -r start",
     "clean": "pnpm -r clean",
-    "db:migrate": "pnpm -r --filter=./packages/db migrate",
-    "db:seed": "pnpm -r --filter=./packages/db seed",
-    "db:push": "pnpm -r --filter=./packages/db db:push",
-    "db:studio": "pnpm -r --filter=./packages/db studio"
+    "lint": "pnpm -r lint"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18"
+  }
 }

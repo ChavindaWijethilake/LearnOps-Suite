@@ -1,0 +1,100 @@
+@import "tailwindcss";
+@import "../../../../../packages/theme/theme.css";
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-float: float 3s ease-in-out infinite;
+
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --shadow-glass-hover: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10 selection:text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+/* Enterprise Light Theme Overrides */
+:root {
+  --radius: 1rem;
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+}
+
+.resource-card {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+}
+
+.category-tag {
+  @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full bg-gray-50/50 text-gray-500 border border-gray-100/50;
+}
+
+.premium-gradient {
+  @apply bg-gradient-to-br from-white via-gray-50/50 to-primary/5;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600;
+}

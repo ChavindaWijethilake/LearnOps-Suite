@@ -1,0 +1,114 @@
+/* LearnOps Suite - Light Mode Theme */
+:root {
+  /* Neutral Base Palette */
+  --background: 0 0% 98%;
+  --foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 222 47% 11%;
+  --radius: 0.5rem;
+  
+  /* Portal - Blue Accent */
+  --primary-portal: 221 83% 53%;
+  --primary-portal-hover: 221 83% 48%;
+  --primary-portal-foreground: 0 0% 100%;
+  
+  /* Billing - Teal Accent */
+  --primary-billing: 173 58% 39%;
+  --primary-billing-hover: 173 58% 34%;
+  --primary-billing-foreground: 0 0% 100%;
+  
+  /* Service Management - Purple Accent */
+  --primary-service: 262 52% 47%;
+  --primary-service-hover: 262 52% 42%;
+  --primary-service-foreground: 0 0% 100%;
+  
+  /* Analytics - Green Accent */
+  --primary-analytics: 142 71% 45%;
+  --primary-analytics-hover: 142 71% 40%;
+  --primary-analytics-foreground: 0 0% 100%;
+  
+  /* Learning Hub - Sky Accent */
+  --primary-learning: 199 89% 48%;
+  --primary-learning-hover: 199 89% 43%;
+  --primary-learning-foreground: 0 0% 100%;
+  
+  /* Resource Center - Amber Accent (muted) */
+  --primary-resource: 32 95% 44%;
+  --primary-resource-hover: 32 95% 39%;
+  --primary-resource-foreground: 0 0% 100%;
+  
+  /* Project Tracker - Rose Accent (muted) */
+  --primary-project: 346 77% 50%;
+  --primary-project-hover: 346 77% 45%;
+  --primary-project-foreground: 0 0% 100%;
+}
+
+/* App-specific primary color mapping */
+[data-app="portal"] {
+  --primary: var(--primary-portal);
+  --primary-hover: var(--primary-portal-hover);
+  --primary-foreground: var(--primary-portal-foreground);
+}
+
+[data-app="billing"] {
+  --primary: var(--primary-billing);
+  --primary-hover: var(--primary-billing-hover);
+  --primary-foreground: var(--primary-billing-foreground);
+}
+
+[data-app="service-management"] {
+  --primary: var(--primary-service);
+  --primary-hover: var(--primary-service-hover);
+  --primary-foreground: var(--primary-service-foreground);
+}
+
+[data-app="analytics"] {
+  --primary: var(--primary-analytics);
+  --primary-hover: var(--primary-analytics-hover);
+  --primary-foreground: var(--primary-analytics-foreground);
+}
+
+[data-app="learning-hub"] {
+  --primary: var(--primary-learning);
+  --primary-hover: var(--primary-learning-hover);
+  --primary-foreground: var(--primary-learning-foreground);
+}
+
+[data-app="resource-center"] {
+  --primary: var(--primary-resource);
+  --primary-hover: var(--primary-resource-hover);
+  --primary-foreground: var(--primary-resource-foreground);
+}
+
+[data-app="project-tracker"] {
+  --primary: var(--primary-project);
+  --primary-hover: var(--primary-project-hover);
+  --primary-foreground: var(--primary-project-foreground);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Disable transitions for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
