@@ -76,7 +76,7 @@
 
 /* Enterprise Light Theme Overrides */
 :root {
-  --radius: 1rem;
+  --radius: 0rem;
 }
 
 .glass-card {
@@ -84,11 +84,11 @@
 }
 
 .learning-card {
-  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
 }
 
 .progress-bar {
-  @apply w-full bg-gray-100/50 rounded-full h-2.5 overflow-hidden border border-gray-100/50;
+  @apply w-full bg-gray-100/50 rounded-none h-2.5 overflow-hidden border border-gray-100/50;
 }
 
 .progress-fill {

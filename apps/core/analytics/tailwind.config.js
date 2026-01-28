@@ -25,9 +25,10 @@ module.exports = {
                 ring: 'hsl(var(--ring))',
             },
             borderRadius: {
-                lg: 'var(--radius)',
-                md: 'calc(var(--radius) - 2px)',
-                sm: 'calc(var(--radius) - 4px)',
+                lg: '0',
+                md: '0',
+                sm: '0',
+                DEFAULT: '0',
             },
             boxShadow: {
                 'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',

@@ -76,7 +76,7 @@
 
 /* Enterprise Light Theme Overrides */
 :root {
-  --radius: 1rem;
+  --radius: 0rem;
 }
 
 .glass-card {
@@ -84,11 +84,11 @@
 }
 
 .resource-card {
-  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
 }
 
 .category-tag {
-  @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full bg-gray-50/50 text-gray-500 border border-gray-100/50;
+  @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-none bg-gray-50/50 text-gray-500 border border-gray-100/50;
 }
 
 .premium-gradient {

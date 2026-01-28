@@ -650,20 +650,14 @@
   .rounded-3xl {
     border-radius: var(--radius-3xl);
   }
-  .rounded-\[2\.5rem\] {
-    border-radius: 2.5rem;
-  }
-  .rounded-\[2rem\] {
-    border-radius: 2rem;
-  }
-  .rounded-\[3rem\] {
-    border-radius: 3rem;
-  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
   .rounded-lg {
     border-radius: var(--radius-lg);
+  }
+  .rounded-none {
+    border-radius: 0;
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
@@ -1578,7 +1572,7 @@
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
   --ring: 222 47% 11%;
-  --radius: 0.5rem;
+  --radius: 0rem;
   --primary-portal: 221 83% 53%;
   --primary-portal-hover: 221 83% 48%;
   --primary-portal-foreground: 0 0% 100%;
@@ -1691,7 +1685,7 @@
   }
 }
 :root {
-  --radius: 1rem;
+  --radius: 0rem;
 }
 .glass-card {
   border-style: var(--tw-border-style);
@@ -1722,7 +1716,7 @@
   }
 }
 .resource-card {
-  border-radius: var(--radius-3xl);
+  border-radius: 0;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: color-mix(in srgb, #fff 20%, transparent);
@@ -1752,7 +1746,7 @@
   }
 }
 .category-tag {
-  border-radius: calc(infinity * 1px);
+  border-radius: 0;
   border-style: var(--tw-border-style);
   border-width: 1px;
   border-color: color-mix(in srgb, oklch(96.7% 0.003 264.542) 50%, transparent);

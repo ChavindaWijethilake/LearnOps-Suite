@@ -27,13 +27,13 @@ export default function ProjectDashboard() {
     <div className="space-y-12 animate-fade-in">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-none text-[10px] font-black uppercase tracking-widest">
             Project Engine v4.0
           </div>
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Project Dashboard</h1>
           <p className="text-lg text-gray-500 font-medium">Track your projects, tasks, and team productivity.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-2xl text-sm font-bold hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95">
+        <button className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-none text-sm font-bold hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95">
           <Plus className="w-5 h-5" />
           New Project
         </button>
@@ -48,7 +48,7 @@ export default function ProjectDashboard() {
             </h2>
             <p className="text-sm text-gray-500 font-medium">Overview of ongoing initiatives</p>
           </div>
-          <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-xl hover:bg-primary/10 transition-all">
+          <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-none hover:bg-primary/10 transition-all">
             View All Projects
           </button>
         </div>
@@ -60,7 +60,7 @@ export default function ProjectDashboard() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex justify-between items-start mb-8">
-                <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                <div className="w-14 h-14 rounded-none bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                   <Briefcase className="w-7 h-7" />
                 </div>
                 <span className={cn(
@@ -96,13 +96,13 @@ export default function ProjectDashboard() {
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-8 bg-white border border-gray-100 rounded-[2.5rem] shadow-sm overflow-hidden animate-slide-up [animation-delay:400ms]">
+        <div className="lg:col-span-8 bg-white border border-gray-100 rounded-none shadow-sm overflow-hidden animate-slide-up [animation-delay:400ms]">
           <div className="px-10 py-8 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
             <div className="space-y-1">
               <h2 className="text-2xl font-extrabold text-gray-900">Recent Tasks</h2>
               <p className="text-sm text-gray-500 font-medium">Your upcoming and completed tasks</p>
             </div>
-            <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-xl hover:bg-primary/10 transition-all">
+            <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-none hover:bg-primary/10 transition-all">
               View All Tasks
             </button>
           </div>
@@ -112,7 +112,7 @@ export default function ProjectDashboard() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-6">
                     <div className={cn(
-                      "w-3 h-3 rounded-full ring-4",
+                      "w-3 h-3 rounded-none ring-4",
                       task.status === 'Done' ? 'bg-green-500 ring-green-50' :
                         task.status === 'In Progress' ? 'bg-blue-500 ring-blue-50' :
                           'bg-gray-300 ring-gray-50'
@@ -131,7 +131,7 @@ export default function ProjectDashboard() {
                     )}>
                       {task.priority} Priority
                     </span>
-                    <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 group-hover:text-gray-600">
+                    <button className="p-2 hover:bg-gray-100 rounded-none transition-colors text-gray-400 group-hover:text-gray-600">
                       <MoreHorizontal className="w-5 h-5" />
                     </button>
                   </div>
@@ -142,7 +142,7 @@ export default function ProjectDashboard() {
         </div>
 
         <div className="lg:col-span-4 space-y-8">
-          <section className="glass-card rounded-[2.5rem] p-10 animate-slide-up [animation-delay:600ms]">
+          <section className="glass-card rounded-none p-10 animate-slide-up [animation-delay:600ms]">
             <h2 className="text-xl font-extrabold text-gray-900 mb-10 flex items-center gap-3">
               <CheckSquare className="w-6 h-6 text-primary" />
               Team Productivity
@@ -168,32 +168,32 @@ export default function ProjectDashboard() {
               </div>
             </div>
 
-            <div className="mt-12 p-8 bg-gray-900 rounded-[2rem] text-white shadow-2xl shadow-gray-900/20">
+            <div className="mt-12 p-8 bg-gray-900 rounded-none text-white shadow-2xl shadow-gray-900/20">
               <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 text-primary">Sprint Goal</p>
               <p className="text-sm font-bold leading-relaxed mb-6">
                 Complete the LearnOps Suite front-end overhaul and prepare for the v4.0 release.
               </p>
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-gray-900 bg-gray-800 flex items-center justify-center text-[10px] font-black">
+                  <div key={i} className="w-10 h-10 rounded-none border-2 border-gray-900 bg-gray-800 flex items-center justify-center text-[10px] font-black">
                     U{i}
                   </div>
                 ))}
-                <div className="w-10 h-10 rounded-full border-2 border-gray-900 bg-primary flex items-center justify-center text-[10px] font-black">
+                <div className="w-10 h-10 rounded-none border-2 border-gray-900 bg-primary flex items-center justify-center text-[10px] font-black">
                   +2
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="bg-primary/5 border border-primary/10 rounded-[2.5rem] p-10 animate-slide-up [animation-delay:800ms]">
+          <section className="bg-primary/5 border border-primary/10 rounded-none p-10 animate-slide-up [animation-delay:800ms]">
             <h2 className="text-xl font-extrabold text-primary mb-6">Quick Search</h2>
             <div className="relative group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Find tasks or projects..."
-                className="w-full pl-12 pr-4 py-4 bg-white border border-gray-100 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all shadow-sm"
+                className="w-full pl-12 pr-4 py-4 bg-white border border-gray-100 rounded-none text-sm focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all shadow-sm"
               />
             </div>
           </section>

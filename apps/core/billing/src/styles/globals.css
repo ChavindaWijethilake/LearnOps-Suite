@@ -22,7 +22,7 @@
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
   --ring: 222 47% 11%;
-  --radius: 1rem;
+  --radius: 0rem;
 
   /* Portal - Blue Accent */
   --primary-portal: 221 83% 53%;
@@ -129,7 +129,7 @@
   }
 
   .billing-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
   }
 
   .status-badge {
@@ -150,10 +150,6 @@
 
   .animate-slide-up {
     animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
   }
 }
 
@@ -176,17 +172,5 @@
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
   }
 }

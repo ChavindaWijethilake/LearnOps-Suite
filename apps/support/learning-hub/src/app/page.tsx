@@ -25,18 +25,18 @@ export default function LearningDashboard() {
     <div className="space-y-12 animate-fade-in">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-none text-[10px] font-black uppercase tracking-widest">
             Learning Hub v2.4
           </div>
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Learning Dashboard</h1>
           <p className="text-lg text-gray-500 font-medium">Continue your learning journey and track your progress.</p>
         </div>
-        <div className="flex items-center gap-8 bg-white/50 backdrop-blur-md p-4 rounded-[2rem] border border-gray-100 shadow-sm">
+        <div className="flex items-center gap-8 bg-white/50 backdrop-blur-md p-4 rounded-none border border-gray-100 shadow-sm">
           <div className="text-right">
             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Total Points</p>
             <p className="text-2xl font-black text-primary tracking-tight">2,450 XP</p>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-white shadow-lg shadow-primary/20 animate-float">
+          <div className="w-14 h-14 rounded-none bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center text-white shadow-lg shadow-primary/20 animate-float">
             <Trophy className="w-7 h-7" />
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function LearningDashboard() {
             </h2>
             <p className="text-sm text-gray-500 font-medium">Pick up where you left off</p>
           </div>
-          <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-xl hover:bg-primary/10 transition-all">
+          <button className="px-4 py-2 text-sm font-bold text-primary bg-primary/5 rounded-none hover:bg-primary/10 transition-all">
             View All My Courses
           </button>
         </div>
@@ -62,10 +62,10 @@ export default function LearningDashboard() {
               className="learning-card group overflow-hidden animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className={`h-40 ${course.image} relative rounded-2xl overflow-hidden mb-6`}>
+              <div className={`h-40 ${course.image} relative rounded-none overflow-hidden mb-6`}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60 group-hover:opacity-40 transition-all" />
                 <button className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100">
-                  <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-primary shadow-2xl backdrop-blur-sm">
+                  <div className="w-14 h-14 rounded-none bg-white/90 flex items-center justify-center text-primary shadow-2xl backdrop-blur-sm">
                     <Play className="w-6 h-6 fill-current ml-1" />
                   </div>
                 </button>
@@ -86,7 +86,7 @@ export default function LearningDashboard() {
                     <Clock className="w-4 h-4" />
                     {course.duration}
                   </div>
-                  <span className="text-gray-600 bg-gray-50 px-2 py-1 rounded-lg">{course.instructor}</span>
+                  <span className="text-gray-600 bg-gray-50 px-2 py-1 rounded-none">{course.instructor}</span>
                 </div>
               </div>
             </div>
@@ -96,40 +96,40 @@ export default function LearningDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         <div className="lg:col-span-8 space-y-8">
-          <section className="bg-white border border-gray-100 rounded-[2.5rem] p-10 shadow-sm animate-slide-up [animation-delay:400ms]">
+          <section className="bg-white border border-gray-100 rounded-none p-10 shadow-sm animate-slide-up [animation-delay:400ms]">
             <div className="flex items-center justify-between mb-10">
               <div className="space-y-1">
                 <h2 className="text-2xl font-extrabold text-gray-900">Recommended for You</h2>
                 <p className="text-sm text-gray-500 font-medium">Based on your interests and activity</p>
               </div>
               <div className="flex gap-2">
-                <button className="p-2.5 bg-gray-50 rounded-xl text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
+                <button className="p-2.5 bg-gray-50 rounded-none text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
                   <Filter className="w-5 h-5" />
                 </button>
-                <button className="p-2.5 bg-gray-50 rounded-xl text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
+                <button className="p-2.5 bg-gray-50 rounded-none text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
                   <Search className="w-5 h-5" />
                 </button>
               </div>
             </div>
             <div className="space-y-6">
               {recommended.map((course) => (
-                <div key={course.id} className="flex items-center gap-8 p-6 rounded-3xl hover:bg-gray-50/50 border border-transparent hover:border-gray-100 transition-all group cursor-pointer">
-                  <div className={`w-28 h-28 rounded-2xl ${course.image} flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform`} />
+                <div key={course.id} className="flex items-center gap-8 p-6 rounded-none hover:bg-gray-50/50 border border-transparent hover:border-gray-100 transition-all group cursor-pointer">
+                  <div className={`w-28 h-28 rounded-none ${course.image} flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform`} />
                   <div className="flex-1 space-y-3">
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors">{course.title}</h3>
                     <div className="flex items-center gap-6 text-xs font-bold text-gray-500">
-                      <div className="flex items-center gap-1.5 text-amber-500 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-100">
+                      <div className="flex items-center gap-1.5 text-amber-500 bg-amber-50 px-2.5 py-1 rounded-none border border-amber-100">
                         <Star className="w-4 h-4 fill-current" />
                         <span>{course.rating}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-gray-300" />
+                        <span className="w-1 h-1 rounded-none bg-gray-300" />
                         {course.students} students
                       </div>
-                      <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-600 uppercase tracking-widest text-[10px] font-black">{course.level}</span>
+                      <span className="px-3 py-1 bg-gray-100 rounded-none text-gray-600 uppercase tracking-widest text-[10px] font-black">{course.level}</span>
                     </div>
                   </div>
-                  <button className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 group-hover:rotate-45 transition-all">
+                  <button className="w-12 h-12 bg-gray-50 rounded-none flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 group-hover:rotate-45 transition-all">
                     <ArrowRight className="w-6 h-6" />
                   </button>
                 </div>
@@ -139,7 +139,7 @@ export default function LearningDashboard() {
         </div>
 
         <div className="lg:col-span-4 space-y-8">
-          <section className="bg-gray-900 rounded-[2.5rem] p-10 text-white shadow-2xl shadow-gray-900/20 animate-slide-up [animation-delay:600ms]">
+          <section className="bg-gray-900 rounded-none p-10 text-white shadow-2xl shadow-gray-900/20 animate-slide-up [animation-delay:600ms]">
             <h2 className="text-xl font-extrabold mb-10 flex items-center gap-3">
               <Trophy className="w-6 h-6 text-primary" />
               Learning Path
@@ -152,9 +152,9 @@ export default function LearningDashboard() {
                 { title: 'Advanced Mastery', status: 'Locked', icon: <Lock className="w-5 h-5" /> },
               ].map((step, i) => (
                 <div key={i} className="flex items-center gap-8 relative z-10 group cursor-pointer">
-                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center border-2 transition-all group-hover:scale-110 ${step.status === 'Completed' ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20' :
-                      step.status === 'In Progress' ? 'bg-gray-900 border-primary text-primary animate-pulse' :
-                        'bg-gray-900 border-gray-800 text-gray-600'
+                  <div className={`w-10 h-10 rounded-none flex items-center justify-center border-2 transition-all group-hover:scale-110 ${step.status === 'Completed' ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20' :
+                    step.status === 'In Progress' ? 'bg-gray-900 border-primary text-primary animate-pulse' :
+                      'bg-gray-900 border-gray-800 text-gray-600'
                     }`}>
                     {step.icon}
                   </div>
@@ -167,12 +167,12 @@ export default function LearningDashboard() {
             </div>
           </section>
 
-          <section className="glass-card rounded-[2.5rem] p-10 animate-slide-up [animation-delay:800ms]">
+          <section className="glass-card rounded-none p-10 animate-slide-up [animation-delay:800ms]">
             <h2 className="text-xl font-extrabold text-primary mb-4">Skill Assessment</h2>
             <p className="text-sm text-gray-500 font-medium leading-relaxed mb-8">
               Take a quick assessment to get personalized course recommendations and unlock new levels.
             </p>
-            <button className="w-full py-4 bg-primary text-white rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95">
+            <button className="w-full py-4 bg-primary text-white rounded-none text-sm font-black uppercase tracking-widest hover:bg-primary-hover transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95">
               Start Assessment
             </button>
           </section>

@@ -24,6 +24,12 @@ const config: Config = {
       backdropBlur: {
         md: '12px',
       },
+      borderRadius: {
+        lg: '0',
+        md: '0',
+        sm: '0',
+        DEFAULT: '0',
+      },
     },
   },
   plugins: [],
