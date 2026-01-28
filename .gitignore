@@ -54,3 +54,24 @@ logs/
 # pnpm-lock.yaml
 # package-lock.json
 # yarn.lock
+# Next.js
+.next/
+**/.next/
+out/
+**/out/
+next-env.d.ts
+**/next-env.d.ts
+
+# Node
+node_modules/
+**/node_modules/
+
+# Logs + TS cache
+*.log
+**/*.log
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Env
+.env*
+!.env.example
