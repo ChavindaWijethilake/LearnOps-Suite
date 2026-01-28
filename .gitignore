@@ -1,9 +1,17 @@
-﻿.next/
+﻿# Next.js
+next-env.d.ts
+**/next-env.d.ts
+.next/
 **/.next/
-out/
-**/out/
+
+# Logs
+*.log
+**/*.log
+
+# TypeScript build cache
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Node
 node_modules/
 **/node_modules/
-.DS_Store
-.env*
-!.env.example
