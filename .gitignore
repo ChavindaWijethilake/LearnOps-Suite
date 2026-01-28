@@ -54,3 +54,25 @@ logs/
 # pnpm-lock.yaml
 # package-lock.json
 # yarn.lock
+
+# Next.js build output
+.next/
+**/.next/
+out/
+**/out/
+
+# Generated / local
+next-env.d.ts
+**/next-env.d.ts
+node_modules/
+**/node_modules/
+*.log
+**/*.log
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Environment files
+.env*
+!.env.example
+
+.DS_Store
