@@ -1,56 +1,9 @@
-# Dependencies
+﻿.next/
+**/.next/
+out/
+**/out/
 node_modules/
-/.pnp
-.pnp.js
-
-# Next.js
-/.next/
-/out/
-/build
-
-# Production
-dist/
-*.tsbuildinfo
-next-env.d.ts
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-.pnpm-debug.log*
-
-# Environment
-.env
-.env.local
-.env.*.local
-.env.production.local
-
-# Vercel
-.vercel
-
-# IDE & Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+**/node_modules/
 .DS_Store
-
-# Database
-.prisma/
-prisma/dev.db
-prisma/dev.db-journal
-
-# Logs
-logs/
-*.log
-
-# Monorepo specific
-/dist/
-/coverage/
-
-# Lock files (optional, commit if needed for monorepo)
-# pnpm-lock.yaml
-# package-lock.json
-# yarn.lock
+.env*
+!.env.example
