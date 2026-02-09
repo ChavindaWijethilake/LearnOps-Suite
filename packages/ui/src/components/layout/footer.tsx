@@ -1,100 +1,124 @@
 import Link from 'next/link';
-import { Twitter, Linkedin, Github, Mail, ExternalLink } from 'lucide-react';
+import { Twitter, Linkedin, Github } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-gray-200/60 py-16 mt-auto">
-      <div className="max-w-[1600px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
-          <div className="md:col-span-4">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
-                L
+    <footer className="bg-slate-50 text-slate-900 border-t-2 border-slate-900">
+      <div className="max-w-[1440px] mx-auto">
+        {/* Main Footer Content */}
+        <div className="px-8 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            {/* Brand Section */}
+            <div className="lg:col-span-4 space-y-10">
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 bg-slate-900 text-white flex items-center justify-center shrink-0">
+                  <span className="font-black text-3xl">Lo</span>
+                </div>
+                <div>
+                  <div className="font-black text-4xl tracking-tighter text-slate-900 leading-none">LearnOps</div>
+                  <div className="text-xs font-black uppercase tracking-[0.4em] text-slate-500 mt-2">Suite</div>
+                </div>
               </div>
-              <span className="text-2xl font-extrabold tracking-tight text-gray-900">LearnOps Suite</span>
+
+              <p className="text-sm text-slate-500 leading-relaxed font-bold max-w-sm">
+                Industrial-grade education management for modern institutions. Built for scale, designed for precision.
+              </p>
+
+              <div className="flex gap-3">
+                {[
+                  { icon: Twitter, label: 'Twitter' },
+                  { icon: Linkedin, label: 'LinkedIn' },
+                  { icon: Github, label: 'GitHub' }
+                ].map(({ icon: Icon, label }) => (
+                  <a
+                    key={label}
+                    href="#"
+                    className="h-11 w-11 border-2 border-slate-900 bg-white flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all duration-200 shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1"
+                    aria-label={label}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
             </div>
-            <p className="text-base text-gray-500 leading-relaxed max-w-sm">
-              A learning-focused, realistic enterprise-style digital services suite designed for modern, data-driven organizations.
-            </p>
-            <div className="flex gap-4 mt-8">
-              <a href="#" className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/5 hover:scale-110 transition-all">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/5 hover:scale-110 transition-all">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/5 hover:scale-110 transition-all">
-                <Github className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
 
-          <div className="md:col-span-2">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Resources</h3>
-            <nav className="flex flex-col gap-4">
-              <Link href="/about" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors flex items-center gap-2">
-                About Us
-              </Link>
-              <Link href="/help" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors flex items-center gap-2">
-                Help Center
-              </Link>
-              <Link href="/contact" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors flex items-center gap-2">
-                Contact
-              </Link>
-            </nav>
-          </div>
+            {/* Navigation Columns */}
+            <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-12">
+              <div className="space-y-8">
+                <h3 className="font-black text-xs uppercase tracking-[0.3em] text-slate-900">Product</h3>
+                <ul className="space-y-4">
+                  {['Features', 'Security', 'Enterprise', 'Pricing'].map((item) => (
+                    <li key={item}>
+                      <Link href="#" className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-widest block">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          <div className="md:col-span-2">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Legal</h3>
-            <nav className="flex flex-col gap-4">
-              <Link href="/privacy" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/security" className="text-sm font-semibold text-gray-600 hover:text-primary transition-colors">
-                Security
-              </Link>
-            </nav>
-          </div>
+              <div className="space-y-8">
+                <h3 className="font-black text-xs uppercase tracking-[0.3em] text-slate-900">Company</h3>
+                <ul className="space-y-4">
+                  {['About', 'Careers', 'Contact', 'Blog'].map((item) => (
+                    <li key={item}>
+                      <Link href="#" className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-widest block">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          <div className="md:col-span-4">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Newsletter</h3>
-            <p className="text-sm text-gray-500 mb-6 font-medium">
-              Get the latest updates on new features and resources.
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-              />
-              <button className="px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:bg-primary-hover transition-all shadow-lg shadow-primary/20">
-                Join
-              </button>
+              <div className="space-y-8">
+                <h3 className="font-black text-xs uppercase tracking-[0.3em] text-slate-900">Resources</h3>
+                <ul className="space-y-4">
+                  {['Documentation', 'API Reference', 'Support', 'Community'].map((item) => (
+                    <li key={item}>
+                      <Link href="#" className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-widest block">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="space-y-8">
+                <h3 className="font-black text-xs uppercase tracking-[0.3em] text-slate-900">Legal</h3>
+                <ul className="space-y-4">
+                  {['Privacy', 'Terms', 'Status', 'Cookies'].map((item) => (
+                    <li key={item}>
+                      <Link href="#" className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-widest block">
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-100 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-medium text-gray-400">
-              &copy; {currentYear} LearnOps Suite.
-            </p>
-            <span className="w-1 h-1 rounded-full bg-gray-300 hidden md:block" />
-            <p className="text-sm font-medium text-gray-400">
-              Built with precision.
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-600 rounded-full border border-green-100">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">System Status: Optimal</span>
+        {/* Bottom Bar */}
+        <div className="border-t-2 border-slate-900">
+          <div className="px-8 py-10 flex flex-col md:flex-row justify-between items-center gap-8 bg-white">
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+              © {currentYear} LearnOps Inc. All rights reserved.
             </div>
-            <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-50 text-gray-400 rounded-lg border border-gray-200/50 uppercase tracking-wider">v1.2.4</span>
+
+            <div className="flex items-center gap-8">
+              <div className="bg-slate-50 border-2 border-slate-900 px-6 py-3 flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)]">
+                <span className="h-2.5 w-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                <span className="text-xs font-black uppercase tracking-[0.25em] text-slate-900">Systems Normal</span>
+              </div>
+
+              <div className="flex items-center gap-6">
+                <Link href="#" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-slate-900 transition-colors">Status</Link>
+                <Link href="#" className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-slate-900 transition-colors">Changelog</Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

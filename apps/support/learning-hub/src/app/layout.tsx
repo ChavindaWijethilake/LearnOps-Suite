@@ -33,16 +33,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-app="learning-hub">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50/50`}>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50/50 text-slate-900 selection:bg-primary/10 selection:text-primary`}>
         <Navbar
           appName="Learning Hub"
           appLogo={<Library className="w-6 h-6 text-white" />}
           userEmail="admin@learnops.local"
         />
-        <div className="flex-1 flex max-w-[1600px] mx-auto w-full">
+        <div className="flex-1 flex w-full max-w-[1600px] mx-auto relative">
           <Sidebar items={navItems} />
-          <main className="flex-1 p-8">
-            {children}
+          <main className="flex-1 p-8 md:p-12 lg:p-16 animate-fade-in overflow-hidden">
+            <div className="max-w-6xl mx-auto">
+              {children}
+            </div>
           </main>
         </div>
         <Footer />

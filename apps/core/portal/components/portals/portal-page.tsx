@@ -24,11 +24,11 @@ export function PortalPage({
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
-          <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-blue-600 text-white shadow-2xl shadow-blue-600/20 group hover:scale-110 hover:rotate-3 transition-all duration-500">
+          <div className="flex h-24 w-24 items-center justify-center rounded-none bg-blue-600 text-white shadow-2xl shadow-blue-600/20 transition-all duration-500">
             {icon}
           </div>
           <div className="space-y-4 flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 text-blue-600 rounded-none text-[10px] font-black uppercase tracking-widest">
               Enterprise Portal Entry
             </div>
             <h1 className="text-5xl font-black text-slate-900 tracking-tighter leading-tight">{portalName}</h1>
@@ -38,13 +38,13 @@ export function PortalPage({
 
         {/* Redirection Notice */}
         {portalUrl && (
-          <div className="glass-card rounded-[3rem] p-10 border-blue-100/50 relative overflow-hidden group">
+          <div className="glass-card rounded-none p-10 border-blue-100/50 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
               <Zap className="w-20 h-20" />
             </div>
             <div className="relative z-10 space-y-6">
               <div className="flex items-center gap-4">
-                <div className="p-2 bg-blue-500/10 rounded-xl text-blue-600">
+                <div className="p-2 bg-blue-500/10 rounded-none text-blue-600">
                   <Shield className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-black text-slate-900 tracking-tight">Redirection Protocol</h3>
@@ -55,7 +55,7 @@ export function PortalPage({
               <div className="flex items-center gap-4">
                 <a
                   href={portalUrl}
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20 active:scale-95"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-none text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-900/20 active:opacity-80"
                 >
                   Initialize Redirect <ArrowRight className="w-4 h-4" />
                 </a>
@@ -78,10 +78,10 @@ export function PortalPage({
               {features.map((feature, idx) => (
                 <div
                   key={idx}
-                  className="group flex items-center gap-6 p-6 bg-white border border-slate-100 rounded-[2rem] transition-all hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/5 animate-slide-up"
+                  className="group flex items-center gap-6 p-6 bg-white border border-slate-100 rounded-none transition-all hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/5 animate-slide-up"
                   style={{ animationDelay: `${idx * 50}ms` }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-blue-600 group-hover:bg-blue-50 transition-all shadow-sm">
+                  <div className="w-12 h-12 rounded-none bg-slate-50 flex items-center justify-center text-slate-400 group-hover:text-blue-600 group-hover:bg-blue-50 transition-all shadow-sm">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <span className="text-base font-black text-slate-700 group-hover:text-slate-900 transition-colors">{feature}</span>

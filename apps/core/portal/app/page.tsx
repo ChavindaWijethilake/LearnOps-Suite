@@ -12,8 +12,23 @@ import {
   Zap,
   Shield,
   Globe,
-  Cpu
+  Cpu,
+  FileText,
+  ShieldCheck,
+  UserPlus
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const activityData = [
+  { day: 'Mon', value: 65 },
+  { day: 'Tue', value: 45 },
+  { day: 'Wed', value: 35 },
+  { day: 'Thu', value: 52 },
+  { day: 'Fri', value: 28 },
+  { day: 'Sat', value: 38 },
+  { day: 'Sun', value: 58 },
+];
+
 
 const modules = [
   {
@@ -93,186 +108,173 @@ const recentActivity = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-16 animate-fade-in pb-20">
-      {/* Premium Hero Section */}
-      <header className="relative overflow-hidden rounded-none bg-slate-950 p-6 md:p-12 text-white shadow-2xl shadow-slate-950/40">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
-        <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-        <div className="absolute -top-48 -right-48 w-96 h-96 bg-blue-600/20 rounded-none blur-[120px] animate-pulse" />
-        <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-indigo-600/20 rounded-none blur-[120px] animate-pulse [animation-delay:2s]" />
+    <div className="space-y-8 animate-fade-in pb-10">
+      {/* Page Header */}
+      <div className="px-8 pt-8">
+        <h1 className="text-4xl font-black tracking-tight mb-2 text-slate-900">Command Center</h1>
+        <p className="text-slate-500 font-medium">System-wide operational overview.</p>
+      </div>
 
-        <div className="relative z-10 max-w-3xl space-y-8">
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-xl rounded-none border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 animate-slide-up">
-            <span className="flex h-2 w-2 rounded-none bg-blue-500 animate-ping" />
-            LearnOps OS v4.0.2 • Global Status: Optimal
-          </div>
-
-          <div className="space-y-4">
-            <h1 className="text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] animate-slide-up [animation-delay:100ms]">
-              Command <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Center</span>
-            </h1>
-            <p className="text-xl text-slate-400 font-medium max-w-xl leading-relaxed animate-slide-up [animation-delay:200ms]">
-              Orchestrate your entire enterprise ecosystem from a single, high-performance interface. Real-time insights, unified control.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-4 pt-4 animate-slide-up [animation-delay:300ms]">
-            <button className="px-10 py-5 bg-white text-slate-950 rounded-none font-black uppercase tracking-widest text-xs hover:bg-blue-50 hover:scale-105 transition-all shadow-xl shadow-white/10 active:scale-95">
-              System Analytics
-            </button>
-            <button className="px-10 py-5 bg-white/5 backdrop-blur-md text-white rounded-none font-black uppercase tracking-widest text-xs border border-white/10 hover:bg-white/10 transition-all active:scale-95">
-              Global Settings
-            </button>
-          </div>
-        </div>
-
-        {/* Floating Stats Decoration */}
-        <div className="hidden xl:block absolute top-20 right-20 space-y-4 animate-float">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-none w-64 shadow-2xl">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-2 bg-blue-500/20 rounded-none text-blue-400">
-                <Cpu className="w-5 h-5" />
+      <div className="px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Main Content Area */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* Quick Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-card border-industrial p-8 space-y-3 shadow-industrial hover:shadow-industrial-hover hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Active Users</span>
+                <UserPlus className="h-4 w-4 text-slate-900" />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Core Load</span>
+              <div className="text-4xl font-black tracking-tighter">12,453</div>
+              <div className="text-[10px] font-black text-emerald-600 flex items-center gap-1.5 uppercase tracking-wider">
+                <div className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                +14% from last week
+              </div>
             </div>
-            <div className="text-2xl font-black text-white">12.4%</div>
-            <div className="mt-4 h-1 w-full bg-white/10 rounded-none overflow-hidden">
-              <div className="h-full bg-blue-500 w-[12.4%]" />
+            <div className="bg-card border-industrial p-8 space-y-3 shadow-industrial hover:shadow-industrial-hover hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">System Load</span>
+                <Cpu className="h-4 w-4 text-slate-900" />
+              </div>
+              <div className="text-4xl font-black tracking-tighter">24%</div>
+              <div className="w-full bg-slate-100 h-2 mt-4 border border-slate-200">
+                <div className="bg-slate-900 h-full w-[24%] transition-all duration-1000" />
+              </div>
+            </div>
+            <div className="bg-card border-industrial p-8 space-y-3 shadow-industrial hover:shadow-industrial-hover hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">Response Time</span>
+                <Zap className="h-4 w-4 text-slate-900" />
+              </div>
+              <div className="text-4xl font-black tracking-tighter">45<span className="text-lg text-slate-400 ml-1 uppercase">ms</span></div>
+              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Global Average</div>
             </div>
           </div>
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-none w-64 shadow-2xl [animation-delay:1s]">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-2 bg-emerald-500/20 rounded-none text-emerald-400">
-                <Globe className="w-5 h-5" />
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Active Nodes</span>
-            </div>
-            <div className="text-2xl font-black text-white">1,204</div>
-            <div className="text-[10px] font-bold text-emerald-400 mt-2">+12 since last hour</div>
-          </div>
-        </div>
-      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Module Grid */}
-        <div className="lg:col-span-8 space-y-12">
-          <section>
-            <div className="flex items-center justify-between mb-10">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-4">
-                  <div className="p-2 bg-blue-600 rounded-none text-white">
-                    <LayoutDashboard className="w-6 h-6" />
-                  </div>
-                  System Modules
-                </h2>
-                <p className="text-slate-500 font-bold text-sm uppercase tracking-widest">Primary Enterprise Infrastructure</p>
-              </div>
-              <Link href="/directory" className="group flex items-center gap-2 px-6 py-3 text-xs font-black uppercase tracking-widest text-blue-600 bg-blue-50 rounded-none hover:bg-blue-100 transition-all">
-                Full Directory <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
+          {/* Application Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {modules.map((module) => (
+              <a
+                key={module.id}
+                href={module.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white border-industrial p-10 shadow-industrial hover:shadow-industrial-hover hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+              >
+                {/* Background Accent */}
+                <div className={cn("absolute top-0 right-0 w-32 h-32 opacity-5 translate-x-8 -translate-y-8 transition-all duration-500 group-hover:opacity-10 group-hover:scale-110", module.color)}>
+                  {module.icon}
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {modules.map((module, index) => (
-                <Link
-                  key={module.id}
-                  href={module.href}
-                  className="group relative overflow-hidden bg-white border border-slate-100 rounded-none p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/5 hover:border-blue-200 animate-slide-up"
-                  style={{ animationDelay: `${(index + 4) * 100}ms` }}
-                >
-                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                <div className="flex items-start justify-between mb-8 relative z-10">
+                  <div className={cn("h-14 w-14 flex items-center justify-center border-2 border-slate-900 bg-white group-hover:bg-slate-900 group-hover:text-white transition-all duration-500 shadow-sm", module.color)}>
                     {module.icon}
                   </div>
+                  <ArrowRight className="h-6 w-6 text-slate-300 group-hover:text-slate-900 -translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                </div>
 
-                  <div className="flex justify-between items-start mb-8">
-                    <div className={cn("p-5 rounded-none shadow-lg transition-all group-hover:scale-110 group-hover:rotate-3", module.bgColor, module.color)}>
-                      {module.icon}
-                    </div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-black mb-2 tracking-tight transition-colors group-hover:text-emerald-600">{module.name}</h3>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6 leading-relaxed bg-slate-50 p-3 border-l-2 border-slate-200 group-hover:border-slate-900 group-hover:bg-white transition-all">
+                    {module.description}
+                  </p>
+                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-100">
                     <span className={cn(
-                      "text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-none border",
-                      module.type.includes('Core') ? "bg-blue-50 text-blue-600 border-blue-100" : "bg-slate-50 text-slate-500 border-slate-100"
+                      "text-[9px] font-black uppercase tracking-[0.3em] px-3 py-1.5 border-2",
+                      module.type.includes('Core') ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-900 border-slate-900"
                     )}>
                       {module.type}
                     </span>
-                  </div>
-
-                  <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-blue-600 transition-colors tracking-tight">{module.name}</h3>
-                  <p className="text-slate-500 mb-8 leading-relaxed font-medium text-lg">{module.description}</p>
-
-                  <div className="flex items-center text-xs font-black uppercase tracking-widest text-blue-600 opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">
-                    Initialize Module <ArrowRight className="w-4 h-4 ml-2" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        {/* Intelligence Sidebar */}
-        <div className="lg:col-span-4 space-y-12">
-          <section className="glass-card rounded-none p-10 animate-slide-up [animation-delay:800ms]">
-            <div className="flex items-center justify-between mb-10">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-4">
-                <Activity className="w-6 h-6 text-blue-600" />
-                Live Feed
-              </h2>
-              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-none text-[10px] font-black uppercase tracking-widest">
-                <span className="h-1.5 w-1.5 rounded-none bg-emerald-500 animate-pulse" />
-                Live
-              </div>
-            </div>
-
-            <div className="space-y-10">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex gap-6 group cursor-pointer">
-                  <div className="relative">
-                    <div className="w-14 h-14 rounded-none bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors border border-slate-100">
-                      <Zap className="w-6 h-6 text-slate-400 group-hover:text-blue-600 transition-colors" />
-                    </div>
-                    {activity.id !== recentActivity.length && (
-                      <div className="absolute top-14 left-1/2 -translate-x-1/2 w-px h-10 bg-slate-100" />
-                    )}
-                  </div>
-                  <div className="pt-1">
-                    <p className="text-base font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">{activity.action}</p>
-                    <p className="text-xs text-slate-400 mt-2 font-bold uppercase tracking-widest">{activity.time}</p>
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-900 transition-colors">
+                      Initialize Link →
+                    </span>
                   </div>
                 </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Analytics Chart */}
+          <div className="bg-card border p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold">Traffic Overview</h3>
+              <select className="bg-background border text-xs p-1">
+                <option>Last 7 Days</option>
+                <option>Last 30 Days</option>
+              </select>
+            </div>
+            <div className="h-[300px] w-full">
+              <div className="flex items-end justify-between h-full gap-3 px-4">
+                {activityData.map((item, index) => (
+                  <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                    <div className="w-full bg-gradient-to-t from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500 transition-all duration-300 rounded-t-sm"
+                      style={{ height: `${item.value}%` }}
+                      title={`${item.day}: ${item.value}%`}
+                    />
+                    <span className="text-xs text-muted-foreground font-medium">{item.day}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar Panel */}
+        <div className="lg:col-span-4 space-y-8">
+          <div className="bg-card border p-6">
+            <h3 className="font-bold mb-6 flex items-center gap-2">
+              <Activity className="h-4 w-4 text-primary" />
+              Live Audit Log
+            </h3>
+            <div className="space-y-6">
+              {recentActivity.map((activity) => {
+                const iconMap = {
+                  billing: CreditCard,
+                  service: LifeBuoy,
+                  learning: GraduationCap,
+                  project: CheckSquare
+                };
+                const Icon = iconMap[activity.type as keyof typeof iconMap] || Zap;
+
+                return (
+                  <div key={activity.id} className="flex gap-4 group cursor-pointer relative pl-6 border-l ml-2">
+                    <div className="absolute -left-[5px] top-1 h-2.5 w-2.5 bg-background border-2 border-muted-foreground group-hover:border-primary rounded-full transition-colors" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{activity.action}</p>
+                      <p className="text-[10px] text-muted-foreground mt-1 uppercase tracking-wider">{activity.time}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <button className="w-full mt-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-secondary transition-colors border border-dashed">
+              View Full Logs
+            </button>
+          </div>
+
+          <div className="bg-slate-950 text-white p-6">
+            <h3 className="font-bold mb-4 flex items-center gap-2">
+              <Shield className="h-4 w-4" />
+              Security Actions
+            </h3>
+            <div className="space-y-2">
+              {[
+                { name: 'Rotate API Keys', icon: FileText },
+                { name: 'Run Security Scan', icon: ShieldCheck },
+                { name: 'Manage Access', icon: UserPlus }
+              ].map((action) => (
+                <button key={action.name} className="w-full flex items-center justify-between p-3 bg-white/5 hover:bg-white/10 text-xs font-bold uppercase tracking-wider transition-colors border border-transparent hover:border-white/20">
+                  <span className="flex items-center gap-2">
+                    <action.icon className="h-4 w-4 text-blue-400" />
+                    {action.name}
+                  </span>
+                  <ArrowRight className="h-3 w-3" />
+                </button>
               ))}
             </div>
-
-            <button className="w-full mt-12 py-5 text-xs font-black uppercase tracking-widest text-slate-600 bg-slate-50 hover:bg-slate-100 rounded-none border border-slate-200 transition-all active:scale-95">
-              Access System Logs
-            </button>
-          </section>
-
-          <section className="bg-slate-900 rounded-none p-10 text-white shadow-2xl shadow-slate-900/30 animate-slide-up [animation-delay:1000ms] relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-10 opacity-10">
-              <Zap className="w-20 h-20" />
-            </div>
-            <h2 className="text-2xl font-black mb-8 flex items-center gap-4 tracking-tight relative z-10">
-              <Shield className="w-6 h-6 text-blue-400" />
-              Quick Actions
-            </h2>
-            <div className="grid grid-cols-1 gap-4 relative z-10">
-              <button className="flex items-center justify-between p-5 bg-white/5 hover:bg-white/10 rounded-none text-xs font-black uppercase tracking-widest transition-all group border border-white/5">
-                Generate Report <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="flex items-center justify-between p-5 bg-white/5 hover:bg-white/10 rounded-none text-xs font-black uppercase tracking-widest transition-all group border border-white/5">
-                Security Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="flex items-center justify-between p-5 bg-white/5 hover:bg-white/10 rounded-none text-xs font-black uppercase tracking-widest transition-all group border border-white/5">
-                User Provisioning <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </section>
+          </div>
         </div>
       </div>
-    </div>
+    </div >
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

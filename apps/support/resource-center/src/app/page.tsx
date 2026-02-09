@@ -7,7 +7,9 @@ import {
   ArrowRight,
   Bookmark,
   Clock,
-  Star
+  Star,
+  Filter,
+  Library
 } from 'lucide-react';
 
 const featured = [
@@ -17,134 +19,140 @@ const featured = [
 ];
 
 const categories = [
-  { name: 'Engineering', count: 124, icon: <div className="w-10 h-10 rounded-none bg-blue-50 text-blue-600 flex items-center justify-center"><BookOpen className="w-5 h-5" /></div> },
-  { name: 'Design', count: 86, icon: <div className="w-10 h-10 rounded-none bg-rose-50 text-rose-600 flex items-center justify-center"><FileText className="w-5 h-5" /></div> },
-  { name: 'Marketing', count: 42, icon: <div className="w-10 h-10 rounded-none bg-amber-50 text-amber-600 flex items-center justify-center"><Video className="w-5 h-5" /></div> },
-  { name: 'Human Resources', count: 35, icon: <div className="w-10 h-10 rounded-none bg-teal-50 text-teal-600 flex items-center justify-center"><Download className="w-5 h-5" /></div> },
+  { name: 'Engineering', count: 124, icon: <div className="w-10 h-10 rounded-none bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100"><BookOpen className="w-5 h-5" /></div> },
+  { name: 'Design', count: 86, icon: <div className="w-10 h-10 rounded-none bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100"><FileText className="w-5 h-5" /></div> },
+  { name: 'Marketing', count: 42, icon: <div className="w-10 h-10 rounded-none bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100"><Video className="w-5 h-5" /></div> },
+  { name: 'Human Resources', count: 35, icon: <div className="w-10 h-10 rounded-none bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100"><Download className="w-5 h-5" /></div> },
 ];
 
 export default function ResourceDashboard() {
   return (
-    <div className="space-y-12 animate-fade-in">
-      <header className="relative py-20 overflow-hidden rounded-none bg-gray-900 text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-primary/10" />
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary rounded-none blur-[120px] animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-hover rounded-none blur-[150px] animate-pulse [animation-delay:1s]" />
-        </div>
-
-        <div className="relative z-10 text-center space-y-8 px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-none text-[10px] font-black uppercase tracking-[0.2em] border border-white/10">
-            Resource Engine v2.0
+    <div className="space-y-12 animate-fade-in pb-10">
+      <div className="px-8 pt-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b pb-8 border-slate-200">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 text-slate-900 text-[10px] font-black uppercase tracking-widest border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,0.1)]">
+            <Library className="w-3.5 h-3.5" />
+            Knowledge Base
           </div>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight max-w-4xl mx-auto">
-            Knowledge at your <span className="text-primary">fingertips</span>
-          </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            Search through thousands of documents, videos, and articles in the LearnOps Resource Center.
-          </p>
-          <div className="max-w-2xl mx-auto relative group">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500 group-focus-within:text-primary transition-colors" />
+          <h1 className="text-4xl font-black text-slate-900 tracking-tight">Resource Center</h1>
+          <p className="text-lg text-slate-500 font-medium">Centralized documentation and assets library.</p>
+        </div>
+        <div className="flex gap-3 pb-2">
+          <button className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-slate-900 hover:bg-slate-900 hover:text-white text-xs font-black uppercase tracking-widest transition-all shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)]">
+            <Filter className="w-4 h-4" />
+            Filters
+          </button>
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-slate-900 transition-colors" />
             <input
               type="text"
-              placeholder="Search resources, guides, and more..."
-              className="w-full pl-16 pr-6 py-6 bg-white/10 backdrop-blur-xl border border-white/10 rounded-none text-lg text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary/50 transition-all shadow-2xl"
+              placeholder="Search resources..."
+              className="pl-12 pr-4 py-3 w-64 bg-white border-2 border-slate-900 text-sm focus:outline-none focus:ring-0 transition-all font-bold placeholder:text-slate-400 shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)]"
             />
           </div>
         </div>
-      </header>
+      </div>
 
-      <section>
-        <div className="flex items-center justify-between mb-10">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-extrabold text-gray-900 flex items-center gap-3">
-              <Star className="w-6 h-6 text-amber-500" />
-              Featured Resources
-            </h2>
-            <p className="text-sm text-gray-500 font-medium">Hand-picked for your success</p>
+      <div className="px-8 space-y-12">
+        <section>
+          <div className="flex items-center justify-between mb-8">
+            <div className="space-y-1">
+              <h2 className="text-2xl font-black text-foreground flex items-center gap-3">
+                <Star className="w-6 h-6 text-primary" />
+                Featured Resources
+              </h2>
+            </div>
           </div>
-          <button className="px-6 py-2.5 text-sm font-bold text-primary bg-primary/5 rounded-none hover:bg-primary/10 transition-all">
-            View All
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featured.map((item, index) => (
-            <div
-              key={item.id}
-              className="resource-card group animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex justify-between items-start mb-8">
-                <div className="w-14 h-14 rounded-none bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                  {item.type === 'PDF' ? <Download className="w-7 h-7" /> : item.type === 'Video' ? <Video className="w-7 h-7" /> : <FileText className="w-7 h-7" />}
-                </div>
-                <button className="p-3 hover:bg-gray-100 rounded-none transition-all text-gray-400 hover:text-primary hover:scale-110">
-                  <Bookmark className="w-5 h-5" />
-                </button>
-              </div>
-              <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-primary transition-colors leading-tight">{item.title}</h3>
-              <div className="flex items-center gap-4 text-xs font-bold text-gray-400 mb-8">
-                <span className="category-tag">{item.category}</span>
-                <span className="w-1 h-1 rounded-none bg-gray-200" />
-                <span className="text-gray-500">{item.author}</span>
-              </div>
-              <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400">
-                  <Clock className="w-4 h-4" />
-                  {item.date}
-                </div>
-                <button className="text-sm font-black text-primary flex items-center gap-2 group-hover:translate-x-1 transition-transform">
-                  Open <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-8">
-          <section className="bg-white border border-gray-100 rounded-none p-10 shadow-sm animate-slide-up [animation-delay:400ms]">
-            <h2 className="text-2xl font-extrabold text-gray-900 mb-10">Browse by Category</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {categories.map((cat) => (
-                <button key={cat.name} className="flex items-center gap-6 p-6 rounded-none border border-gray-50 hover:border-primary/20 hover:bg-gray-50/50 transition-all group text-left">
-                  <div className="group-hover:scale-110 transition-transform duration-500">
-                    {cat.icon}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featured.map((item, index) => (
+              <div
+                key={item.id}
+                className="group bg-card border hover:border-primary transition-all duration-300 flex flex-col"
+              >
+                <div className="p-8 flex-1">
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="w-12 h-12 rounded-none bg-secondary flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-all">
+                      {item.type === 'PDF' ? <FileText className="w-6 h-6" /> : item.type === 'Video' ? <Video className="w-6 h-6" /> : <BookOpen className="w-6 h-6" />}
+                    </div>
+                    <button className="p-2 hover:bg-secondary text-muted-foreground hover:text-foreground transition-all">
+                      <Bookmark className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-extrabold text-gray-900 group-hover:text-primary transition-colors">{cat.name}</h3>
-                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">{cat.count} Resources</p>
+                  <div className="mb-4">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary border border-primary/20 px-2 py-1 bg-primary/5">
+                      {item.category}
+                    </span>
                   </div>
-                </button>
-              ))}
-            </div>
-          </section>
-        </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-tight">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground font-medium">Authored by <span className="text-foreground">{item.author}</span></p>
+                </div>
+                <div className="px-8 py-4 bg-secondary/20 border-t flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                    <Clock className="w-3 h-3" />
+                    {item.date}
+                  </div>
+                  <button className="text-xs font-bold text-primary flex items-center gap-2 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
+                    Access <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <div className="lg:col-span-4 space-y-8">
-          <section className="bg-primary rounded-none p-10 text-white shadow-2xl shadow-primary/20 animate-slide-up [animation-delay:600ms]">
-            <h2 className="text-xl font-extrabold mb-6">Contribute</h2>
-            <p className="text-sm font-medium text-white/80 mb-10 leading-relaxed">
-              Have a resource that could help others? Upload it to the Resource Center and share your knowledge with the community.
-            </p>
-            <button className="w-full py-4 bg-white text-primary rounded-none text-sm font-black uppercase tracking-widest hover:bg-gray-50 transition-all shadow-xl hover:scale-105 active:scale-95">
-              Upload Resource
-            </button>
-          </section>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-8">
+            <section className="bg-card border p-8">
+              <h2 className="text-xl font-black text-foreground mb-8 uppercase tracking-tight">Browse Categories</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {categories.map((cat) => (
+                  <button key={cat.name} className="flex items-center gap-6 p-6 border hover:border-primary/50 hover:bg-accent/5 transition-all group text-left bg-background">
+                    <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
+                      {cat.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">{cat.name}</h3>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">{cat.count} Resources</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </section>
+          </div>
 
-          <section className="glass-card rounded-none p-10 animate-slide-up [animation-delay:800ms]">
-            <h2 className="text-xl font-extrabold text-primary mb-6">Quick Links</h2>
-            <div className="space-y-4">
-              {['Brand Assets', 'HR Policies', 'Technical Guides'].map((link) => (
-                <button key={link} className="w-full text-left p-4 bg-white/50 border border-gray-100 rounded-none text-sm font-bold text-gray-700 hover:border-primary hover:text-primary hover:translate-x-2 transition-all">
-                  {link}
+          <div className="lg:col-span-4 space-y-8">
+            <section className="bg-slate-950 p-8 text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/20 rounded-full blur-3xl" />
+              <div className="relative z-10">
+                <h2 className="text-lg font-black uppercase tracking-widest mb-4">Contribute</h2>
+                <p className="text-sm font-medium text-slate-400 mb-8 leading-relaxed">
+                  Share your knowledge. Upload guides, assets, or documentation to the repository.
+                </p>
+                <button className="w-full py-4 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-none text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Upload Asset
                 </button>
-              ))}
-            </div>
-          </section>
+              </div>
+            </section>
+
+            <section className="bg-card border p-8">
+              <h2 className="text-lg font-bold text-foreground mb-6">Quick Links</h2>
+              <div className="space-y-3">
+                {['Brand Assets', 'HR Policies', 'Technical Guides', 'Security Protocols'].map((link) => (
+                  <button key={link} className="w-full text-left p-4 border bg-background hover:border-primary hover:text-primary transition-all text-sm font-bold flex items-center justify-between group">
+                    {link}
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+                  </button>
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
   );
+}
+
+function cn(...inputs: any[]) {
+  return inputs.filter(Boolean).join(' ');
 }

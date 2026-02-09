@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Users, ChevronRight } from 'lucide-react';
+import { BioluminescentGrid, BioluminescentGridItem } from '@learnops/ui';
 
 interface Course {
   id: string;
@@ -72,12 +73,12 @@ export default function DashboardPage() {
           {enrolledCourses.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">My Courses</h2>
-              <div className="grid md:grid-cols-2 gap-6">
+              <BioluminescentGrid>
                 {courses
                   .filter(c => enrolledCourses.includes(c.id))
                   .map((course) => (
-                    <Link key={course.id} href={`/app/courses/${course.id}`}>
-                      <div className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/20 rounded-2xl p-6 hover:border-emerald-400/50 transition cursor-pointer h-full">
+                    <Link key={course.id} href={`/app/courses/${course.id}`} className="block h-full">
+                      <BioluminescentGridItem className="hover:border-emerald-400/50 transition cursor-pointer h-full">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -94,10 +95,10 @@ export default function DashboardPage() {
                           <Users className="w-4 h-4" />
                           {course.enrolledCount} students
                         </div>
-                      </div>
+                      </BioluminescentGridItem>
                     </Link>
                   ))}
-              </div>
+              </BioluminescentGrid>
             </div>
           )}
 
@@ -109,11 +110,11 @@ export default function DashboardPage() {
                 <p className="text-gray-600 dark:text-gray-400">No courses available</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-6">
+              <BioluminescentGrid>
                 {courses.map((course) => (
-                  <div
+                  <BioluminescentGridItem
                     key={course.id}
-                    className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-white/20 rounded-2xl p-6 hover:border-emerald-400/50 transition"
+                    className="hover:border-emerald-400/50 transition"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -146,9 +147,9 @@ export default function DashboardPage() {
                         </button>
                       )}
                     </div>
-                  </div>
+                  </BioluminescentGridItem>
                 ))}
-              </div>
+              </BioluminescentGrid>
             )}
           </div>
         </>

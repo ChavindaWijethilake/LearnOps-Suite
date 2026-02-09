@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    transpilePackages: ['@learnops/ui', '@learnops/db'],
+};
 
 export default nextConfig;

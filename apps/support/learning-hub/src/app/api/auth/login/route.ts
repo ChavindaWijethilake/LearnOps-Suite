@@ -1,4 +1,4 @@
-import { prisma } from '@edu/db';
+import { prisma } from '@learnops/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';

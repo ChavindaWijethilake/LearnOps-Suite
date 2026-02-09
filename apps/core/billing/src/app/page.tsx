@@ -15,6 +15,16 @@ import {
   Activity
 } from 'lucide-react';
 
+const revenueData = [
+  { name: 'Jan', value: 65 },
+  { name: 'Feb', value: 48 },
+  { name: 'Mar', value: 35 },
+  { name: 'Apr', value: 52 },
+  { name: 'May', value: 30 },
+  { name: 'Jun', value: 42 },
+  { name: 'Jul', value: 68 },
+];
+
 const stats = [
   {
     label: 'Total Revenue',
@@ -63,159 +73,163 @@ const recentInvoices = [
 
 export default function BillingDashboard() {
   return (
-    <div className="space-y-16 animate-fade-in pb-20">
-      {/* Premium Hero Section */}
-      <header className="relative overflow-hidden rounded-none bg-slate-950 p-12 md:p-16 text-white shadow-2xl shadow-slate-950/40">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)]" />
-        <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-        <div className="absolute -top-48 -right-48 w-96 h-96 bg-emerald-600/20 rounded-none blur-[120px] animate-pulse" />
-
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="space-y-8 max-w-2xl text-center md:text-left">
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-xl rounded-none border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 animate-slide-up">
-              <Zap className="w-4 h-4" />
-              Financial Nexus v4.2 • Real-time Auditing Active
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.9] animate-slide-up [animation-delay:100ms]">
-                Financial <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Intelligence</span>
-              </h1>
-              <p className="text-lg text-slate-400 font-medium leading-relaxed animate-slide-up [animation-delay:200ms]">
-                Orchestrate your enterprise revenue streams with precision. Real-time invoice tracking, automated disbursements, and predictive financial insights.
-              </p>
-            </div>
-          </div>
-
-          <button className="group relative flex items-center gap-4 px-10 py-6 bg-emerald-500 text-white rounded-none font-black uppercase tracking-widest text-xs hover:bg-emerald-400 transition-all shadow-2xl shadow-emerald-500/20 active:scale-95 animate-slide-up [animation-delay:300ms]">
-            <Plus className="w-6 h-6" />
-            Create New Invoice
-            <div className="absolute inset-0 rounded-none bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
+    <div className="space-y-8 animate-fade-in pb-10">
+      {/* Page Header */}
+      <div className="px-8 pt-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-black tracking-tight mb-2 text-slate-900">Financial Engine</h1>
+          <p className="text-slate-500 font-medium">Real-time revenue orchestration.</p>
         </div>
-      </header>
+        <button className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)]">
+          <Plus className="h-4 w-4" />
+          New Invoice
+        </button>
+      </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {stats.map((stat, index) => (
-          <div
-            key={stat.label}
-            className="glass-card rounded-none p-8 group animate-slide-up border-slate-100/50"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            <div className="flex justify-between items-start mb-8">
-              <div className={cn("p-4 rounded-none shadow-lg transition-all group-hover:rotate-3", stat.bgColor, stat.color)}>
+      <div className="px-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {stats.map((stat) => (
+          <div key={stat.label} className="bg-white border-industrial p-8 space-y-3 shadow-industrial hover:shadow-industrial-hover hover:-translate-y-1 transition-all duration-300">
+            <div className="flex justify-between items-start">
+              <span className="text-[10px] font-black uppercase text-slate-400 tracking-[0.2em]">{stat.label}</span>
+              <div className={cn("h-10 w-10 flex items-center justify-center border-2 border-slate-900 bg-slate-50", stat.color)}>
                 {stat.icon}
               </div>
-              <div className={cn(
-                "flex items-center gap-1.5 px-3 py-1 rounded-none text-[10px] font-black uppercase tracking-widest",
-                stat.trendingUp ? "bg-emerald-50 text-emerald-600" : "bg-rose-50 text-rose-600"
-              )}>
-                {stat.trendingUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                {stat.change}
-              </div>
             </div>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">{stat.label}</p>
-            <p className="text-4xl font-black text-slate-900 tracking-tighter">{stat.value}</p>
+            <div className="text-3xl font-black tracking-tighter">{stat.value}</div>
+            <div className={cn(
+              "flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider",
+              stat.trendingUp ? "text-emerald-600" : "text-rose-600"
+            )}>
+              {stat.trendingUp ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
+              {stat.change}
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Recent Invoices Table */}
-        <div className="lg:col-span-8 glass-card rounded-none border-slate-100/50 overflow-hidden animate-slide-up [animation-delay:400ms]">
-          <div className="px-10 py-8 border-b border-slate-50 flex justify-between items-center bg-slate-50/30">
-            <div className="flex items-center gap-4">
-              <div className="p-2 bg-slate-900 rounded-none text-white">
-                <Activity className="w-5 h-5" />
-              </div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Recent Transactions</h2>
+      <div className="px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Main Content Area */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* Revenue Chart */}
+          <div className="bg-card border p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold">Revenue Trends</h3>
+              <select className="bg-background border text-xs p-1">
+                <option>This Year</option>
+                <option>Last Year</option>
+              </select>
             </div>
-            <button className="group flex items-center gap-2 px-6 py-3 text-xs font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 rounded-none hover:bg-emerald-100 transition-all">
-              Full Ledger <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50/50">
-                  <th className="px-10 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Identifier</th>
-                  <th className="px-10 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Entity</th>
-                  <th className="px-10 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Volume</th>
-                  <th className="px-10 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
-                  <th className="px-10 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Timestamp</th>
-                  <th className="px-10 py-5"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {recentInvoices.map((invoice) => (
-                  <tr key={invoice.id} className="hover:bg-slate-50/50 transition-colors group">
-                    <td className="px-10 py-6 text-sm font-black text-slate-900">{invoice.id}</td>
-                    <td className="px-10 py-6 text-sm font-bold text-slate-600">{invoice.customer}</td>
-                    <td className="px-10 py-6 text-sm font-black text-slate-900">{invoice.amount}</td>
-                    <td className="px-10 py-6">
-                      <span className={cn(
-                        "status-badge",
-                        invoice.status === 'Paid' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                          invoice.status === 'Pending' ? 'bg-blue-50 text-blue-600 border-blue-100' :
-                            'bg-rose-50 text-rose-600 border-rose-100'
-                      )}>
-                        {invoice.status}
-                      </span>
-                    </td>
-                    <td className="px-10 py-6 text-sm font-bold text-slate-400">{invoice.date}</td>
-                    <td className="px-10 py-6 text-right">
-                      <button className="p-3 hover:bg-white hover:shadow-lg rounded-none transition-all text-slate-400 hover:text-slate-900 border border-transparent hover:border-slate-100">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </button>
-                    </td>
-                  </tr>
+            <div className="h-[300px] w-full">
+              <div className="flex items-end justify-between h-full gap-3 px-4">
+                {revenueData.map((item, index) => (
+                  <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                    <div className="w-full bg-gradient-to-t from-emerald-500 to-emerald-400 hover:from-emerald-600 hover:to-emerald-500 transition-all duration-300 rounded-t-sm"
+                      style={{ height: `${item.value}%` }}
+                      title={`${item.name}: ${item.value}%`}
+                    />
+                    <span className="text-xs text-muted-foreground font-medium">{item.name}</span>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Transactions Table */}
+          <div className="bg-white border-industrial shadow-industrial">
+            <div className="px-8 py-6 border-b-2 border-slate-900 flex justify-between items-center bg-slate-50">
+              <h3 className="text-lg font-black uppercase tracking-widest flex items-center gap-3">
+                <Activity className="h-5 w-5 text-emerald-600" />
+                Ledger: Recent Activity
+              </h3>
+              <button className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">
+                Extract All Data →
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                  <tr>
+                    <th className="px-8 py-4">Serial ID</th>
+                    <th className="px-8 py-4">Client</th>
+                    <th className="px-8 py-4">Volume</th>
+                    <th className="px-8 py-4">Status</th>
+                    <th className="px-8 py-4">Timestamp</th>
+                    <th className="px-8 py-4"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y-2 divide-slate-100">
+                  {recentInvoices.map((invoice) => (
+                    <tr key={invoice.id} className="hover:bg-slate-50 transition-all duration-300 group">
+                      <td className="px-8 py-6 text-xs font-black text-slate-900 uppercase tracking-wider">{invoice.id}</td>
+                      <td className="px-8 py-6 text-xs font-bold text-slate-600">{invoice.customer}</td>
+                      <td className="px-8 py-6 text-sm font-black text-slate-900">{invoice.amount}</td>
+                      <td className="px-8 py-6">
+                        <span className={cn(
+                          "px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] border-2",
+                          invoice.status === 'Paid' ? 'bg-emerald-50 text-emerald-700 border-emerald-500/20' :
+                            invoice.status === 'Pending' ? 'bg-blue-50 text-blue-700 border-blue-500/20' :
+                              'bg-rose-50 text-rose-700 border-rose-500/20'
+                        )}>
+                          {invoice.status}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{invoice.date}</td>
+                      <td className="px-8 py-6 text-right">
+                        <button className="p-2 border-2 border-transparent hover:border-slate-900 hover:bg-white transition-all">
+                          <MoreHorizontal className="h-4 w-4 text-slate-400 group-hover:text-slate-900" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         {/* Intelligence Sidebar */}
         <div className="lg:col-span-4 space-y-10">
-          <div className="glass-card rounded-none p-10 animate-slide-up [animation-delay:600ms] border-slate-100/50">
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-10 flex items-center gap-4">
-              <TrendingUp className="w-6 h-6 text-emerald-600" />
-              Performance
-            </h2>
-            <div className="space-y-10">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Collection Velocity</span>
-                  <span className="text-sm font-black text-slate-900">94%</span>
+          <div className="bg-white border-industrial p-8 shadow-industrial">
+            <h3 className="text-sm font-black uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+              <TrendingUp className="w-5 h-5 text-emerald-600" />
+              Efficiency Metrics
+            </h3>
+            <div className="space-y-8">
+              <div className="space-y-3">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span className="text-slate-400">Collection Velocity</span>
+                  <span className="text-slate-900">94.8%</span>
                 </div>
-                <div className="h-2 w-full bg-slate-100 rounded-none overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-none w-[94%] shadow-lg shadow-emerald-500/20" />
+                <div className="h-3 w-full bg-slate-100 border border-slate-200">
+                  <div className="h-full bg-slate-900 w-[94%] transition-all duration-1000 shadow-[2px_0_0_0_rgba(16,185,129,1)]" />
                 </div>
               </div>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Settlement Latency</span>
-                  <span className="text-sm font-black text-slate-900">4.2 Days</span>
+              <div className="space-y-3">
+                <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                  <span className="text-slate-400">Settlement Delta</span>
+                  <span className="text-slate-900">4.2 Days</span>
                 </div>
-                <div className="h-2 w-full bg-slate-100 rounded-none overflow-hidden">
-                  <div className="bg-blue-500 h-full rounded-none w-[60%] shadow-lg shadow-blue-500/20" />
+                <div className="h-3 w-full bg-slate-100 border border-slate-200">
+                  <div className="h-full bg-indigo-600 w-[60%] transition-all duration-1000 shadow-[2px_0_0_0_rgba(99,102,241,1)]" />
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="mt-12 p-8 bg-slate-900 rounded-none text-white shadow-2xl shadow-slate-900/40 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform">
-                <Shield className="w-16 h-16" />
+          <div className="bg-slate-950 text-white p-10 shadow-industrial border-2 border-slate-800 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full translate-x-16 -translate-y-16 blur-2xl group-hover:bg-teal-500/20 transition-all duration-700" />
+            <div className="flex items-center gap-5 mb-8 relative z-10">
+              <div className="h-14 w-14 bg-teal-500/20 flex items-center justify-center border-2 border-teal-500/50">
+                <Shield className="h-7 w-7 text-teal-400" />
               </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-4 text-emerald-400">Optimization Engine</p>
-              <p className="text-base font-bold leading-relaxed relative z-10">
-                Automate your recurring revenue cycles to reduce operational overhead by <span className="text-emerald-400 font-black">24%</span>.
-              </p>
-              <button className="mt-8 w-full py-4 bg-white text-slate-900 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-emerald-50 transition-all active:scale-95 relative z-10">
-                Initialize Automation
-              </button>
+              <div>
+                <h3 className="font-black text-xs uppercase tracking-[0.2em]">Optimization Engine</h3>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight mt-1">Autonomous reconciliation</p>
+              </div>
             </div>
+            <button className="w-full py-4 bg-white text-slate-900 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-teal-400 transition-all duration-300 shadow-lg relative z-10">
+              Engage Protocol
+            </button>
           </div>
         </div>
       </div>

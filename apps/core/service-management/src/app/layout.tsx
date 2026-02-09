@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navbar, Sidebar, Footer } from '@learnops/ui';
+import { SharedLayout } from '@learnops/ui';
 import {
   LayoutDashboard,
   LifeBuoy,
   GitBranch,
   BarChart3,
-  Settings,
-  ShieldCheck
+  Settings
 } from 'lucide-react';
 import './globals.css';
 
@@ -33,19 +32,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-app="service-management">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50/50`}>
-        <Navbar
+      <body className={`${inter.className} min-h-screen bg-slate-50 text-slate-900`}>
+        <SharedLayout
           appName="Service Management"
-          appLogo={<ShieldCheck className="w-6 h-6 text-white" />}
-          userEmail="admin@learnops.local"
-        />
-        <div className="flex-1 flex max-w-[1600px] mx-auto w-full">
-          <Sidebar items={navItems} />
-          <main className="flex-1 p-8">
-            {children}
-          </main>
-        </div>
-        <Footer />
+          navItems={navItems}
+        >
+          {children}
+        </SharedLayout>
       </body>
     </html>
   );

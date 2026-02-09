@@ -1,3 +1,4 @@
 {
+  "/status/page": "app/status/page.js",
   "/page": "app/page.js"
 }

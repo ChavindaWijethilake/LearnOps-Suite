@@ -1,6 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navbar, Footer } from '@learnops/ui';
+import { SharedLayout } from '@learnops/ui';
+import {
+  LayoutDashboard,
+  User,
+  Settings,
+  Shield,
+  Activity,
+  History
+} from 'lucide-react';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -13,6 +21,15 @@ export const metadata: Metadata = {
   },
 };
 
+const navItems = [
+  { href: '/', label: 'Command Center', icon: <LayoutDashboard className="w-4 h-4" /> },
+  { href: '/profile', label: 'Admin Profile', icon: <User className="w-4 h-4" /> },
+  { href: '/settings', label: 'System Settings', icon: <Settings className="w-4 h-4" /> },
+  { href: '/audit-logs', label: 'Operational Logs', icon: <History className="w-4 h-4" /> },
+  { href: '/security', label: 'Security Matrix', icon: <Shield className="w-4 h-4" /> },
+  { href: '/status', label: 'System Status', icon: <Activity className="w-4 h-4" /> },
+];
+
 export default function RootLayout({
   children,
 }: {
@@ -20,16 +37,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-app="portal">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50/50`}>
-        <Navbar
+      <body className={`${inter.className} min-h-screen bg-slate-50`}>
+        <SharedLayout
           appName="LearnOps Portal"
-          showBackToPortal={false}
-          userEmail="admin@learnops.local"
-        />
-        <main className="flex-1 max-w-[1600px] mx-auto w-full px-4 py-8">
+          navItems={navItems}
+        >
           {children}
-        </main>
-        <Footer />
+        </SharedLayout>
       </body>
     </html>
   );

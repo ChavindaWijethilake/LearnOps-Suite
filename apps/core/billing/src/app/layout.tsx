@@ -1,17 +1,15 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navbar, Sidebar, Footer } from '@learnops/ui';
+import { SharedLayout } from '@learnops/ui';
 import {
   LayoutDashboard,
   FileText,
   Users,
-  BarChart3,
-  Settings,
-  CreditCard,
-  ArrowRightLeft,
   Wallet,
+  ArrowRightLeft,
+  GraduationCap,
   PieChart,
-  GraduationCap
+  Settings
 } from 'lucide-react';
 import '../styles/globals.css';
 
@@ -40,19 +38,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-app="billing">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50/50 selection:bg-emerald-500/10 selection:text-emerald-600`}>
-        <Navbar
+      <body className={`${inter.className} min-h-screen bg-slate-50`}>
+        <SharedLayout
           appName="Billing Nexus"
-          appLogo={<CreditCard className="w-6 h-6 text-white" />}
-          userEmail="admin@learnops.local"
-        />
-        <div className="flex-1 flex max-w-[1600px] mx-auto w-full">
-          <Sidebar items={navItems} />
-          <main className="flex-1 p-8 md:p-12">
-            {children}
-          </main>
-        </div>
-        <Footer />
+          navItems={navItems}
+        >
+          {children}
+        </SharedLayout>
       </body>
     </html>
   );
