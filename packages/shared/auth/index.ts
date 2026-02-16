@@ -1,7 +1,7 @@
 // LearnOps Suite - Mock Auth System
 "use client";
 
-export type Role = "admin" | "staff" | "viewer";
+export type Role = "admin" | "staff" | "viewer" | "student" | "professor";
 
 export interface User {
     id: string;
@@ -100,7 +100,9 @@ export function hasPermission(requiredRole: Role): boolean {
 
     const roleHierarchy: Record<Role, number> = {
         viewer: 1,
+        student: 1,
         staff: 2,
+        professor: 2,
         admin: 3,
     };
 

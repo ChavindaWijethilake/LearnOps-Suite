@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@learnops/shared": [
+        "../../../packages/shared/index.ts"
       ]
     }
   },

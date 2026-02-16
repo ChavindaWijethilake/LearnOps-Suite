@@ -1,4 +1,8 @@
 {
-  "/status/page": "app/status/page.js",
-  "/page": "app/page.js"
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/portals/page": "app/portals/page.js",
+  "/settings/page": "app/settings/page.js",
+  "/(dashboard)/command-center/feature-flags/page": "app/(dashboard)/command-center/feature-flags/page.js",
+  "/(dashboard)/command-center/security/page": "app/(dashboard)/command-center/security/page.js",
+  "/(dashboard)/command-center/alerts/page": "app/(dashboard)/command-center/alerts/page.js"
 }

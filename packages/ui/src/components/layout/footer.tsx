@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="bg-slate-50 text-slate-900 border-t-2 border-slate-900">
       <div className="max-w-[1440px] mx-auto">
         {/* Main Footer Content */}
-        <div className="px-8 py-20">
+        <div className="px-8 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             {/* Brand Section */}
             <div className="lg:col-span-4 space-y-10">

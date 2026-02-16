@@ -18,11 +18,10 @@ export const metadata: Metadata = {
 };
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" />, active: true },
+  { href: '/', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
   { href: '/reports', label: 'Reports', icon: <BarChart3 className="w-4 h-4" /> },
   { href: '/dashboards', label: 'Dashboards', icon: <PieChart className="w-4 h-4" /> },
   { href: '/insights', label: 'Insights', icon: <TrendingUp className="w-4 h-4" /> },
-  { href: '/settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
 ];
 
 export default function RootLayout({

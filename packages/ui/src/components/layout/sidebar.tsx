@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { cn } from '../../utils/cn';
 
 interface NavItem {
@@ -16,6 +17,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ items, collapsed = false }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <aside
       className={cn(
@@ -31,36 +34,40 @@ export function Sidebar({ items, collapsed = false }: SidebarProps) {
         )}
 
         <nav className="space-y-2">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              title={collapsed ? item.label : undefined}
-              className={cn(
-                'flex items-center px-4 py-3.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group border-2',
-                collapsed ? "justify-center" : "gap-4",
-                item.active
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,0.15)] translate-x-[2px] translate-y-[-2px]'
-                  : 'bg-white/50 border-transparent text-slate-500 hover:bg-slate-200/80 hover:text-slate-900 hover:border-slate-300'
-              )}
-            >
-              {item.icon && (
-                <span className={cn(
-                  "h-4 w-4 transition-all duration-300 shrink-0",
-                  item.active ? "text-emerald-400 scale-110" : "text-slate-400 group-hover:text-slate-900 group-hover:scale-110"
-                )}>
-                  {item.icon}
-                </span>
-              )}
-              {!collapsed && <span className="truncate">{item.label}</span>}
-              {item.active && !collapsed && (
-                <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-emerald-500 animate-pulse" />
-              )}
-              {item.active && collapsed && (
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 animate-pulse" />
-              )}
-            </Link>
-          ))}
+          {items.map((item) => {
+            const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={collapsed ? item.label : undefined}
+                className={cn(
+                  'flex items-center px-4 py-3.5 text-[10px] font-black uppercase tracking-[0.15em] transition-all duration-300 relative group border-2',
+                  collapsed ? "justify-center" : "gap-4",
+                  isActive
+                    ? 'bg-slate-900 text-white border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,0.15)] translate-x-[2px] translate-y-[-2px]'
+                    : 'bg-white/50 border-transparent text-slate-500 hover:bg-slate-200/80 hover:text-slate-900 hover:border-slate-300'
+                )}
+              >
+                {item.icon && (
+                  <span className={cn(
+                    "h-4 w-4 transition-all duration-300 shrink-0",
+                    isActive ? "text-emerald-400 scale-110" : "text-slate-400 group-hover:text-slate-900 group-hover:scale-110"
+                  )}>
+                    {item.icon}
+                  </span>
+                )}
+                {!collapsed && <span className="truncate">{item.label}</span>}
+                {isActive && !collapsed && (
+                  <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-emerald-500 animate-pulse" />
+                )}
+                {isActive && collapsed && (
+                  <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 animate-pulse" />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="mt-auto pt-8 border-t-2 border-slate-200">

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: learnops-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: learnops_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - learnops-network
+
+  portal:
+    build:
+      context: .
+      dockerfile: apps/core/portal/Dockerfile
+    container_name: learnops-portal
+    ports:
+      - "3010:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/learnops_db
+      - NEXTAUTH_SECRET=supersecretkey123
+      - NEXT_PUBLIC_API_URL=http://localhost:3010/api
+    depends_on:
+      - postgres
+    networks:
+      - learnops-network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  learnops-network:
+    driver: bridge

@@ -87,7 +87,10 @@ export function Navbar({
           </div>
 
           <div className="flex items-center bg-white/50 border-2 border-slate-200 shadow-sm">
-            <button className="h-10 w-10 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all relative border-r-2 border-slate-200 group">
+            <button
+              className="h-10 w-10 flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all relative border-r-2 border-slate-200 group"
+              onClick={() => alert("No new notifications")}
+            >
               <Bell className="h-4 w-4 text-slate-500 group-hover:text-white transition-colors" />
               <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 bg-rose-500 rounded-full shadow-[0_0_5px_rgba(244,63,94,0.8)]"></span>
             </button>
