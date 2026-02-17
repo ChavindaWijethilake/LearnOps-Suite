@@ -17,3 +17,51 @@ node_modules/
 **/node_modules/
 venv/
 **/venv/
+# Lock files (optional, commit if needed for monorepo)
+# pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+
+# Next.js build output
+.next/
+**/.next/
+out/
+**/out/
+
+# Generated / local
+next-env.d.ts
+**/next-env.d.ts
+node_modules/
+**/node_modules/
+*.log
+**/*.log
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Environment files
+.env*
+!.env.example
+
+.DS_Store
+.next/
+**/.next/
+out/
+**/out/
+node_modules/
+**/node_modules/
+*.log
+**/*.log
+*.tsbuildinfo
+**/*.tsbuildinfo
+.env*
+!.env.example
+
+# Next.js build output
+.next/
+**/.next/
+out/
+**/out/
+
+git add -A
+# or, only stage deletions:
+# git add -u
