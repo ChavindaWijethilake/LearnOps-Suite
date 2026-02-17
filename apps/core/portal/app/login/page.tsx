@@ -1,4 +1,5 @@
 import { LoginForm } from '@/components/auth/login-form';
+import Link from 'next/link';
 
 export default function LoginPage() {
     return (
@@ -18,7 +19,7 @@ export default function LoginPage() {
                         </div>
                     </div>
                     <div className="text-sm text-gray-600">
-                        Need help? <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Contact Support</a>
+                        Need help? <Link href="/support/request" className="text-blue-600 hover:text-blue-700 font-medium">Contact Support</Link>
                     </div>
                 </div>
             </header>

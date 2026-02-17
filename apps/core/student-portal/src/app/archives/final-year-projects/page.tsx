@@ -1,3 +1,5 @@
+'use client';
+
 import ResourceListPage from '../../components/resource-list-page';
 import { GraduationCap } from 'lucide-react';
 

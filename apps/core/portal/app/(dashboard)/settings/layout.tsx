@@ -13,7 +13,8 @@ import {
     Undo2,
     Home,
     RotateCcw,
-    AlertTriangle
+    AlertTriangle,
+    Settings
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -31,6 +32,7 @@ import {
 
 const settingsNav = [
     { href: '/settings/profile', label: 'Profile Information', icon: User, desc: 'Personal details & identity' },
+    { href: '/settings/preferences', label: 'General Preferences', icon: Settings, desc: 'Interface, theme & regional' },
     { href: '/settings/notifications', label: 'Notifications', icon: Bell, desc: 'Alert preferences & routing' },
     { href: '/settings/security', label: 'Security & Privacy', icon: Shield, desc: 'Auth, sessions & 2FA' },
     { href: '/settings/performance', label: 'Performance', icon: Zap, desc: 'Sync & cache optimization' },
