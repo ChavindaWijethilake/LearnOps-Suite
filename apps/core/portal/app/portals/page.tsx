@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import {
     LayoutDashboard,
     GraduationCap,
@@ -45,7 +46,7 @@ const initialModules = [
         icon: GraduationCap,
         color: 'from-emerald-500 to-emerald-600',
         meta: 'Active • Last accessed today',
-        roles: ['student', 'professor', 'admin']
+        roles: ['student', 'professor', 'admin', 'super-admin']
     },
     {
         id: 'professor',
@@ -55,7 +56,7 @@ const initialModules = [
         icon: User,
         color: 'from-blue-500 to-blue-600',
         meta: 'Faculty Access',
-        roles: ['professor', 'admin']
+        roles: ['professor', 'admin', 'super-admin']
     },
     {
         id: 'admin',
@@ -65,7 +66,7 @@ const initialModules = [
         icon: Shield,
         color: 'from-slate-500 to-slate-600',
         meta: 'Restricted Access',
-        roles: ['admin']
+        roles: ['admin', 'super-admin']
     },
     {
         id: 'it-service',
@@ -75,7 +76,7 @@ const initialModules = [
         icon: Headphones,
         color: 'from-blue-500 to-blue-600',
         meta: 'No open tickets',
-        roles: ['student', 'professor', 'admin']
+        roles: ['student', 'professor', 'admin', 'super-admin']
     },
     {
         id: 'billing',
@@ -85,7 +86,7 @@ const initialModules = [
         icon: CreditCard,
         color: 'from-violet-500 to-violet-600',
         meta: 'Next due: Mar 01',
-        roles: ['student', 'admin']
+        roles: ['student', 'admin', 'super-admin']
     },
     {
         id: 'account',
@@ -95,7 +96,17 @@ const initialModules = [
         icon: Settings,
         color: 'from-slate-500 to-slate-600',
         meta: 'Profile 100% complete',
-        roles: ['student', 'professor', 'admin']
+        roles: ['student', 'professor', 'admin', 'super-admin']
+    },
+    {
+        id: 'support-request',
+        title: 'Support Request',
+        desc: 'Direct line to technical and academic support units',
+        href: '/support/request',
+        icon: Headphones,
+        color: 'from-blue-600 to-indigo-600',
+        meta: 'Resolution target: 4hrs',
+        roles: ['student', 'professor', 'admin', 'super-admin']
     }
 ];
 
@@ -252,8 +263,16 @@ export default function PortalDashboard() {
                             {isSidebarCollapsed ? 'SYS' : 'System'}
                         </div>
                         <NavItem
+                            icon={Headphones}
+                            label="Support"
+                            href="/support/request"
+                            collapsed={isSidebarCollapsed}
+                            onClick={() => addActivity('Support Portal', 'Accessed support request system', 'info')}
+                        />
+                        <NavItem
                             icon={Settings}
                             label="Preferences"
+                            href="/settings/preferences"
                             collapsed={isSidebarCollapsed}
                             onClick={() => addActivity('System Preferences', 'Accessed settings panel', 'neutral')}
                         />
@@ -289,77 +308,87 @@ export default function PortalDashboard() {
                 <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
                 {/* 2. Top Navigation Bar */}
-                <header className="h-20 px-8 flex items-center justify-between sticky top-0 z-40 bg-[#0F172A]/80 backdrop-blur-xl border-b border-slate-800/50 shrink-0">
-                    <h1 className="text-xl font-bold text-slate-100 tracking-tight">Portal Command Center</h1>
+                <header className="h-32 flex flex-col sticky top-0 z-40 bg-[#0F172A]/80 backdrop-blur-xl border-b border-slate-800/50 shrink-0">
+                    <div className="bg-red-600/20 border-b border-red-500/50 text-red-500 text-[10px] font-black uppercase tracking-[0.25em] py-2 text-center animate-pulse">
+                        System Update Pending: Support Protocol V3 Online
+                    </div>
+                    <div className="flex-1 px-8 flex items-center justify-between">
+                        <h1 className="text-xl font-bold text-slate-100 tracking-tight">Portal Command Center</h1>
 
-                    <div className="flex items-center gap-6">
-                        {/* Global Search */}
-                        <div className="relative group hidden md:block">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
-                            <input
-                                type="text"
-                                placeholder="Search everything..."
-                                className="w-80 bg-slate-900/50 border border-slate-700 rounded-full py-2 pl-10 pr-4 text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all placeholder:text-slate-500"
-                            />
-                        </div>
+                        <div className="flex items-center gap-6">
+                            {/* Global Search */}
+                            <div className="relative group hidden md:block">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="Search everything..."
+                                    className="w-80 bg-slate-900/50 border border-slate-700 rounded-full py-2 pl-10 pr-4 text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all placeholder:text-slate-500"
+                                />
+                            </div>
 
-                        {/* Actions */}
-                        <div className="flex items-center gap-2 relative">
-                            <IconButton
-                                icon={Bell}
-                                active={showNotifications}
-                                onClick={toggleNotifications}
-                                badge="3"
-                            />
-                            <IconButton
-                                icon={MessageSquare}
-                                active={showChat}
-                                onClick={toggleChat}
-                            />
-                            <div className="w-px h-6 bg-slate-800 mx-2" />
-                            <button
-                                onClick={() => logout()}
-                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                <span className="hidden md:inline">Sign Out</span>
-                            </button>
+                            {/* Actions */}
+                            <div className="flex items-center gap-2 relative">
+                                <IconButton
+                                    icon={Bell}
+                                    active={showNotifications}
+                                    onClick={toggleNotifications}
+                                    badge="3"
+                                />
+                                <IconButton
+                                    icon={MessageSquare}
+                                    active={showChat}
+                                    onClick={toggleChat}
+                                />
+                                <Link href="/support/request">
+                                    <IconButton
+                                        icon={Headphones}
+                                    />
+                                </Link>
+                                <div className="w-px h-6 bg-slate-800 mx-2" />
+                                <button
+                                    onClick={() => logout()}
+                                    className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    <span className="hidden md:inline">Sign Out</span>
+                                </button>
 
-                            {/* Notifications Panel */}
-                            {showNotifications && (
-                                <div className="absolute top-14 right-0 w-80 bg-slate-900 border border-slate-700 shadow-2xl rounded-2xl p-4 z-50 animate-in slide-in-from-top-2 fade-in duration-200">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="font-bold text-white">Notifications</h3>
-                                        <button onClick={() => setShowNotifications(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
-                                    </div>
-                                    <div className="space-y-3">
-                                        {recentActivity.map(item => (
-                                            <div key={item.id} className="p-3 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:bg-slate-800 transition-colors cursor-pointer">
-                                                <div className="flex justify-between items-start">
-                                                    <span className="text-sm font-semibold text-slate-200">{item.title}</span>
-                                                    <span className="text-[10px] text-slate-500">{item.time}</span>
+                                {/* Notifications Panel */}
+                                {showNotifications && (
+                                    <div className="absolute top-14 right-0 w-80 bg-slate-900 border border-slate-700 shadow-2xl rounded-2xl p-4 z-50 animate-in slide-in-from-top-2 fade-in duration-200">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="font-bold text-white">Notifications</h3>
+                                            <button onClick={() => setShowNotifications(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+                                        </div>
+                                        <div className="space-y-3">
+                                            {recentActivity.map(item => (
+                                                <div key={item.id} className="p-3 bg-slate-800/50 rounded-xl border border-slate-700/50 hover:bg-slate-800 transition-colors cursor-pointer">
+                                                    <div className="flex justify-between items-start">
+                                                        <span className="text-sm font-semibold text-slate-200">{item.title}</span>
+                                                        <span className="text-[10px] text-slate-500">{item.time}</span>
+                                                    </div>
+                                                    <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
                                                 </div>
-                                                <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
+                                        <button className="w-full mt-4 py-2 text-xs font-bold text-center text-emerald-400 hover:text-emerald-300">View All Notifications</button>
                                     </div>
-                                    <button className="w-full mt-4 py-2 text-xs font-bold text-center text-emerald-400 hover:text-emerald-300">View All Notifications</button>
-                                </div>
-                            )}
+                                )}
 
-                            {/* Chat Panel */}
-                            {showChat && (
-                                <div className="absolute top-14 right-12 w-80 bg-slate-900 border border-slate-700 shadow-2xl rounded-2xl p-4 z-50 animate-in slide-in-from-top-2 fade-in duration-200">
-                                    <div className="flex justify-between items-center mb-4">
-                                        <h3 className="font-bold text-white">Messages</h3>
-                                        <button onClick={() => setShowChat(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+                                {/* Chat Panel */}
+                                {showChat && (
+                                    <div className="absolute top-14 right-12 w-80 bg-slate-900 border border-slate-700 shadow-2xl rounded-2xl p-4 z-50 animate-in slide-in-from-top-2 fade-in duration-200">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="font-bold text-white">Messages</h3>
+                                            <button onClick={() => setShowChat(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+                                        </div>
+                                        <div className="h-48 flex items-center justify-center text-slate-500 text-sm italic">
+                                            No new messages
+                                        </div>
+                                        <button className="w-full mt-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-500">Start New Chat</button>
                                     </div>
-                                    <div className="h-48 flex items-center justify-center text-slate-500 text-sm italic">
-                                        No new messages
-                                    </div>
-                                    <button className="w-full mt-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-500">Start New Chat</button>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -568,9 +597,11 @@ export default function PortalDashboard() {
                                 </div>
                                 <h4 className="font-bold text-white mb-1">Need Help?</h4>
                                 <p className="text-blue-100 text-sm mb-4">Our support team is online.</p>
-                                <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-bold transition-colors">
-                                    Contact Support
-                                </button>
+                                <Link href="/contact" className="block w-full">
+                                    <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-bold transition-colors">
+                                        Contact Support
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -585,6 +616,7 @@ export default function PortalDashboard() {
 function NavItem({
     icon: Icon,
     label,
+    href = "#",
     active,
     badge,
     collapsed,
@@ -592,6 +624,7 @@ function NavItem({
 }: {
     icon: any,
     label: string,
+    href?: string,
     active?: boolean,
     badge?: string,
     collapsed?: boolean,
@@ -599,7 +632,7 @@ function NavItem({
 }) {
     return (
         <a
-            href="#"
+            href={href}
             onClick={onClick}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all group relative ${active
                 ? 'text-emerald-400 bg-emerald-500/10'

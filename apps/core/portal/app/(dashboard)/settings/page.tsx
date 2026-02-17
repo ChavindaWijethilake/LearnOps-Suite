@@ -8,12 +8,14 @@ import {
     Shield,
     Zap,
     ChevronRight,
-    ArrowRight
+    ArrowRight,
+    Settings
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const settingsCategories = [
     { href: '/settings/profile', label: 'Profile Information', icon: User, desc: 'Manage your personal identity, organization details, and operator avatar.', color: 'text-blue-400', border: 'border-blue-500/20', bg: 'bg-blue-500/5' },
+    { href: '/settings/preferences', label: 'General Preferences', icon: Settings, desc: 'Tailor your operational environment with interface, accessibility, and regional settings.', color: 'text-amber-400', border: 'border-amber-500/20', bg: 'bg-amber-500/5' },
     { href: '/settings/notifications', label: 'Notifications', icon: Bell, desc: 'Configure how and when you receive critical system alerts and status updates.', color: 'text-emerald-400', border: 'border-emerald-500/20', bg: 'bg-emerald-500/5' },
     { href: '/settings/security', label: 'Security & Privacy', icon: Shield, desc: 'Enforce multi-factor authentication, manage active sessions, and update credentials.', color: 'text-indigo-400', border: 'border-indigo-500/20', bg: 'bg-indigo-500/5' },
     { href: '/settings/performance', label: 'Performance', icon: Zap, desc: 'Optimize interface refresh rates, hardware acceleration, and local data caching.', color: 'text-violet-400', border: 'border-violet-500/20', bg: 'bg-violet-500/5' },

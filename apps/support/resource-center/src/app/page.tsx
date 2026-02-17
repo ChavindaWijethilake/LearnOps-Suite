@@ -49,10 +49,10 @@ import {
 
 /* ─── Mock Data ─── */
 const categories = [
-  { id: 1, name: 'Engineering Documentation', count: 142, icon: Cpu, desc: 'API specifications, system architecture, and technical guidelines.', gradient: 'from-blue-600/20 to-indigo-600/20' },
-  { id: 2, name: 'Design Language System', count: 85, icon: Layers, desc: 'Brand assets, typography tokens, and component library.', gradient: 'from-purple-600/20 to-rose-600/20' },
-  { id: 3, name: 'Human Operations', count: 64, icon: User, desc: 'Employee onboarding, internal policies, and benefits guide.', gradient: 'from-orange-600/20 to-amber-600/20' },
-  { id: 4, name: 'Growth & Marketing', count: 110, icon: TrendingUp, desc: 'Campaign assets, social kits, and brand vision boards.', gradient: 'from-emerald-600/20 to-teal-600/20' },
+  { id: 1, name: 'STEM Research & Labs', count: 142, icon: FlaskConical, desc: 'Experimental findings, lab protocols, and advanced STEM documentation.', gradient: 'from-blue-600/20 to-indigo-600/20' },
+  { id: 2, name: 'Arts & Humanities Archive', count: 85, icon: Layers, desc: 'Digital humanities projects, artistic assets, and cultural repositories.', gradient: 'from-purple-600/20 to-rose-600/20' },
+  { id: 3, name: 'Campus Life & Governance', count: 64, icon: User, desc: 'Student organization guides, campus policies, and community resources.', gradient: 'from-orange-600/20 to-amber-600/20' },
+  { id: 4, name: 'Global Academic Relations', count: 110, icon: TrendingUp, desc: 'International exchange programs, global research partnerships, and alumni networks.', gradient: 'from-emerald-600/20 to-teal-600/20' },
 ];
 
 const quickLinks = [
@@ -73,6 +73,7 @@ export default function ResourceCommandCenter() {
   const [showSettings, setShowSettings] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [lastSynced] = useState(new Date().toLocaleTimeString());
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div
@@ -89,10 +90,10 @@ export default function ResourceCommandCenter() {
       </div>
 
       {/* ═══════════════════════════════════════════
-          1. SIDEBAR
+          1. SIDEBAR (Restored)
       ═══════════════════════════════════════════ */}
       <aside
-        className="w-[280px] h-screen fixed left-0 top-0 flex flex-col z-50"
+        className={`fixed left-0 top-0 h-screen transition-all duration-300 z-50 flex flex-col ${sidebarOpen ? 'w-[280px]' : 'w-0 md:w-[280px]'} overflow-hidden md:overflow-visible`}
         style={{
           background: 'rgba(15,23,42,0.50)',
           backdropFilter: 'blur(40px)',
@@ -101,6 +102,13 @@ export default function ResourceCommandCenter() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
         }}
       >
+        {/* Mobile shadow overlay */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/60 md:hidden z-[-1]"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
         {/* Brand */}
         <div className="h-24 flex items-center px-8 gap-4">
           <div
@@ -121,85 +129,40 @@ export default function ResourceCommandCenter() {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white tracking-tight leading-none">LearnOps</h1>
-            <p className="text-[10px] text-emerald-500 font-black uppercase tracking-[0.2em] mt-1.5 opacity-80">Resource HQ</p>
+            <p className="text-[10px] text-emerald-500 font-black uppercase tracking-[0.2em] mt-1.5 opacity-80">Resource Hub</p>
           </div>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-5 py-10 space-y-2">
-          {/* Main Nav */}
-          <NavLabel>Main</NavLabel>
+        <nav className="flex-1 px-5 py-6 space-y-2 overflow-y-auto">
+          {/* Search Hub */}
+          <NavLabel>Search Hub</NavLabel>
           {[
-            { icon: LayoutDashboard, label: 'Dashboard', id: 'Dashboard', href: '/' },
-            { icon: Library, label: 'Resource Center', id: 'Resource Center', href: '/' },
             { icon: Search, label: 'Advanced Search', id: 'Search', href: '/search' },
           ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
 
-          {/* Resource Types */}
-          <NavLabel>Resource Types</NavLabel>
-          {[
-            { icon: FileText, label: 'Text Resources', id: 'Text', href: '/resources/text' },
-            { icon: Video, label: 'Video Resources', id: 'Video', href: '/resources/video' },
-            { icon: Mic, label: 'Audio Resources', id: 'Audio', href: '/resources/audio' },
-            { icon: Presentation, label: 'Presentations', id: 'Slides', href: '/resources/presentations' },
-            { icon: Download, label: 'Downloads', id: 'Downloads', href: '/resources/downloads' },
-          ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
-
-          {/* Academic Archives */}
-          <NavLabel>Archives</NavLabel>
-          {[
-            { icon: ClipboardList, label: 'Past Papers', id: 'PastPapers', href: '/archives/past-papers' },
-            { icon: BookOpen, label: 'Past Coursework', id: 'PastCoursework', href: '/archives/past-coursework' },
-            { icon: FolderOpen, label: 'Sample Projects', id: 'SampleProjects', href: '/archives/sample-projects' },
-            { icon: GraduationCap, label: 'FYP Archive', id: 'FYP', href: '/archives/final-year-projects' },
-          ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
-
-          {/* Projects */}
-          <NavLabel>Projects</NavLabel>
-          {[
-            { icon: User, label: 'Student Projects', id: 'StudentProjects', href: '/projects/student' },
-            { icon: Award, label: 'Capstone Projects', id: 'Capstone', href: '/projects/capstone' },
-            { icon: Microscope, label: 'Research', id: 'Research', href: '/projects/research' },
-            { icon: Github, label: 'Open Source', id: 'OpenSource', href: '/projects/open-source' },
-          ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
-
           {/* Personalized */}
-          <NavLabel>Personal</NavLabel>
+          <NavLabel>Personalized</NavLabel>
           {[
-            { icon: Bookmark, label: 'Saved', id: 'Saved', href: '/saved' },
-            { icon: Clock, label: 'Recent', id: 'Recent', href: '/recent' },
+            { icon: Bookmark, label: 'Saved Resources', id: 'Saved', href: '/saved' },
+            { icon: Clock, label: 'Recently Accessed', id: 'Recent', href: '/recent' },
             { icon: Sparkles, label: 'Recommended', id: 'Recommended', href: '/recommended' },
-            { icon: Upload, label: 'Submit', id: 'Submit', href: '/submit' },
+            { icon: Upload, label: 'Submit Material', id: 'Submit', href: '/submit' },
           ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
         </nav>
 
-        {/* Status pill */}
-        <div className="p-8">
-          <div
-            className="px-6 py-4 flex items-center justify-between"
-            style={{
-              borderRadius: '18px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.10)',
-            }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inset-0 rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" style={{ boxShadow: '0 0 10px rgba(16,185,129,0.9)' }} />
-              </span>
-              <span className="text-xs font-bold text-white tracking-wide">Active</span>
-            </div>
-            <div className="h-4 w-px" style={{ background: 'rgba(255,255,255,0.10)' }} />
-            <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Stable 100%</span>
-          </div>
+        {/* Sidebar Footer: Settings */}
+        <div className="p-8 mt-auto border-t border-white/5">
+          {[
+            { icon: Settings, label: 'Settings', id: 'Settings', href: 'http://localhost:3000/settings' },
+          ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
         </div>
       </aside>
 
       {/* ═══════════════════════════════════════════
           2. MAIN CONTENT
       ═══════════════════════════════════════════ */}
-      <main className="flex-1 ml-[280px] min-h-screen flex flex-col relative z-10">
+      <main className="flex-1 md:ml-[280px] min-h-screen flex flex-col relative z-10">
 
         {/* ── Top Bar (glass) ── */}
         <header
@@ -211,18 +174,20 @@ export default function ResourceCommandCenter() {
             borderBottom: '1px solid rgba(255,255,255,0.05)',
           }}
         >
-          <div>
-            <h2 className="text-[26px] font-bold text-white tracking-tight leading-tight">Resource Command Center</h2>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-[11px] font-bold text-emerald-500/80 uppercase tracking-[0.2em]">Operational Protocol v4.0.1</span>
-              <span className="w-1 h-1 bg-slate-700" style={{ borderRadius: '50%' }} />
-              <span className="text-[11px] font-medium text-slate-500">Security: Verified</span>
-              <span className="w-1 h-1 bg-slate-700" style={{ borderRadius: '50%' }} />
-              <span className="text-[11px] font-medium text-emerald-400/60 transition-all animate-pulse">Last Synced: {lastSynced}</span>
+          <div className="flex items-center gap-6">
+            {/* Mobile Menu Toggle */}
+            <button
+              className="md:hidden p-3 bg-white/5 border border-white/10 rounded-xl"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <LayoutDashboard className="w-5 h-5 text-emerald-400" />
+            </button>
+
+            <div>
+              <h2 className="text-xl md:text-[26px] font-bold text-white tracking-tight leading-tight">Resource Command Center</h2>
             </div>
           </div>
 
-          {/* Pill search */}
           <div className="flex-1 max-w-lg px-12">
             <div className="relative group">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-500 group-focus-within:text-emerald-400 transition-colors" />
@@ -315,29 +280,13 @@ export default function ResourceCommandCenter() {
                       </div>
                     </div>
                     <div className="pt-4 border-t border-white/5 flex flex-col gap-3">
-                      <button className="text-left text-xs text-slate-400 hover:text-emerald-400 transition-colors">Workspace Config</button>
-                      <button className="text-left text-xs text-slate-400 hover:text-emerald-400 transition-colors">API Thresholds</button>
+                      <Link href="http://localhost:3000/settings" className="text-left text-xs text-slate-400 hover:text-emerald-400 transition-colors text-left">Workspace Config</Link>
+                      <Link href="http://localhost:3000/settings/performance" className="text-left text-xs text-slate-400 hover:text-emerald-400 transition-colors text-left">API Thresholds</Link>
                       <button className="text-left text-xs text-rose-400/70 hover:text-rose-400 transition-colors">Emergency Purge</button>
                     </div>
                   </div>
                 </div>
               )}
-            </div>
-            <div
-              className="ml-4 w-11 h-11 overflow-hidden cursor-pointer hover:scale-105 transition-transform"
-              style={{
-                borderRadius: '9999px',
-                background: 'linear-gradient(135deg,#6366F1,#4338CA)',
-                padding: '2px',
-                boxShadow: '0 4px 14px rgba(99,102,241,0.25)',
-              }}
-            >
-              <div
-                className="w-full h-full flex items-center justify-center"
-                style={{ borderRadius: '9999px', background: '#0F172A', border: '1px solid rgba(255,255,255,0.05)' }}
-              >
-                <span className="text-xs font-black text-indigo-100 uppercase tracking-tighter">OP-1</span>
-              </div>
             </div>
           </div>
         </header>
@@ -381,10 +330,10 @@ export default function ResourceCommandCenter() {
                 </div>
 
                 <h3 className="text-[34px] font-bold text-white mb-4 tracking-tight leading-[1.1] group-hover:text-emerald-400 transition-colors duration-700">
-                  Industrial Cloud Architecture <br /> Orchestration Protocol 9.2
+                  Global Research Archive & <br /> Scholarly Library Collections
                 </h3>
                 <p className="text-[17px] text-slate-400 leading-relaxed max-w-xl mb-10">
-                  Our certified technical framework for high-performance distributed systems, secure multi-tenant isolation, and automated neural scaling layers.
+                  A peer-reviewed pedagogical infrastructure for advanced scholarly collaboration, secure manuscript distribution, and automated indexing services.
                 </p>
 
                 <div className="flex items-center justify-between">
@@ -393,8 +342,8 @@ export default function ResourceCommandCenter() {
                       <img src="https://ui-avatars.com/api/?name=Engineering+Ops&background=0F172A&color=10B981&bold=true" alt="Author" className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <span className="text-base font-bold text-white tracking-tight block">Technical Operations</span>
-                      <span className="text-[11px] text-slate-500 font-black uppercase tracking-widest">Core Engineering Hub</span>
+                      <span className="text-base font-bold text-white tracking-tight block">University Library</span>
+                      <span className="text-[11px] text-slate-500 font-black uppercase tracking-widest">Central Repository</span>
                     </div>
                   </div>
 
@@ -408,7 +357,7 @@ export default function ResourceCommandCenter() {
                       letterSpacing: '0.05em',
                     }}
                   >
-                    Access Protocol <ArrowRight className="w-4 h-4" />
+                    Explore Research <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -416,75 +365,11 @@ export default function ResourceCommandCenter() {
 
             {/* Secondary Cards (35 %) */}
             <div className="col-span-4 flex flex-col gap-10">
-              <SmallCard title="2026 Institutional Vision Board" category="Brand Strategy" icon={Sparkles} accent="#6366F1" />
-              <SmallCard title="Legacy Infrastructure Audit" category="Operations" icon={Shield} accent="#10B981" />
+              <SmallCard title="2026 Academic Excellence Roadmap" category="Brand Strategy" icon={Sparkles} accent="#6366F1" />
+              <SmallCard title="Graduate Research Archive" category="Operations" icon={Shield} accent="#10B981" />
             </div>
           </section>
 
-          {/* ─────────────────────────────────────────
-              4. CATEGORIES (2-column glass tiles)
-          ───────────────────────────────────────── */}
-          <section className="space-y-10">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-[20px] font-bold text-white tracking-tight">Departmental Knowledge Base</h3>
-                <p className="text-sm text-slate-500 mt-1.5 font-medium">Explore specialized institutional repositories by operational department.</p>
-              </div>
-              <button
-                className="text-[11px] font-black text-emerald-400 hover:text-white uppercase tracking-[0.2em] flex items-center gap-3 group transition-colors"
-                style={{
-                  padding: '12px 24px',
-                  borderRadius: '9999px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.10)',
-                }}
-              >
-                Institutional Hub <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-10">
-              {categories.map((cat) => (
-                <div
-                  key={cat.id}
-                  className="group relative p-10 overflow-hidden cursor-pointer hover:-translate-y-1 transition-all duration-700"
-                  style={{
-                    borderRadius: '22px',
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.05)',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(16,185,129,0.3)';
-                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.25)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.15)';
-                  }}
-                >
-                  {/* Hover glow */}
-                  <div className="absolute top-0 right-0 w-48 h-48 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" style={{ borderRadius: '9999px', background: 'rgba(16,185,129,0.08)' }} />
-
-                  <div className="flex items-start justify-between mb-10 relative z-10">
-                    <div
-                      className={`w-16 h-16 flex items-center justify-center bg-gradient-to-br ${cat.gradient} group-hover:scale-110 group-hover:rotate-3 transition-all duration-700`}
-                      style={{ borderRadius: '18px', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}
-                    >
-                      <cat.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest block">Volume</span>
-                      <span className="text-[28px] font-bold text-white mt-2 tabular-nums block" style={{ fontFamily: 'monospace' }}>{cat.count}</span>
-                    </div>
-                  </div>
-
-                  <h4 className="text-[20px] font-bold text-white group-hover:text-emerald-400 transition-colors duration-500 relative z-10">{cat.name}</h4>
-                  <p className="text-sm text-slate-500 mt-3 leading-relaxed max-w-[340px] font-medium relative z-10">{cat.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
 
           {/* ─────────────────────────────────────────
               5. CONTRIBUTE + QUICK LINKS
@@ -556,7 +441,7 @@ export default function ResourceCommandCenter() {
                 }}
               >
                 <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] mb-10 flex items-center gap-4">
-                  Core Operational Links
+                  Core Academic Links
                   <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.10)' }} />
                 </h4>
 
@@ -605,7 +490,7 @@ export default function ResourceCommandCenter() {
                 </div>
                 <div className="relative z-10 flex items-center justify-between">
                   <div>
-                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-2">Global Database Sync</p>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-2">Global Research Sync</p>
                     <h4 className="text-3xl font-bold text-white tracking-tighter">
                       14,208 <span className="text-sm font-bold text-emerald-500 ml-2 tracking-normal">+1.2k</span>
                     </h4>
@@ -697,16 +582,6 @@ export default function ResourceCommandCenter() {
             </div>
           </SectionBlock>
 
-          {/* ─────────────────────────────────────────
-              10. SAVED & PERSONALIZED
-          ───────────────────────────────────────── */}
-          <SectionBlock title="Saved & Personalized" subtitle="Your bookmarks, history, and tailored recommendations.">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-              <NavCard href="/saved" icon={Bookmark} label="Saved Resources" count={12} accent="#F59E0B" />
-              <NavCard href="/recent" icon={Clock} label="Recently Accessed" count={8} accent="#6366F1" />
-              <NavCard href="/recommended" icon={Sparkles} label="Recommended For You" count={15} accent="#10B981" />
-            </div>
-          </SectionBlock>
 
         </div>
       </main>

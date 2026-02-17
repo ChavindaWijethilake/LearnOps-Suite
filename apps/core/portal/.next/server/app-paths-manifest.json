@@ -1,8 +1,7 @@
 {
-  "/api/auth/me/route": "app/api/auth/me/route.js",
   "/portals/page": "app/portals/page.js",
-  "/settings/page": "app/settings/page.js",
-  "/(dashboard)/command-center/feature-flags/page": "app/(dashboard)/command-center/feature-flags/page.js",
-  "/(dashboard)/command-center/security/page": "app/(dashboard)/command-center/security/page.js",
-  "/(dashboard)/command-center/alerts/page": "app/(dashboard)/command-center/alerts/page.js"
+  "/billing/page": "app/billing/page.js",
+  "/(dashboard)/settings/profile/page": "app/(dashboard)/settings/profile/page.js",
+  "/(dashboard)/settings/performance/page": "app/(dashboard)/settings/performance/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js"
 }
