@@ -1,0 +1,203 @@
+/* LearnOps Suite - Industrial Light Theme */
+:root {
+  /* Neutral Base Palette (Slate) */
+  --background: 210 40% 98%;
+  /* #F8FAFC */
+  --foreground: 222 47% 11%;
+  /* #0F172A */
+
+  --muted: 210 40% 96.1%;
+  /* #F1F5F9 */
+  --muted-foreground: 215 16.3% 46.9%;
+  /* #64748B */
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+
+  --border: 214.3 31.8% 91.4%;
+  /* #E2E8F0 */
+  --input: 214.3 31.8% 91.4%;
+
+  --primary: 222 47% 11%;
+  /* #0F172A (Slate Black) */
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 215 27.9% 16.9%;
+  /* #1E293B */
+  --secondary-foreground: 210 40% 98%;
+
+  --accent: 221.2 83.2% 53.3%;
+  /* #2563EB (Blue) */
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 84.2% 60.2%;
+  /* #DC2626 */
+  --destructive-foreground: 210 40% 98%;
+
+  --success: 142.1 76.2% 36.3%;
+  /* #16A34A */
+  --success-foreground: 355.7 100% 97.3%;
+
+  --ring: 221.2 83.2% 53.3%;
+  /* #2563EB */
+
+  --radius: 0px;
+  /* STRICT 0px */
+
+  /* Portal - Slate/Blue */
+  --primary-portal: 222 47% 11%;
+  --primary-portal-hover: 215 27.9% 16.9%;
+  --primary-portal-foreground: 210 40% 98%;
+
+  /* Billing - Teal/Slate */
+  --primary-billing: 173 58% 39%;
+  --primary-billing-hover: 173 58% 34%;
+  --primary-billing-foreground: 0 0% 100%;
+
+  /* Service Management - Purple/Slate */
+  --primary-service: 262 50% 45%;
+  --primary-service-hover: 262 50% 40%;
+  --primary-service-foreground: 0 0% 100%;
+
+  /* Analytics - Green/Slate */
+  --primary-analytics: 142 70% 45%;
+  --primary-analytics-hover: 142 70% 40%;
+  --primary-analytics-foreground: 0 0% 100%;
+
+  /* Learning Hub - Sky/Slate */
+  --primary-learning: 199 89% 48%;
+  --primary-learning-hover: 199 89% 43%;
+  --primary-learning-foreground: 0 0% 100%;
+
+  /* Resource Center - Amber/Slate */
+  --primary-resource: 32 95% 44%;
+  --primary-resource-hover: 32 95% 39%;
+  --primary-resource-foreground: 0 0% 100%;
+
+  /* Project Tracker - Rose/Slate */
+  --primary-project: 346 77% 50%;
+  --primary-project-hover: 346 77% 45%;
+  --primary-project-foreground: 0 0% 100%;
+}
+
+/* App-specific primary color mapping */
+[data-app="portal"] {
+  --primary: var(--primary-portal);
+  --primary-hover: var(--primary-portal-hover);
+  --primary-foreground: var(--primary-portal-foreground);
+}
+
+[data-app="billing"] {
+  --primary: var(--primary-billing);
+  --primary-hover: var(--primary-billing-hover);
+  --primary-foreground: var(--primary-billing-foreground);
+}
+
+[data-app="service-management"] {
+  --primary: var(--primary-service);
+  --primary-hover: var(--primary-service-hover);
+  --primary-foreground: var(--primary-service-foreground);
+}
+
+[data-app="analytics"] {
+  --primary: var(--primary-analytics);
+  --primary-hover: var(--primary-analytics-hover);
+  --primary-foreground: var(--primary-analytics-foreground);
+}
+
+[data-app="learning-hub"] {
+  --primary: var(--primary-learning);
+  --primary-hover: var(--primary-learning-hover);
+  --primary-foreground: var(--primary-learning-foreground);
+}
+
+[data-app="resource-center"] {
+  --primary: var(--primary-resource);
+  --primary-hover: var(--primary-resource-hover);
+  --primary-foreground: var(--primary-resource-foreground);
+}
+
+[data-app="project-tracker"] {
+  --primary: var(--primary-project);
+  --primary-hover: var(--primary-project-hover);
+  --primary-foreground: var(--primary-project-foreground);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+}
+
+/* Bioluminescent Grid System */
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols, 3), 1fr);
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.bio-item {
+  position: relative;
+  background: white;
+  border: 2px solid #0f172a;
+  padding: 2.5rem;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 8px 8px 0px 0px rgba(15, 23, 42, 0.1);
+}
+
+.bio-item:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px 0px rgba(15, 23, 42, 0.15);
+  border-color: var(--primary);
+}
+
+.bio-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(16, 185, 129, 0.08),
+      transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.bio-item:hover::before {
+  opacity: 1;
+}
+
+.bio-item-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Industrial Utilities */
+.shadow-industrial {
+  box-shadow: 8px 8px 0px 0px rgba(15, 23, 42, 0.1);
+}
+
+.shadow-industrial-hover:hover {
+  box-shadow: 12px 12px 0px 0px rgba(15, 23, 42, 0.15);
+}
+
+.border-industrial {
+  border: 2px solid #0f172a;
+}
+
+/* Disable transitions for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,226 @@
+You are Antigravity IDE. Update my existing monorepo to match the structure and requirements below. Do not create placeholder pages that do nothing. Every visible link and button must navigate to a real page. Keep everything in LIGHT MODE by default. Use a modern “liquid glass” UI style (Apple like glass edges and subtle depth), but keep it clean and usable.
+
+PROJECT NAME
+LearnOps Suite, Unified Digital Services Portal
+
+GOAL
+A learning project that feels like a real enterprise suite, but no real payments, no paid services, no SMS integrations. Use mock, local only, free setup. OTP is allowed but must be a local simulated OTP (printed in terminal or displayed in a dev panel) so it is not a setup hassle.
+
+MONOREPO STRUCTURE
+Refactor into this structure and ensure all apps run with pnpm dev from the repo root.
+
+learnops-suite/
+  apps/
+    core/
+      portal/
+      billing/
+      service-management/
+      analytics/
+    support/
+      learning-hub/
+      resource-center/
+      project-tracker/
+  packages/
+    ui/
+    theme/
+    shared/
+    config/
+
+TECH STACK
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components (Radix based)
+- lucide-react icons
+- zod for validation
+- Local storage OR in-memory mock DB for now (prefer in-memory mock module + optional localStorage persistence)
+- No external services required to run
+
+GLOBAL UX RULES
+1) Light mode default everywhere. No automatic dark mode switching.
+2) Consistent suite wide layout: top nav + left sidebar + main content + right optional panel (optional).
+3) Liquid glass style: buttons and cards have subtle glass border, faint blur, soft shadow, rounded 2xl. No heavy glow. Keep accessibility (contrast) good.
+4) Use tasteful motion: small hover lift, fade in, subtle page transition, micro-interactions. No distracting animations.
+5) Every link works, including footer links. If a footer link exists, create the page.
+6) Add loading skeletons for key list pages.
+7) Add empty states with clear CTAs, not blank pages.
+
+SUITE IDENTITY, THEMES, AND UNIQUENESS
+Keep them visually connected using the same UI kit, spacing, typography, and glass style, but change one accent per app.
+
+Base theme (suite wide):
+- Background: soft off-white with subtle gradient (very light)
+- Surfaces: white with glass border
+- Text: neutral gray scale
+- Primary font: default Next, keep modern system font stack
+
+Accent per app (one accent color only, used for primary buttons, active nav, badges):
+- Portal: Indigo / Royal blue accent
+- Billing: Teal / Aqua accent
+- Service Management: Violet / Purple accent
+- Analytics: Emerald / Green accent
+- Learning Hub: Sky / Light blue accent
+- Resource Center: Amber / Gold accent
+- Project Tracker: Rose / Pink accent
+
+Implement this by creating a shared theme system in packages/theme with tokens and per-app accent config, but keep all light mode.
+
+FAVICON AND TAB BRANDING (IMPORTANT)
+Currently browser tab shows GovPay. Remove all GovPay branding and replace with unique branding per app:
+- Each app must have unique app name, title template, favicon, and simple logo mark.
+- Implement per-app metadata in Next.js (app/layout.tsx metadata).
+- Add a unique SVG favicon for each app (simple modern icon). Do not reuse GovPay assets.
+- Add a small logo mark in the navbar matching favicon.
+
+APP PORTS AND DEV COMMANDS
+- portal: 3000
+- billing: 3001
+- service-management: 3002
+- analytics: 3003
+- learning-hub: 3004
+- resource-center: 3005
+- project-tracker: 3006
+
+Root command: pnpm dev should start all apps (use turbo or pnpm -r).
+Create a scripts/dev.ps1 that prints URLs on separate lines cleanly.
+
+NAVIGATION RULES
+Portal acts as the suite shell:
+- Portal home shows tiles for each module with status badges (Core or Support).
+- Clicking tiles opens the respective app in a new tab OR same tab (prefer same tab) with a clear “Back to Portal” link in each app.
+In each app navbar include:
+- App logo + app name
+- “Back to Portal” link
+- User menu (Profile, Settings, Sign out)
+
+AUTH (LIGHTWEIGHT AND LOCAL ONLY)
+Implement a simple local auth shared across apps:
+- Login screen at /login for each app or a shared redirect to portal login.
+- Username is email. Password is not required.
+- OTP flow: user enters email, click “Send OTP”, show OTP in a dev only panel (or console), then user enters OTP to sign in.
+- Persist session token in localStorage.
+- Provide a shared auth package in packages/shared or packages/shared/auth.
+
+ROLE CONCEPT (SIMPLE)
+Support 3 roles for demo:
+- Admin
+- Staff
+- Viewer
+Use a local role selector in Settings (dev feature) to change role and update visible navigation permissions.
+
+ESSENTIAL FUNCTIONALITIES (NO PLACEHOLDERS)
+
+1) CORE PORTAL (apps/core/portal)
+Pages:
+- / (Dashboard) shows: module tiles, recent activity feed, quick links
+- /directory (All modules list, search and filter)
+- /profile (User profile)
+- /settings (Theme info, role switcher, session info)
+- /help (About, docs links)
+Features:
+- Global search box that searches across mock data: invoices, requests, reports, projects, articles (aggregate locally)
+- Recent activity feed: store events when user creates an item in any app (use localStorage event log)
+
+2) BILLING (apps/core/billing)
+Entities (mock): Customer, Invoice, PaymentAttempt
+Pages:
+- / (Billing overview with KPIs: unpaid invoices, total due, recent payments)
+- /invoices (list, filters: status, date)
+- /invoices/new (create invoice form with zod validation)
+- /invoices/[id] (details, line items, timeline)
+- /payments (payment attempts list, statuses)
+- /customers (customer list and details)
+Functional actions:
+- Create invoice
+- Mark invoice as “Paid” (simulated)
+- Generate receipt (client side PDF-like view page, not real payment)
+- Export invoices CSV (client side)
+
+3) SERVICE MANAGEMENT (apps/core/service-management)
+Entities (mock): ServiceRequest, Category, SLA, Comment
+Pages:
+- / (Queue overview with status columns)
+- /requests (table + filters: status, priority, assignee)
+- /requests/new (create request with attachments simulated)
+- /requests/[id] (details, comments, timeline)
+- /approvals (list of requests requiring approval)
+Functional actions:
+- Create request
+- Update status (New, In Progress, Waiting, Resolved, Closed)
+- Assign to user (local mock users list)
+- Add comment
+- SLA badge based on priority (visual only, calculated locally)
+
+4) ANALYTICS (apps/core/analytics)
+Entities (mock): Report, DashboardWidget
+Pages:
+- / (Analytics overview with charts)
+- /dashboards (saved dashboards list)
+- /dashboards/[id] (widgets grid, reorder in UI)
+- /reports (report list)
+- /reports/[id] (report viewer)
+- /exports (export center)
+Functional actions:
+- Create a dashboard (name + widgets)
+- Add widgets (bar, line, donut) using recharts
+- Export a report to CSV (client side)
+
+5) SUPPORT APPS (apps/support/*)
+These are “tools” but still fully functional.
+
+learning-hub:
+- / courses list, course detail, progress tracking
+- local progress persistence
+
+resource-center:
+- / articles list, article detail, tags filter
+- /files list (mock), file detail page
+
+project-tracker:
+- / projects list, project detail, tasks
+- create project, create task, change task status
+
+SHARED PACKAGES REQUIREMENTS
+packages/ui:
+- shared Navbar, Sidebar, Footer components
+- Button variants with liquid glass border style
+- Cards, Tables, Badges, Breadcrumbs, EmptyState, Skeleton, Toast system
+
+packages/theme:
+- base tokens and per-app accent config
+- ensure light mode, consistent neutral palette
+- per-app accent applied via CSS variables on root
+
+packages/shared:
+- auth module
+- mock data store module
+- event log module for “recent activity”
+- shared types and zod schemas
+
+packages/config:
+- shared tsconfig, eslint config
+
+FOOTER LINKS (MUST WORK)
+Footer items for each app:
+- About
+- Privacy
+- Terms
+- Contact
+Create these pages inside each app, simple but real.
+
+QUALITY BAR
+- No broken imports, no missing scripts.
+- No GovPay naming anywhere (title, favicon, logos, README).
+- All apps start without extra services.
+- UI consistent, modern, light, glass effect.
+- Buttons and links always go somewhere meaningful.
+
+DELIVERABLES
+1) Updated file structure as specified.
+2) Working apps with navigation and auth.
+3) Unique favicon and app title per app.
+4) Shared UI kit and theme config with per-app accents.
+5) Mock data and functional CRUD-like flows for each app.
+6) Root pnpm dev starts all apps.
+
+Now implement the refactor and updates on my existing repo. Do not generate a brand new repo, update the existing files and move them into this structure.

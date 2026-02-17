@@ -1,0 +1,29 @@
+{
+  "extends": "../../../packages/config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@learnops/ui": [
+        "../../../packages/ui/src"
+      ],
+      "@learnops/theme": [
+        "../../../packages/theme"
+      ],
+      "@learnops/shared": [
+        "../../../packages/shared/src"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

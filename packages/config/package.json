@@ -1,0 +1,11 @@
+{
+    "name": "@learnops/config",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Shared configuration for LearnOps Suite",
+    "main": "index.ts",
+    "exports": {
+        "./tsconfig": "./tsconfig.json",
+        "./tailwind": "./tailwind.config.ts"
+    }
+}

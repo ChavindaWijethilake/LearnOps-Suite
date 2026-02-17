@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from '../utils/cn';
 
 interface GlassButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,7 +17,7 @@ export function GlassButton({
   children,
   ...props
 }: GlassButtonProps) {
-  const baseClasses = 'backdrop-blur-md border border-white/30 rounded-lg font-medium transition-all duration-200 active:scale-95';
+  const baseClasses = 'backdrop-blur-md border border-white/30 rounded-none font-medium transition-all duration-200 active:opacity-80';
 
   const sizeClasses = {
     sm: 'px-3 py-1 text-sm',

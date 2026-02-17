@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "../../../../../packages/theme/theme.css";
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-float: float 3s ease-in-out infinite;
+
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --shadow-glass-hover: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10 selection:text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+/* Enterprise Light Theme Overrides */
+:root {
+  --radius: 0rem;
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+}
+
+.project-card {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+}
+
+.task-badge {
+  @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-none border;
+}
+
+.premium-gradient {
+  @apply bg-gradient-to-br from-white via-gray-50/50 to-primary/5;
+}
+
+
+
+/* Bioluminescent Grid Component Styles (Light Mode) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #0f172a;
+  --muted-text-color: #64748b;
+  --grid-line-color: rgba(35, 134, 255, 0.1);
+  --item-bg-color: rgba(255, 255, 255, 0.8);
+  --item-border-color: rgba(0, 0, 0, 0.1);
+  --item-hover-border-color: rgba(35, 134, 255, 0.5);
+  --glow-color-1: #0077ff;
+  --glow-color-2: #00eaff;
+}
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .bio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.bio-item {
+  position: relative;
+  background-color: var(--item-bg-color);
+  border: 1px solid var(--item-border-color);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.bio-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      var(--glow-color-1),
+      transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bio-item:hover {
+  border-color: var(--item-hover-border-color);
+  box-shadow: 0 4px 20px -10px var(--glow-color-1);
+}
+
+.bio-item:hover::before {
+  opacity: 0.1;
+}
+
+.bio-item-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

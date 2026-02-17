@@ -1,0 +1,261 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LearnOps Suite - Light Mode Theme */
+:root {
+  /* Neutral Base Palette */
+  --background: 0 0% 98%;
+  --foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 222 47% 11%;
+  --radius: 0rem;
+
+  /* Portal - Blue Accent */
+  --primary-portal: 221 83% 53%;
+  --primary-portal-hover: 221 83% 48%;
+  --primary-portal-foreground: 0 0% 100%;
+
+  /* Billing - Teal Accent */
+  --primary-billing: 173 58% 39%;
+  --primary-billing-hover: 173 58% 34%;
+  --primary-billing-foreground: 0 0% 100%;
+
+  /* Service Management - Purple Accent */
+  --primary-service: 262 52% 47%;
+  --primary-service-hover: 262 52% 42%;
+  --primary-service-foreground: 0 0% 100%;
+
+  /* Analytics - Green Accent */
+  --primary-analytics: 142 71% 45%;
+  --primary-analytics-hover: 142 71% 40%;
+  --primary-analytics-foreground: 0 0% 100%;
+
+  /* Learning Hub - Sky Accent */
+  --primary-learning: 199 89% 48%;
+  --primary-learning-hover: 199 89% 43%;
+  --primary-learning-foreground: 0 0% 100%;
+
+  /* Resource Center - Amber Accent (muted) */
+  --primary-resource: 32 95% 44%;
+  --primary-resource-hover: 32 95% 39%;
+  --primary-resource-foreground: 0 0% 100%;
+
+  /* Project Tracker - Rose Accent (muted) */
+  --primary-project: 346 77% 50%;
+  --primary-project-hover: 346 77% 45%;
+  --primary-project-foreground: 0 0% 100%;
+}
+
+/* App-specific primary color mapping */
+[data-app="portal"] {
+  --primary: var(--primary-portal);
+  --primary-hover: var(--primary-portal-hover);
+  --primary-foreground: var(--primary-portal-foreground);
+}
+
+[data-app="billing"] {
+  --primary: var(--primary-billing);
+  --primary-hover: var(--primary-billing-hover);
+  --primary-foreground: var(--primary-billing-foreground);
+}
+
+[data-app="service-management"] {
+  --primary: var(--primary-service);
+  --primary-hover: var(--primary-service-hover);
+  --primary-foreground: var(--primary-service-foreground);
+}
+
+[data-app="analytics"] {
+  --primary: var(--primary-analytics);
+  --primary-hover: var(--primary-analytics-hover);
+  --primary-foreground: var(--primary-analytics-foreground);
+}
+
+[data-app="learning-hub"] {
+  --primary: var(--primary-learning);
+  --primary-hover: var(--primary-learning-hover);
+  --primary-foreground: var(--primary-learning-foreground);
+}
+
+[data-app="resource-center"] {
+  --primary: var(--primary-resource);
+  --primary-hover: var(--primary-resource-hover);
+  --primary-foreground: var(--primary-resource-foreground);
+}
+
+[data-app="project-tracker"] {
+  --primary: var(--primary-project);
+  --primary-hover: var(--primary-project-hover);
+  --primary-foreground: var(--primary-project-foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10 selection:text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+  }
+
+  .billing-card {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+  }
+
+  .status-badge {
+    @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-none border;
+  }
+
+  .premium-gradient {
+    @apply bg-gradient-to-br from-white via-gray-50/50 to-primary/5;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Bioluminescent Grid Component Styles (Light Mode) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #0f172a;
+  --muted-text-color: #64748b;
+  --grid-line-color: rgba(35, 134, 255, 0.1);
+  --item-bg-color: rgba(255, 255, 255, 0.8);
+  --item-border-color: rgba(0, 0, 0, 0.1);
+  --item-hover-border-color: rgba(35, 134, 255, 0.5);
+  --glow-color-1: #0077ff;
+  --glow-color-2: #00eaff;
+}
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .bio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .bio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.bio-item {
+  position: relative;
+  background-color: var(--item-bg-color);
+  border: 1px solid var(--item-border-color);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.bio-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      var(--glow-color-1),
+      transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.bio-item:hover {
+  border-color: var(--item-hover-border-color);
+  box-shadow: 0 4px 20px -10px var(--glow-color-1);
+}
+
+.bio-item:hover::before {
+  opacity: 0.1;
+}
+
+.bio-item-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
