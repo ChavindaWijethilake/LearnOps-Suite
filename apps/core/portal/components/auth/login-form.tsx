@@ -29,10 +29,15 @@ const loginSchema = z.object({
     rememberMe: z.boolean().default(false),
 });
 
-export function LoginForm() {
+interface LoginFormProps {
+    allowedRoles?: Role[];
+}
+
+export function LoginForm({ allowedRoles }: LoginFormProps) {
     const router = useRouter();
     const { login } = useAuth();
-    const [role, setRole] = useState<Role>('student');
+    // Default to the first allowed role if provided, otherwise 'student'
+    const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : 'student');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -64,7 +69,7 @@ export function LoginForm() {
                 <p className="text-gray-600 text-sm">Sign in to continue to your account</p>
             </div>
 
-            <RoleSelector selectedRole={role} onSelect={setRole} />
+            <RoleSelector selectedRole={role} onSelect={setRole} allowedRoles={allowedRoles} />
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">

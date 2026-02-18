@@ -7,14 +7,19 @@ import { Role } from '@learnops/shared';
 interface RoleSelectorProps {
     selectedRole: Role;
     onSelect: (role: Role) => void;
+    allowedRoles?: Role[];
 }
 
-export function RoleSelector({ selectedRole, onSelect }: RoleSelectorProps) {
-    const roles: { id: Role; label: string; icon: React.ElementType }[] = [
+export function RoleSelector({ selectedRole, onSelect, allowedRoles }: RoleSelectorProps) {
+    const allRoles: { id: Role; label: string; icon: React.ElementType }[] = [
         { id: 'student', label: 'Student', icon: User },
         { id: 'professor', label: 'Professor', icon: GraduationCap },
         { id: 'admin', label: 'Admin', icon: Shield },
     ];
+
+    const roles = allowedRoles
+        ? allRoles.filter(role => allowedRoles.includes(role.id))
+        : allRoles;
 
     return (
         <div className="w-full bg-gray-100 p-1 rounded-xl border border-gray-200 flex gap-1 mb-6">

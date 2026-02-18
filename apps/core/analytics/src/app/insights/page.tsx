@@ -9,55 +9,48 @@ const insights = [
 
 export default function InsightsPage() {
     return (
-        <div className="space-y-8">
-            <header className="flex flex-col gap-2">
-                <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                    <Sparkles className="w-6 h-6 text-primary" />
-                    AI Insights
-                </h1>
-                <p className="text-sm text-gray-500">Automated analysis and actionable recommendations based on your data.</p>
+        <div className="space-y-8 animate-fade-in">
+            <header className="pb-6 border-b border-slate-800">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase tracking-widest rounded-md mb-3">
+                    <Sparkles className="w-3.5 h-3.5" /> AI-Powered
+                </div>
+                <h1 className="text-2xl font-bold text-slate-50">AI Insights</h1>
+                <p className="text-sm text-slate-400 mt-1">Automated analysis and actionable recommendations</p>
             </header>
 
-            <div className="grid grid-cols-1 gap-4">
-                {insights.map((insight) => (
-                    <div key={insight.id} className="bg-white border border-gray-200 rounded-2xl p-6 flex gap-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group">
-                        <div className={`w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center ${insight.type === 'Positive' ? 'bg-green-50 text-green-600' :
-                                insight.type === 'Warning' ? 'bg-amber-50 text-amber-600' :
-                                    insight.type === 'Issue' ? 'bg-red-50 text-red-600' :
-                                        'bg-blue-50 text-blue-600'
+            <div className="space-y-4">
+                {insights.map((insight, index) => (
+                    <div key={insight.id}
+                        className="bg-slate-800/40 backdrop-blur-md border border-slate-700/50 rounded-xl p-5 flex gap-5 hover:bg-slate-800/60 hover:border-emerald-500/20 transition-all duration-300 group animate-slide-up"
+                        style={{ animationDelay: `${index * 80}ms` }}>
+                        <div className={`w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center ${insight.type === 'Positive' ? 'bg-green-500/10 text-green-400' :
+                                insight.type === 'Warning' ? 'bg-amber-500/10 text-amber-400' :
+                                    insight.type === 'Issue' ? 'bg-red-500/10 text-red-400' : 'bg-blue-500/10 text-blue-400'
                             }`}>
-                            {insight.type === 'Positive' ? <TrendingUp className="w-6 h-6" /> :
-                                insight.type === 'Warning' ? <AlertCircle className="w-6 h-6" /> :
-                                    insight.type === 'Issue' ? <Zap className="w-6 h-6" /> :
-                                        <MessageSquare className="w-6 h-6" />}
+                            {insight.type === 'Positive' ? <TrendingUp className="w-5 h-5" /> :
+                                insight.type === 'Warning' ? <AlertCircle className="w-5 h-5" /> :
+                                    insight.type === 'Issue' ? <Zap className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
                         </div>
-
                         <div className="flex-1 space-y-2">
                             <div className="flex justify-between items-start">
-                                <h3 className="text-lg font-bold text-gray-900">{insight.title}</h3>
-                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border ${insight.impact === 'Critical' ? 'bg-red-50 text-red-600 border-red-100' :
-                                        insight.impact === 'High' ? 'bg-orange-50 text-orange-600 border-orange-100' :
-                                            'bg-blue-50 text-blue-600 border-blue-100'
-                                    }`}>
-                                    {insight.impact} Impact
-                                </span>
+                                <h3 className="font-bold text-slate-50">{insight.title}</h3>
+                                <span className={`text-[10px] font-bold px-2 py-1 rounded-md ${insight.impact === 'Critical' ? 'bg-red-500/10 text-red-400' :
+                                        insight.impact === 'High' ? 'bg-orange-500/10 text-orange-400' : 'bg-blue-500/10 text-blue-400'
+                                    }`}>{insight.impact}</span>
                             </div>
-                            <p className="text-sm text-gray-500 leading-relaxed max-w-3xl">
-                                {insight.description}
-                            </p>
-                            <button className="text-sm font-bold text-primary flex items-center gap-1.5 pt-2 group-hover:underline">
-                                Take Action
-                                <ArrowRight className="w-4 h-4" />
+                            <p className="text-sm text-slate-400 leading-relaxed">{insight.description}</p>
+                            <button className="text-xs font-medium text-emerald-400 flex items-center gap-1 hover:text-emerald-300 transition-colors">
+                                Take Action <ArrowRight className="w-3.5 h-3.5" />
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <section className="bg-gray-900 rounded-3xl p-10 text-center space-y-6">
-                <h2 className="text-2xl font-bold text-white">Want deeper insights?</h2>
-                <p className="text-gray-400 max-w-xl mx-auto">Upgrade to LearnOps Pro to unlock predictive analytics and custom AI models tailored to your organization.</p>
-                <button className="px-8 py-4 bg-primary text-white rounded-2xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+            <section className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl p-10 text-center space-y-4">
+                <h2 className="text-xl font-bold text-slate-50">Want deeper insights?</h2>
+                <p className="text-slate-400 max-w-xl mx-auto text-sm">Upgrade to LearnOps Pro to unlock predictive analytics and custom AI models.</p>
+                <button className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
                     Upgrade to Pro
                 </button>
             </section>

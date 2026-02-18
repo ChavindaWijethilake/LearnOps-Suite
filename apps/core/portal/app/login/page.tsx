@@ -26,7 +26,7 @@ export default function LoginPage() {
 
             {/* Main Content */}
             <main className="flex-1 flex items-center justify-center p-6">
-                <LoginForm />
+                <LoginForm allowedRoles={['student', 'professor']} />
             </main>
 
             {/* Footer */}

@@ -60,7 +60,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         setUser(data.user);
         router.refresh(); // Refresh server components
-        router.push('/');
+
+        // Role-based redirection
+        if (data.user.role === 'admin' || data.user.role === 'super-admin') {
+            router.push('/admin');
+        } else {
+            router.push('/');
+        }
     };
 
     const logout = async () => {
