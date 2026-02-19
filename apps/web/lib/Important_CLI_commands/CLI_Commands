@@ -1,0 +1,13 @@
+TO RUN : 
+
+SERVICE REQUEST :
+cd "e:\Projects\Web Application\education-portal-design\apps\service-request" ; pnpm dev
+
+PROJECT TRACKER :
+Start-Sleep -Seconds 3; cd "e:\Projects\Web Application\education-portal-design\apps\project-tracker" ; pnpm dev
+
+LEARNING HUB :
+Start-Sleep -Seconds 6; cd "e:\Projects\Web Application\education-portal-design\apps\learning-hub" ; pnpm dev
+
+RESOURCE CENTER :
+Start-Sleep -Seconds 9; cd "e:\Projects\Web Application\education-portal-design\apps\resource-center" ; pnpm dev

@@ -4,9 +4,10 @@
   "private": true,
   "description": "LearnOps Suite - Unified learning and service management platform",
   "scripts": {
-    "dev": "pnpm -r --parallel dev",
-    "build": "pnpm -r build",
-    "start": "pnpm -r start",
+    "dev": "pnpm --filter @learnops/web dev",
+    "dev:all": "pnpm -r --parallel dev",
+    "build": "pnpm --filter @learnops/web build",
+    "start": "pnpm --filter @learnops/web start",
     "clean": "pnpm -r clean",
     "lint": "pnpm -r lint"
   },
