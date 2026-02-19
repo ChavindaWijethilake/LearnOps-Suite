@@ -2,114 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LearnOps Suite - Light Mode Theme */
+/* LearnOps Analytics — Dark Navy Theme (matching main project) */
 :root {
-  /* Neutral Base Palette */
-  --background: 0 0% 98%;
-  --foreground: 222 47% 11%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --ring: 222 47% 11%;
-  --radius: 0rem;
+  /* Core Dark Theme */
+  --background: #0F172A;
+  --surface: #1E293B;
+  --surface-glass: rgba(30, 41, 59, 0.7);
+  --foreground: #F8FAFC;
+  --text-secondary: #94A3B8;
 
-  /* Portal - Blue Accent */
-  --primary-portal: 221 83% 53%;
-  --primary-portal-hover: 221 83% 48%;
-  --primary-portal-foreground: 0 0% 100%;
+  /* Accent Colors */
+  --primary: #10B981;
+  --primary-hover: #059669;
+  --primary-foreground: #FFFFFF;
+  --secondary: #3B82F6;
 
-  /* Billing - Teal Accent */
-  --primary-billing: 173 58% 39%;
-  --primary-billing-hover: 173 58% 34%;
-  --primary-billing-foreground: 0 0% 100%;
+  /* Borders */
+  --border: #334155;
+  --border-hover: #475569;
 
-  /* Service Management - Purple Accent */
-  --primary-service: 262 52% 47%;
-  --primary-service-hover: 262 52% 42%;
-  --primary-service-foreground: 0 0% 100%;
+  /* Status */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #F43F5E;
 
-  /* Analytics - Green Accent */
-  --primary-analytics: 142 71% 45%;
-  --primary-analytics-hover: 142 71% 40%;
-  --primary-analytics-foreground: 0 0% 100%;
-
-  /* Learning Hub - Sky Accent */
-  --primary-learning: 199 89% 48%;
-  --primary-learning-hover: 199 89% 43%;
-  --primary-learning-foreground: 0 0% 100%;
-
-  /* Resource Center - Amber Accent (muted) */
-  --primary-resource: 32 95% 44%;
-  --primary-resource-hover: 32 95% 39%;
-  --primary-resource-foreground: 0 0% 100%;
-
-  /* Project Tracker - Rose Accent (muted) */
-  --primary-project: 346 77% 50%;
-  --primary-project-hover: 346 77% 45%;
-  --primary-project-foreground: 0 0% 100%;
-}
-
-/* App-specific primary color mapping */
-[data-app="portal"] {
-  --primary: var(--primary-portal);
-  --primary-hover: var(--primary-portal-hover);
-  --primary-foreground: var(--primary-portal-foreground);
-}
-
-[data-app="billing"] {
-  --primary: var(--primary-billing);
-  --primary-hover: var(--primary-billing-hover);
-  --primary-foreground: var(--primary-billing-foreground);
-}
-
-[data-app="service-management"] {
-  --primary: var(--primary-service);
-  --primary-hover: var(--primary-service-hover);
-  --primary-foreground: var(--primary-service-foreground);
-}
-
-[data-app="analytics"] {
-  --primary: var(--primary-analytics);
-  --primary-hover: var(--primary-analytics-hover);
-  --primary-foreground: var(--primary-analytics-foreground);
-}
-
-[data-app="learning-hub"] {
-  --primary: var(--primary-learning);
-  --primary-hover: var(--primary-learning-hover);
-  --primary-foreground: var(--primary-learning-foreground);
-}
-
-[data-app="resource-center"] {
-  --primary: var(--primary-resource);
-  --primary-hover: var(--primary-resource-hover);
-  --primary-foreground: var(--primary-resource-foreground);
-}
-
-[data-app="project-tracker"] {
-  --primary: var(--primary-project);
-  --primary-hover: var(--primary-project-hover);
-  --primary-foreground: var(--primary-project-foreground);
+  /* Glassmorphism */
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --shadow-glass-hover: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
 @layer base {
   * {
-    @apply border-border/50;
+    border-color: var(--border);
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/10 selection:text-primary;
+    @apply bg-[#0F172A] text-slate-50 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-200;
   }
 
   h1,
@@ -118,29 +47,25 @@
   h4,
   h5,
   h6 {
-    @apply tracking-tight font-bold;
+    @apply font-bold text-slate-50 tracking-tight;
   }
 }
 
 @layer utilities {
+  .glass-panel {
+    @apply bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 shadow-xl;
+  }
+
   .glass-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+    @apply bg-slate-800/40 backdrop-blur-md border border-slate-700/50 hover:bg-slate-800/60 transition-all duration-300;
   }
 
-  .analytics-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 rounded-none p-8 shadow-glass hover:shadow-glass-hover transition-all duration-500;
+  .glass-nav {
+    @apply bg-[#0F172A]/80 backdrop-blur-xl border-b border-slate-800;
   }
 
-  .status-badge {
-    @apply text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-none border;
-  }
-
-  .premium-gradient {
-    @apply bg-gradient-to-br from-white via-gray-50/50 to-primary/5;
-  }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600;
+  .text-glow {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
   }
 
   .animate-fade-in {
@@ -174,88 +99,21 @@
   }
 }
 
-/* Bioluminescent Grid Component Styles (Light Mode) */
-:root {
-  --background-color: #ffffff;
-  --text-color: #0f172a;
-  --muted-text-color: #64748b;
-  --grid-line-color: rgba(35, 134, 255, 0.1);
-  --item-bg-color: rgba(255, 255, 255, 0.8);
-  --item-border-color: rgba(0, 0, 0, 0.1);
-  --item-hover-border-color: rgba(35, 134, 255, 0.5);
-  --glow-color-1: #0077ff;
-  --glow-color-2: #00eaff;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.bio-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
-  width: 100%;
+::-webkit-scrollbar-track {
+  background: #0F172A;
 }
 
-@media (min-width: 768px) {
-  .bio-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
 }
 
-@media (min-width: 1024px) {
-  .bio-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.bio-item {
-  position: relative;
-  background-color: var(--item-bg-color);
-  border: 1px solid var(--item-border-color);
-  border-radius: 0.75rem;
-  overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-}
-
-.bio-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
-      var(--glow-color-1),
-      transparent 40%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.bio-item:hover {
-  border-color: var(--item-hover-border-color);
-  box-shadow: 0 4px 20px -10px var(--glow-color-1);
-}
-
-.bio-item:hover::before {
-  opacity: 0.1;
-}
-
-.bio-item-content {
-  position: relative;
-  z-index: 2;
-  padding: 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }

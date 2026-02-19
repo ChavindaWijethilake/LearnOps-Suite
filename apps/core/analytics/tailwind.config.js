@@ -10,34 +10,24 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                background: 'hsl(var(--background))',
-                foreground: 'hsl(var(--foreground))',
-                card: {
-                    DEFAULT: 'hsl(var(--card))',
-                    foreground: 'hsl(var(--card-foreground))',
-                },
+                background: '#0F172A',
+                surface: '#1E293B',
+                foreground: '#F8FAFC',
+                border: '#334155',
                 primary: {
-                    DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
+                    DEFAULT: '#10B981',
+                    foreground: '#FFFFFF',
                 },
-                border: 'hsl(var(--border))',
-                input: 'hsl(var(--input))',
-                ring: 'hsl(var(--ring))',
-            },
-            borderRadius: {
-                none: '0',
-                sm: '0',
-                md: '0',
-                lg: '0',
-                xl: '0',
-                '2xl': '0',
-                '3xl': '0',
-                full: '0',
-                DEFAULT: '0',
+                secondary: {
+                    DEFAULT: '#3B82F6',
+                    foreground: '#FFFFFF',
+                },
             },
             boxShadow: {
-                'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-                'glass-hover': '0 8px 32px 0 rgba(31, 38, 135, 0.12)',
+                'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+                'glass-hover': '0 12px 40px 0 rgba(0, 0, 0, 0.4)',
+                'glow': '0 0 20px rgba(16, 185, 129, 0.15)',
+                'glow-lg': '0 0 40px rgba(16, 185, 129, 0.2)',
             },
         },
     },

@@ -25,7 +25,8 @@ import {
     Menu,
     X,
     GripVertical,
-    RotateCcw
+    RotateCcw,
+    BarChart3
 } from 'lucide-react';
 import { useAuth } from '@/components/auth/auth-provider';
 
@@ -39,6 +40,16 @@ const initialActivity = [
 
 const initialModules = [
     {
+        id: 'admin',
+        title: 'Admin Command Center',
+        desc: 'Main system dashboard, user management, and infrastructure controls',
+        href: '/admin',
+        icon: Shield,
+        color: 'from-indigo-500 to-indigo-600',
+        meta: 'Secure Admin Link',
+        roles: ['admin', 'super-admin']
+    },
+    {
         id: 'academic',
         title: 'Academic Portal',
         desc: 'Courses, assignments, grades, academic records',
@@ -46,7 +57,7 @@ const initialModules = [
         icon: GraduationCap,
         color: 'from-emerald-500 to-emerald-600',
         meta: 'Active • Last accessed today',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: ['student', 'professor']
     },
     {
         id: 'professor',
@@ -56,27 +67,7 @@ const initialModules = [
         icon: User,
         color: 'from-blue-500 to-blue-600',
         meta: 'Faculty Access',
-        roles: ['professor', 'admin', 'super-admin']
-    },
-    {
-        id: 'admin',
-        title: 'Admin Command Center',
-        desc: 'System health, audit logs, security protocols',
-        href: '/status',
-        icon: Shield,
-        color: 'from-slate-500 to-slate-600',
-        meta: 'Restricted Access',
-        roles: ['admin', 'super-admin']
-    },
-    {
-        id: 'it-service',
-        title: 'IT Service Desk',
-        desc: 'Submit tickets, track requests, system support',
-        href: 'http://localhost:3003',
-        icon: Headphones,
-        color: 'from-blue-500 to-blue-600',
-        meta: 'No open tickets',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: ['professor']
     },
     {
         id: 'billing',
@@ -86,7 +77,7 @@ const initialModules = [
         icon: CreditCard,
         color: 'from-violet-500 to-violet-600',
         meta: 'Next due: Mar 01',
-        roles: ['student', 'admin', 'super-admin']
+        roles: ['student']
     },
     {
         id: 'account',
@@ -96,17 +87,7 @@ const initialModules = [
         icon: Settings,
         color: 'from-slate-500 to-slate-600',
         meta: 'Profile 100% complete',
-        roles: ['student', 'professor', 'admin', 'super-admin']
-    },
-    {
-        id: 'support-request',
-        title: 'Support Request',
-        desc: 'Direct line to technical and academic support units',
-        href: '/support/request',
-        icon: Headphones,
-        color: 'from-blue-600 to-indigo-600',
-        meta: 'Resolution target: 4hrs',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: ['student', 'professor']
     }
 ];
 
@@ -208,7 +189,14 @@ export default function PortalDashboard() {
     };
 
     const resetToDefault = () => {
-        setModules(initialModules);
+        if (user?.role) {
+            const filtered = initialModules.filter(m =>
+                (m as any).roles.includes(user.role)
+            );
+            setModules(filtered);
+        } else {
+            setModules(initialModules);
+        }
     };
 
     return (
@@ -255,20 +243,29 @@ export default function PortalDashboard() {
 
                 {/* Navigation (Blank top, System at bottom) */}
                 <nav className="flex-1 py-8 px-4 flex flex-col gap-2">
-                    {/* Top items removed as requested */}
+                    {/* Admin Direct Access */}
+                    {(user?.role === 'admin' || user?.role === 'super-admin') && (
+                        <>
+                            <div className={`px-4 text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ${isSidebarCollapsed ? 'text-center' : ''}`}>
+                                {isSidebarCollapsed ? 'ADM' : 'Administration'}
+                            </div>
+                            <NavItem
+                                icon={Shield}
+                                label="Admin Dashboard"
+                                href="/admin"
+                                collapsed={isSidebarCollapsed}
+                                onClick={() => addActivity('Admin Access', 'Navigated to Admin Dashboard', 'info')}
+                            />
+                            <div className="my-4 border-t border-slate-800/50" />
+                        </>
+                    )}
 
                     {/* Spacer to push Settings to bottom */}
                     <div className="mt-auto pt-4 border-t border-slate-800/50">
                         <div className={`px-4 text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ${isSidebarCollapsed ? 'text-center' : ''}`}>
                             {isSidebarCollapsed ? 'SYS' : 'System'}
                         </div>
-                        <NavItem
-                            icon={Headphones}
-                            label="Support"
-                            href="/support/request"
-                            collapsed={isSidebarCollapsed}
-                            onClick={() => addActivity('Support Portal', 'Accessed support request system', 'info')}
-                        />
+
                         <NavItem
                             icon={Settings}
                             label="Preferences"
@@ -408,11 +405,7 @@ export default function PortalDashboard() {
                                         Access your academic services and manage your university experience from one central hub.
                                     </p>
                                 </div>
-                                <div className="flex flex-wrap gap-3">
-                                    <StatChip label="Modules" value={modules.length.toString()} />
-                                    <StatChip label="Role" value={user?.role || 'Student'} />
-                                    <StatChip label="Status" value="Active" active />
-                                </div>
+
                             </div>
                         </div>
 
@@ -591,17 +584,20 @@ export default function PortalDashboard() {
 
                             {/* Mini Help Card */}
                             <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-6 shadow-xl shadow-blue-900/20 text-center relative overflow-hidden group">
-                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm relative z-10">
                                     <Headphones className="w-6 h-6 text-white" />
                                 </div>
-                                <h4 className="font-bold text-white mb-1">Need Help?</h4>
-                                <p className="text-blue-100 text-sm mb-4">Our support team is online.</p>
-                                <Link href="/contact" className="block w-full">
-                                    <button className="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-sm font-bold transition-colors">
-                                        Contact Support
-                                    </button>
-                                </Link>
+                                <h4 className="font-bold text-white mb-1 relative z-10">Need Help?</h4>
+                                <p className="text-blue-100 text-sm mb-4 relative z-10">Our support team is online.</p>
+                                <div className="relative z-10">
+                                    <Link href="/support/request" className="block w-full">
+                                        <button className="w-full py-2.5 bg-white text-blue-600 hover:bg-white/95 rounded-xl text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 flex items-center justify-center gap-2">
+                                            <span>Support Request</span>
+                                            <ChevronRight className="w-4 h-4" />
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
