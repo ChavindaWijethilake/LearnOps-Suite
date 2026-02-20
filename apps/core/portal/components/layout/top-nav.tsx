@@ -3,7 +3,11 @@
 import Link from 'next/link';
 import { Bell, User, LogOut } from 'lucide-react';
 
+import { useAuth } from '@/components/auth/auth-provider';
+
 const TopNav = () => {
+    const { logout } = useAuth();
+
     return (
         <header className="fixed top-0 left-0 right-0 h-16 bg-[#0F172A] border-b border-[#1F2937] z-50 flex items-center justify-between px-6">
             <div className="flex items-center gap-4">
@@ -36,14 +40,7 @@ const TopNav = () => {
 
                 {/* Logout Button */}
                 <button
-                    onClick={() => {
-                        // Clear session (mock)
-                        if (typeof window !== 'undefined') {
-                            localStorage.removeItem('learnops_session');
-                        }
-                        // Redirect to login
-                        window.location.href = '/login';
-                    }}
+                    onClick={() => logout()}
                     className="p-2 text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#1F2937] rounded-lg transition-colors"
                     title="Sign out"
                 >

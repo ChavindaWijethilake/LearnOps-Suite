@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Public paths that don't require authentication
-    const publicPaths = ['/login', '/admin/login', '/public', '/api/auth/login', '/api/auth/logout', '/support/request', '/api/support'];
+    const publicPaths = ['/portal/login', '/admin/login', '/public', '/api/auth/login', '/api/auth/logout', '/support/request', '/api/support'];
 
     // Check if the current path is public
     if (publicPaths.some(path => pathname.startsWith(path))) {
@@ -24,8 +24,16 @@ export async function middleware(request: NextRequest) {
         if (pathname.startsWith('/api')) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
-        // Redirect to login if no token found
-        const url = new URL('/login', request.url);
+
+        // Redirect to admin login if accessing admin routes
+        if (pathname.startsWith('/admin')) {
+            const url = new URL('/admin/login', request.url);
+            url.searchParams.set('callbackUrl', encodeURI(pathname));
+            return NextResponse.redirect(url);
+        }
+
+        // Redirect to standard login if no token found
+        const url = new URL('/portal/login', request.url);
         url.searchParams.set('callbackUrl', encodeURI(pathname));
         return NextResponse.redirect(url);
     }
@@ -65,7 +73,7 @@ export async function middleware(request: NextRequest) {
     } catch (error) {
         // Token invalid or expired
         console.error('Middleware auth error:', error);
-        return NextResponse.redirect(new URL('/login', request.url));
+        return NextResponse.redirect(new URL('/portal/login', request.url));
     }
 }
 

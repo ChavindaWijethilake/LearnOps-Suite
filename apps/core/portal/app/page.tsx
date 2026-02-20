@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
 export default function HomePage() {
-  // Redirect to portal hub
-  redirect('/portals');
+  // Redirect to portal login
+  redirect('/portal/login');
 }

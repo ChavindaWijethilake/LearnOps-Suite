@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,11 +35,21 @@ interface LoginFormProps {
 
 export function LoginForm({ allowedRoles }: LoginFormProps) {
     const router = useRouter();
-    const { login } = useAuth();
+    const { login, user, isLoading: authLoading } = useAuth();
     // Default to the first allowed role if provided, otherwise 'student'
     const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : 'student');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!authLoading && user) {
+            if (user.role === 'admin' || user.role === 'super-admin') {
+                router.push('/admin');
+            } else {
+                router.push('/');
+            }
+        }
+    }, [user, authLoading, router]);
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),

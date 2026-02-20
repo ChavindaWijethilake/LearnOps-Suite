@@ -70,9 +70,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const logout = async () => {
+        const userRole = user?.role;
         await fetch('/api/auth/logout', { method: 'POST' });
         setUser(null);
-        router.push('/login');
+
+        if (userRole === 'admin' || userRole === 'super-admin') {
+            router.push('/admin/login');
+        } else {
+            router.push('/portal/login');
+        }
         router.refresh();
     };
 
