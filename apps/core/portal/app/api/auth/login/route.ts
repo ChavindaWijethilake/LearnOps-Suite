@@ -77,15 +77,23 @@ export async function POST(request: Request) {
             .setExpirationTime('24h')
             .sign(JWT_SECRET);
 
-        // Set cookie
-        (await cookies()).set({
+        // Determine cookie options
+        const cookieOptions: any = {
             name: 'auth_token',
             value: token,
             httpOnly: true,
             path: '/',
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 60 * 60 * 24, // 24 hours
-        });
+        };
+
+        // If rememberMe is checked, set expiration for 30 days
+        // Otherwise, no maxAge means it's a session cookie (cleared on browser close)
+        if (body.rememberMe) {
+            cookieOptions.maxAge = 60 * 60 * 24 * 30; // 30 days
+        }
+
+        // Set cookie
+        (await cookies()).set(cookieOptions);
 
         return NextResponse.json({
             success: true,
