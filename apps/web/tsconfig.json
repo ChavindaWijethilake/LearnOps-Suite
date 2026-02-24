@@ -29,6 +29,12 @@
       "@learnops/shared": [
         "../../packages/shared/index.ts"
       ],
+      "@learnops/rbac": [
+        "../../packages/rbac/src/index.ts"
+      ],
+      "@learnops/audit": [
+        "../../packages/audit/src/index.ts"
+      ],
       "@learnops/ui/*": [
         "../../packages/ui/*"
       ],

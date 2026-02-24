@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,9 +38,14 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
     const router = useRouter();
     const { login } = useAuth();
     // Default to the first allowed role if provided, otherwise 'student'
-    const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : 'student');
+    const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : Role.STUDENT);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -60,6 +66,10 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
             setError(err.message || 'Failed to login');
             setIsLoading(false);
         }
+    }
+
+    if (!mounted) {
+        return <div className="w-full max-w-[400px] glass-panel rounded-3xl p-8 shadow-2xl relative z-10" />;
     }
 
     return (
@@ -88,7 +98,7 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
                                 <FormLabel className="text-slate-300 text-xs font-semibold pl-1">Email Address</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder={role === 'student' ? 'student@university.edu' : 'professor@university.edu'}
+                                        placeholder={role === Role.STUDENT ? 'student@university.edu' : 'professor@university.edu'}
                                         {...field}
                                         className="bg-slate-900/40 border-slate-700/50 h-11 text-slate-100 placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl transition-all text-sm"
                                     />
@@ -112,7 +122,7 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
                                 <FormControl>
                                     <PasswordInput
                                         {...field}
-                                        showStrength={role === 'admin' || role === 'professor'}
+                                        showStrength={role === Role.ADMIN || role === Role.PROFESSOR}
                                         className="bg-slate-900/40 border-slate-700/50 h-11 text-slate-100 placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl transition-all text-sm"
                                     />
                                 </FormControl>

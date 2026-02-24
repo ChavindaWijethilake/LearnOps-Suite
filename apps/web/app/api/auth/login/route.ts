@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
 import { SignJWT } from 'jose';
-import { prisma } from '@learnops/db'; // Assuming this export exists or I need to create it
 import { cookies } from 'next/headers';
+import { isValidRole, parseRole, Role } from '@learnops/rbac';
+import { logAction } from '@learnops/audit';
 
 // Secret key for JWT signing
 const JWT_SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'supersecretkey123');
-
-// Simple Prisma Client instance if not exported from package (temporary/fallback)
-import { PrismaClient } from '@prisma/client';
-// const prisma = new PrismaClient(); // We should use the singleton from package if possible
 
 export async function POST(request: Request) {
     try {
@@ -22,55 +19,34 @@ export async function POST(request: Request) {
             );
         }
 
-        // In a real app, hash password comparison here. 
-        // For now, we'll accept any password for valid users or specific test users.
-        // Once DB is up, we will query:
-        /*
-        const user = await prisma.user.findUnique({
-            where: { email },
-        });
-
-        if (!user || user.password !== password) { // Replace generic password check with bcrypt/argon2
-             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
-        }
-        */
-
-        // MOCK AUTH for development until DB is approachable/seeded
-        // Check if DB is reachable, if not fall back to mock based on email
-        let user;
-        try {
-            // Try to connect to DB? No, usually we just fail. 
-            // But for this "dev" task I'll simulate based on email pattern to allow login
-            // without DB for the initial "docker not running" scenario.
-
-            // ACTUAL LOGIC (commented out until DB is ready/seeded)
-            /*
-            const prisma = new PrismaClient(); 
-            user = await prisma.user.findUnique({ where: { email } });
-            */
-        } catch (e) {
-            console.error("DB Error", e);
+        // ─── Role Resolution ───
+        // Determine role from request body or infer from email pattern (mock mode)
+        let role: string = body.role || 'student';
+        if (!body.role) {
+            if (email.includes('prof')) role = 'professor';
+            else if (email.includes('finance')) role = 'finance-admin';
+            else if (email.includes('support')) role = 'support-agent';
+            else if (email.includes('super')) role = 'super-admin';
+            else if (email.includes('admin')) role = 'admin';
         }
 
-        // TEMPORARY MOCK LOGIC for "dev" task
-        let role = body.role || 'student';
-        if (!body.role && email.includes('prof')) role = 'professor';
-        if (!body.role && email.includes('super')) role = 'super-admin';
-        if (!body.role && email.includes('admin')) role = 'admin';
+        // Validate and normalize role using RBAC package
+        const validatedRole = parseRole(role);
 
-        user = {
+        // MOCK USER — In production, this would query the database with bcrypt comparison
+        const user = {
             id: 'mock-id-' + Math.random().toString(36).substring(7),
             email,
             name: email.split('@')[0],
-            role,
+            role: validatedRole,
         };
 
-        // Create JWT
+        // Create JWT with validated role
         const token = await new SignJWT({
             sub: user.id,
             email: user.email,
             role: user.role,
-            name: user.name
+            name: user.name,
         })
             .setProtectedHeader({ alg: 'HS256' })
             .setIssuedAt()
@@ -87,16 +63,32 @@ export async function POST(request: Request) {
             maxAge: 60 * 60 * 24, // 24 hours
         });
 
+        // ─── Audit Log: Login Event ───
+        const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+        try {
+            await logAction({
+                actorId: user.id,
+                actorRole: user.role,
+                action: 'LOGIN',
+                resource: 'USER',
+                resourceId: user.id,
+                metadata: { email: user.email, method: 'password' },
+                ipAddress,
+            });
+        } catch {
+            // Audit logging failure should never block login
+            console.warn('[AUDIT] Failed to log login event');
+        }
+
         return NextResponse.json({
             success: true,
             user: {
                 id: user.id,
                 email: user.email,
                 name: user.name,
-                role: user.role
-            }
+                role: user.role,
+            },
         });
-
     } catch (error) {
         console.error('Login error:', error);
         return NextResponse.json(

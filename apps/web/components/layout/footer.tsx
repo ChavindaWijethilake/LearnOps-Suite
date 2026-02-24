@@ -1,6 +1,19 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const Footer = () => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return <footer className="w-full border-t border-[#1F2937] p-6 bg-[#0F172A] mt-auto" />;
+    }
+
     return (
         <footer className="w-full border-t border-[#1F2937] p-6 bg-[#0F172A] mt-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#9CA3AF]">

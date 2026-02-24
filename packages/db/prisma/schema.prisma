@@ -11,13 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  email     String     @unique
-  name      String?
-  password  String?
-  role      String     @default("student") // student, professor, admin
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  email       String     @unique
+  name        String?
+  password    String?
+  role        String     @default("student") // student, professor, admin, finance-admin, support-agent, super-admin
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?  // Soft delete support
+  lastLoginAt DateTime?  // Security tracking
 
   // Relations
   serviceRequests ServiceRequest[]
@@ -27,6 +29,24 @@ model User {
   bookmarks       Bookmark[]
   comments        Comment[]
   resources       Resource[]
+}
+
+// ===== Audit Logging =====
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  actorRole  String
+  action     String   // CREATE, READ, UPDATE, DELETE, APPROVE, EXPORT, ASSIGN
+  resource   String   // COURSE, USER, BILLING, RESOURCE_CENTER, etc.
+  resourceId String?
+  metadata   String?  // JSON string for additional context
+  ipAddress  String?
+  timestamp  DateTime @default(now())
+
+  @@index([actorId])
+  @@index([resource])
+  @@index([timestamp])
+  @@index([action])
 }
 
 // ===== Service Request Portal =====

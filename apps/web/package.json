@@ -11,7 +11,9 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",
+        "@learnops/audit": "workspace:*",
         "@learnops/db": "workspace:*",
+        "@learnops/rbac": "workspace:*",
         "@learnops/shared": "workspace:*",
         "@learnops/ui": "workspace:*",
         "@radix-ui/react-alert-dialog": "^1.1.15",
