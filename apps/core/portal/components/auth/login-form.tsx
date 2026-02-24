@@ -37,19 +37,24 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
     const router = useRouter();
     const { login, user, isLoading: authLoading } = useAuth();
     // Default to the first allowed role if provided, otherwise 'student'
-    const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : 'student');
+    const [role, setRole] = useState<Role>(allowedRoles ? allowedRoles[0] : Role.STUDENT);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        if (!authLoading && user) {
-            if (user.role === 'admin' || user.role === 'super-admin') {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!authLoading && user && mounted) {
+            if (user.role.toUpperCase() === 'ADMIN' || user.role.toUpperCase() === 'SUPER_ADMIN') {
                 router.push('/admin');
             } else {
                 router.push('/');
             }
         }
-    }, [user, authLoading, router]);
+    }, [user, authLoading, router, mounted]);
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -72,6 +77,10 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
         }
     }
 
+    if (!mounted) {
+        return <div className="w-full max-w-[420px] bg-white border border-gray-200 rounded-2xl p-8 shadow-lg h-[400px]" />;
+    }
+
     return (
         <div className="w-full max-w-[420px] bg-white border border-gray-200 rounded-2xl p-8 shadow-lg">
             <div className="text-center mb-6">
@@ -91,7 +100,7 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
                                 <FormLabel className="text-gray-700 font-medium">Email Address</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder={role === 'student' ? 'student@university.edu' : 'admin@learnops.com'}
+                                        placeholder={role === Role.STUDENT ? 'student@university.edu' : 'admin@learnops.com'}
                                         {...field}
                                         className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400"
                                     />
@@ -115,7 +124,7 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
                                 <FormControl>
                                     <PasswordInput
                                         {...field}
-                                        showStrength={role === 'admin' || role === 'professor'}
+                                        showStrength={role === Role.ADMIN || role === Role.PROFESSOR}
                                         className="bg-gray-50 border-gray-300 text-gray-900"
                                     />
                                 </FormControl>

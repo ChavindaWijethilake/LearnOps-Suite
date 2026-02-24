@@ -1,9 +1,9 @@
-import { Response } from 'next/dist/compiled/@edge-runtime/web/incoming-request-utils';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    return Response.json({ success: true });
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return Response.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -102,6 +102,11 @@ export default function PortalDashboard() {
     // Module Customization State
     const [modules, setModules] = useState(initialModules);
     const [isCustomizing, setIsCustomizing] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Filter modules based on user role
     useEffect(() => {
@@ -198,6 +203,10 @@ export default function PortalDashboard() {
             setModules(initialModules);
         }
     };
+
+    if (!mounted) {
+        return <div className="min-h-screen bg-[#0F172A]" />;
+    }
 
     return (
         <div className="min-h-screen bg-[#0F172A] flex text-slate-200 selection:bg-emerald-500/30 font-sans">

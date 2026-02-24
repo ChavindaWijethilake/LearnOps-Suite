@@ -30,6 +30,7 @@ import {
     RotateCcw
 } from 'lucide-react';
 import { useAuth } from '@/components/auth/auth-provider';
+import { Role } from '@learnops/rbac';
 
 // -- Mock Data --
 const initialActivity = [
@@ -48,7 +49,7 @@ const initialModules = [
         icon: Shield,
         color: 'from-indigo-500 to-indigo-600',
         meta: 'Secure Admin Link',
-        roles: ['admin', 'super-admin']
+        roles: [Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'analytics',
@@ -58,7 +59,7 @@ const initialModules = [
         icon: BarChart3,
         color: 'from-pink-500 to-rose-500',
         meta: 'Live Data',
-        roles: ['admin', 'professor', 'super-admin']
+        roles: [Role.ADMIN, Role.PROFESSOR, Role.SUPER_ADMIN]
     },
     {
         id: 'billing',
@@ -68,7 +69,7 @@ const initialModules = [
         icon: CreditCard,
         color: 'from-violet-500 to-violet-600',
         meta: 'Next due: Mar 01',
-        roles: ['student', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'service',
@@ -78,28 +79,19 @@ const initialModules = [
         icon: Wrench,
         color: 'from-orange-500 to-amber-500',
         meta: 'Support Desk',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'student-portal',
         title: 'Student Portal',
         desc: 'Courses, assignments, grades, academic records',
-        href: '/student-portal',
+        href: '/student-dashboard',
         icon: GraduationCap,
         color: 'from-emerald-500 to-emerald-600',
         meta: 'Academic Hub',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     },
-    {
-        id: 'learning-hub',
-        title: 'Learning Hub',
-        desc: 'Access to learning materials, resources, and study guides',
-        href: '/learning-hub',
-        icon: BookOpen,
-        color: 'from-cyan-500 to-blue-500',
-        meta: 'Knowledge Base',
-        roles: ['student', 'professor', 'admin', 'super-admin']
-    },
+
     {
         id: 'project-tracker',
         title: 'Project Tracker',
@@ -108,7 +100,7 @@ const initialModules = [
         icon: Target,
         color: 'from-fuchsia-500 to-purple-500',
         meta: 'Task Manager',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'resource-center',
@@ -118,7 +110,7 @@ const initialModules = [
         icon: Library,
         color: 'from-teal-400 to-emerald-500',
         meta: 'Digital Library',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'account',
@@ -128,7 +120,7 @@ const initialModules = [
         icon: Settings,
         color: 'from-slate-500 to-slate-600',
         meta: 'Profile Settings',
-        roles: ['student', 'professor', 'admin', 'super-admin']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     }
 ];
 
@@ -143,16 +135,22 @@ export default function PortalDashboard() {
     // Module Customization State
     const [modules, setModules] = useState(initialModules);
     const [isCustomizing, setIsCustomizing] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    // Initial mounting
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Filter modules based on user role
     useEffect(() => {
-        if (user?.role) {
+        if (user?.role && mounted) {
             const filtered = initialModules.filter(m =>
-                (m as any).roles.includes(user.role)
+                (m as any).roles.some((r: string) => r.toUpperCase() === user.role.toUpperCase())
             );
             setModules(filtered);
         }
-    }, [user?.role]);
+    }, [user?.role, mounted]);
 
     // Drag and Drop State
     const dragItem = useRef<number | null>(null);
@@ -232,13 +230,17 @@ export default function PortalDashboard() {
     const resetToDefault = () => {
         if (user?.role) {
             const filtered = initialModules.filter(m =>
-                (m as any).roles.includes(user.role)
+                (m as any).roles.some((r: string) => r.toUpperCase() === user.role.toUpperCase())
             );
             setModules(filtered);
         } else {
             setModules(initialModules);
         }
     };
+
+    if (!mounted) {
+        return <div className="min-h-screen bg-[#0F172A]" />;
+    }
 
     return (
         <div className="min-h-screen bg-[#0F172A] flex text-slate-200 selection:bg-emerald-500/30 font-sans">
@@ -285,7 +287,7 @@ export default function PortalDashboard() {
                 {/* Navigation (Blank top, System at bottom) */}
                 <nav className="flex-1 py-8 px-4 flex flex-col gap-2">
                     {/* Admin Direct Access */}
-                    {(user?.role === 'admin' || user?.role === 'super-admin') && (
+                    {(user?.role?.toUpperCase() === Role.ADMIN || user?.role?.toUpperCase() === Role.SUPER_ADMIN) && (
                         <>
                             <div className={`px-4 text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ${isSidebarCollapsed ? 'text-center' : ''}`}>
                                 {isSidebarCollapsed ? 'ADM' : 'Administration'}
@@ -356,7 +358,11 @@ export default function PortalDashboard() {
                         <div className="flex items-center gap-6">
                             {/* Global Search */}
                             <div className="relative group hidden md:block">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
+                                <Search
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-400 transition-colors"
+                                    aria-hidden="true"
+                                    suppressHydrationWarning
+                                />
                                 <input
                                     type="text"
                                     placeholder="Search everything..."
@@ -623,23 +629,7 @@ export default function PortalDashboard() {
                                 </button>
                             </div>
 
-                            {/* Mini Help Card */}
-                            <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-6 shadow-xl shadow-blue-900/20 text-center relative overflow-hidden group">
-                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                                <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm relative z-10">
-                                    <Headphones className="w-6 h-6 text-white" />
-                                </div>
-                                <h4 className="font-bold text-white mb-1 relative z-10">Need Help?</h4>
-                                <p className="text-blue-100 text-sm mb-4 relative z-10">Our support team is online.</p>
-                                <div className="relative z-10">
-                                    <Link href="/support/request" className="block w-full">
-                                        <button className="w-full py-2.5 bg-white text-blue-600 hover:bg-white/95 rounded-xl text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 flex items-center justify-center gap-2">
-                                            <span>Support Request</span>
-                                            <ChevronRight className="w-4 h-4" />
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -25,6 +25,11 @@ import { Badge } from '@/components/ui/badge';
 export default function ServiceDetailsPage() {
     const params = useParams();
     const serviceName = params.name as string;
+    const [uuid, setUuid] = useState('');
+
+    useEffect(() => {
+        setUuid(`srv_${Math.random().toString(36).substr(2, 9)}`);
+    }, []);
 
     return (
         <div className="max-w-[1400px] mx-auto py-8 space-y-8 animate-fade-in pb-20">
@@ -48,7 +53,7 @@ export default function ServiceDetailsPage() {
                             <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic">{serviceName.replace('-', ' ')}</h1>
                             <Badge className="bg-emerald-500/20 text-emerald-500 border-emerald-500/30">OPERATIONAL</Badge>
                         </div>
-                        <p className="text-slate-500 font-bold text-xs uppercase tracking-[0.2em] mt-2">UUID: srv_{Math.random().toString(36).substr(2, 9)} • Cluster: us-east-multi</p>
+                        <p className="text-slate-500 font-bold text-xs uppercase tracking-[0.2em] mt-2">UUID: {uuid} • Cluster: us-east-multi</p>
                     </div>
                 </div>
 

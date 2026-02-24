@@ -1,5 +1,7 @@
 'use client';
 
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { User, Shield, GraduationCap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Role } from '@learnops/shared';
@@ -11,15 +13,25 @@ interface RoleSelectorProps {
 }
 
 export function RoleSelector({ selectedRole, onSelect, allowedRoles }: RoleSelectorProps) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const allRoles: { id: Role; label: string; icon: React.ElementType }[] = [
-        { id: 'student', label: 'Student', icon: User },
-        { id: 'professor', label: 'Professor', icon: GraduationCap },
-        { id: 'admin', label: 'Admin', icon: Shield },
+        { id: Role.STUDENT, label: 'Student', icon: User },
+        { id: Role.PROFESSOR, label: 'Professor', icon: GraduationCap },
+        { id: Role.ADMIN, label: 'Admin', icon: Shield },
     ];
 
     const roles = allowedRoles
         ? allRoles.filter(role => allowedRoles.includes(role.id))
         : allRoles;
+
+    if (!mounted) {
+        return <div className="grid grid-cols-2 gap-3 mb-6 h-[100px]" />;
+    }
 
     return (
         <div className="grid grid-cols-2 gap-3 mb-6">

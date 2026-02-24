@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Role } from '@learnops/shared';
 
 type User = {
     id: string;
@@ -19,10 +20,12 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProviderContent({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams?.get('callbackUrl');
 
     useEffect(() => {
         checkAuth();
@@ -61,8 +64,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(data.user);
         router.refresh(); // Refresh server components
 
-        // Role-based redirection
-        if (data.user.role === 'admin' || data.user.role === 'super-admin') {
+        // If a callbackUrl is present, redirect there
+        if (callbackUrl) {
+            router.push(decodeURIComponent(callbackUrl));
+            return;
+        }
+
+        // Role-based redirection fallback
+        if (data.user.role === Role.ADMIN || data.user.role === Role.SUPER_ADMIN) {
             router.push('/admin');
         } else {
             router.push('/');
@@ -80,6 +89,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         <AuthContext.Provider value={{ user, isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
+    );
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+    return (
+        <Suspense fallback={null}>
+            <AuthProviderContent>{children}</AuthProviderContent>
+        </Suspense>
     );
 }
 

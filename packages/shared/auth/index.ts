@@ -1,13 +1,16 @@
-// LearnOps Suite - Mock Auth System
+// LearnOps Suite - Shared Auth System
 "use client";
 
-export type Role = "admin" | "staff" | "viewer" | "student" | "professor";
+import { can, parseRole, isAtLeast, Role, Resource, Action } from "@learnops/rbac";
+
+// Re-export RBAC types
+export { Role, type Resource, type Action } from "@learnops/rbac";
 
 export interface User {
     id: string;
     email: string;
     name: string;
-    role: Role;
+    role: string;
 }
 
 export interface Session {
@@ -38,12 +41,14 @@ export function verifyOTP(email: string, code: string): boolean {
 }
 
 // Create session
-export function createSession(email: string, role: Role = "staff"): Session {
+export function createSession(email: string, role: string = "student"): Session {
+    const validatedRole = parseRole(role);
+
     const user: User = {
         id: Math.random().toString(36).substring(7),
         email,
         name: email.split("@")[0],
-        role,
+        role: validatedRole,
     };
 
     const session: Session = {
@@ -78,11 +83,11 @@ export function getSession(): Session | null {
 }
 
 // Update role (dev feature)
-export function updateRole(role: Role): void {
+export function updateRole(role: string): void {
     const session = getSession();
     if (!session) return;
 
-    session.user.role = role;
+    session.user.role = parseRole(role);
     localStorage.setItem("learnops_session", JSON.stringify(session));
 }
 
@@ -93,18 +98,22 @@ export function logout(): void {
     }
 }
 
-// Check permissions
-export function hasPermission(requiredRole: Role): boolean {
+/**
+ * Check if the current user has permission for a resource + action.
+ * Uses the RBAC permission matrix.
+ */
+export function hasPermission(resource: Resource, action: Action): boolean {
     const session = getSession();
     if (!session) return false;
+    return can(parseRole(session.user.role), resource, action);
+}
 
-    const roleHierarchy: Record<Role, number> = {
-        viewer: 1,
-        student: 1,
-        staff: 2,
-        professor: 2,
-        admin: 3,
-    };
-
-    return roleHierarchy[session.user.role] >= roleHierarchy[requiredRole];
+/**
+ * Legacy permission check — checks if user's role is at or above the required level.
+ * @deprecated Use hasPermission(resource, action) instead for granular checks.
+ */
+export function hasRoleLevel(requiredRole: string): boolean {
+    const session = getSession();
+    if (!session) return false;
+    return isAtLeast(session.user.role, parseRole(requiredRole));
 }

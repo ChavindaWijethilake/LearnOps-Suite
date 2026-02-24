@@ -36,6 +36,11 @@ export default function BillingPortalPage() {
     const [lastSynced, setLastSynced] = useState<string>('');
     const [activeTab, setActiveTab] = useState<'overview' | 'fees' | 'history' | 'installments' | 'support'>('fees'); // Default to fees for easier testing
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Fee Selection State
     const [selectedFees, setSelectedFees] = useState<string[]>(['fee-1', 'fee-3', 'fee-4']); // Default selected required items
@@ -116,6 +121,10 @@ export default function BillingPortalPage() {
             // Here you would typically call an API
         }, 3000);
     };
+
+    if (!mounted) {
+        return <div className="min-h-screen bg-[#0F172A]" />;
+    }
 
     return (
         <div className="min-h-screen bg-[#0F172A] text-slate-400 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
@@ -218,8 +227,8 @@ export default function BillingPortalPage() {
                                                     </div>
                                                     <div className="col-span-2 text-center">
                                                         <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border ${fee.status === 'Paid' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' :
-                                                                fee.status === 'Outstanding' ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' :
-                                                                    'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                                                            fee.status === 'Outstanding' ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' :
+                                                                'bg-amber-500/10 border-amber-500/20 text-amber-400'
                                                             }`}>
                                                             {fee.status}
                                                         </span>
@@ -248,8 +257,8 @@ export default function BillingPortalPage() {
                                                 key={addon.id}
                                                 onClick={() => toggleAddon(addon.id)}
                                                 className={`cursor-pointer p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${selectedAddons.includes(addon.id)
-                                                        ? 'bg-indigo-500/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
-                                                        : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200'
+                                                    ? 'bg-indigo-500/20 border-indigo-500 text-white shadow-lg shadow-indigo-500/10'
+                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200'
                                                     }`}
                                             >
                                                 <div className="flex justify-between items-start mb-2">

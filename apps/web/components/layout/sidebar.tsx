@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import {
     Activity,
     FileText,
@@ -49,6 +51,15 @@ const navItems = [
 
 const Sidebar = () => {
     const pathname = usePathname();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return <aside className="fixed left-0 top-16 bottom-0 w-64 bg-[#0B1120] border-r border-slate-800/50 z-40" />;
+    }
 
     return (
         <aside className="fixed left-0 top-16 bottom-0 w-64 bg-[#0B1120] border-r border-slate-800/50 overflow-y-auto z-40 transition-all duration-300">
@@ -72,7 +83,7 @@ const Sidebar = () => {
                                 {group.title}
                             </h3>
                             {group.items.map((item) => {
-                                const isActive = pathname === item.href || (item.href !== '/status' && pathname.startsWith(item.href));
+                                const isActive = mounted && pathname && (pathname === item.href || (item.href !== '/status' && pathname.startsWith(item.href)));
                                 return (
                                     <Link
                                         key={item.href}

@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { can, parseRole, Resource, Action, Role, getAllowedActions } from '@learnops/rbac'
 
 export type UserRole = 'Student' | 'Teacher' | 'Institution Admin' | 'Super Admin'
 
@@ -10,6 +11,8 @@ export interface User {
   firstName: string
   lastName: string
   role: UserRole
+  /** Normalized RBAC role string (e.g., "student", "admin") */
+  rbacRole: string
   institution: string
   avatar?: string
 }
@@ -21,6 +24,10 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>
   register: (data: RegisterData) => Promise<void>
   logout: () => void
+  /** Check if current user can perform an action on a resource */
+  canAccess: (resource: Resource, action: Action) => boolean
+  /** Get all allowed actions for current user on a resource */
+  allowedActions: (resource: Resource) => Action[]
 }
 
 interface RegisterData {
@@ -34,6 +41,19 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+/**
+ * Map legacy display role names to RBAC role strings
+ */
+function roleToRbacRole(role: UserRole): string {
+  switch (role) {
+    case 'Student': return 'student'
+    case 'Teacher': return 'professor'
+    case 'Institution Admin': return 'admin'
+    case 'Super Admin': return 'super-admin'
+    default: return 'student'
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -42,10 +62,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // In a real app, this would check with a backend
         const storedUser = localStorage.getItem('user')
         if (storedUser) {
-          setUser(JSON.parse(storedUser))
+          const parsed = JSON.parse(storedUser)
+          // Ensure rbacRole is set for legacy stored users
+          if (!parsed.rbacRole) {
+            parsed.rbacRole = roleToRbacRole(parsed.role)
+          }
+          setUser(parsed)
         }
       } catch (error) {
         console.error('Auth check failed:', error)
@@ -63,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let firstName = 'Demo'
     let lastName = 'User'
 
-    if (email.includes('teacher')) {
+    if (email.includes('teacher') || email.includes('prof')) {
       role = 'Teacher'
       firstName = 'Demo'
       lastName = 'Teacher'
@@ -82,6 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       firstName,
       lastName,
       role,
+      rbacRole: roleToRbacRole(role),
       institution: 'Demo Institution',
       avatar: undefined,
     }
@@ -97,6 +122,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       firstName: data.firstName,
       lastName: data.lastName,
       role: data.role,
+      rbacRole: roleToRbacRole(data.role),
       institution: data.institution,
     }
 
@@ -109,6 +135,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('user')
   }
 
+  /**
+   * Check if the current user can perform an action on a resource.
+   * Uses the RBAC permission matrix.
+   */
+  const canAccess = (resource: Resource, action: Action): boolean => {
+    if (!user) return false
+    return can(user.rbacRole, resource, action)
+  }
+
+  /**
+   * Get all allowed actions for the current user on a resource.
+   */
+  const allowedActionsForResource = (resource: Resource): Action[] => {
+    if (!user) return []
+    return getAllowedActions(user.rbacRole, resource)
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -118,6 +161,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         register,
         logout,
+        canAccess,
+        allowedActions: allowedActionsForResource,
       }}
     >
       {children}
