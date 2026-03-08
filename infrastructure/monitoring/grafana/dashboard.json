@@ -1,0 +1,17 @@
+{
+    "title": "LearnOps Overview",
+    "panels": [
+        {
+            "type": "stat",
+            "title": "Gateway Requests",
+            "targets": [
+                {
+                    "expr": "sum(rate(http_requests_total{job=\"gateway\"}[5m]))",
+                    "legendFormat": "Requests / sec"
+                }
+            ]
+        }
+    ],
+    "schemaVersion": 30,
+    "timezone": "browser"
+}

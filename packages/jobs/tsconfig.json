@@ -1,0 +1,19 @@
+{
+    "extends": "../../packages/config/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "baseUrl": ".",
+        "paths": {
+            "@learnops/platform/*": [
+                "../../packages/platform/src/*"
+            ],
+            "@learnops/shared/*": [
+                "../../packages/shared/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

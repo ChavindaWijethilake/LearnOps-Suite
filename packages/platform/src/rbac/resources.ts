@@ -1,0 +1,20 @@
+export enum Resource {
+    COURSE = 'COURSE',
+    USER = 'USER',
+    BILLING = 'BILLING',
+    RESOURCE_CENTER = 'RESOURCE_CENTER',
+    SUPPORT_TICKET = 'SUPPORT_TICKET',
+    SYSTEM_SETTINGS = 'SYSTEM_SETTINGS',
+    ANALYTICS = 'ANALYTICS',
+    AUDIT_LOG = 'AUDIT_LOG',
+}
+
+export enum Action {
+    CREATE = 'CREATE',
+    READ = 'READ',
+    UPDATE = 'UPDATE',
+    DELETE = 'DELETE',
+    APPROVE = 'APPROVE',
+    EXPORT = 'EXPORT',
+    ASSIGN = 'ASSIGN',
+}

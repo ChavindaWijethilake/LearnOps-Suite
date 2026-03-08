@@ -8,3 +8,9 @@ export * from './components/glass-button';
 export * from './components/theme-provider';
 export { cn } from './utils/cn';
 export * from './components/bioluminescent-grid';
+
+// Feature Modules
+export * from './features/dashboard';
+export * from './features/invoices';
+export * from './features/tickets';
+export * from './features/courses';
