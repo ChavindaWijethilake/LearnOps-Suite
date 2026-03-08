@@ -1,0 +1,21 @@
+{
+    "name": "@learnops/api",
+    "version": "1.0.0",
+    "private": true,
+    "description": "LearnOps Service Layer — Domain services for billing, tickets, learning, analytics",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "@learnops/db": "workspace:*",
+        "@learnops/platform": "workspace:*",
+        "@learnops/shared": "workspace:*",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    }
+}

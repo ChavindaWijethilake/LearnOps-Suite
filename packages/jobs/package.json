@@ -1,13 +1,16 @@
 {
-    "name": "@learnops/config",
+    "name": "@learnops/jobs",
     "version": "1.0.0",
     "private": true,
-    "description": "LearnOps Suite - Configuration Layer",
+    "description": "LearnOps Suite - Background Job System",
     "main": "src/index.ts",
     "scripts": {
         "lint": "tsc --noEmit"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@learnops/platform": "workspace:*",
+        "@learnops/shared": "workspace:*"
+    },
     "devDependencies": {
         "@types/node": "^20.14.9",
         "typescript": "^5.5.3"

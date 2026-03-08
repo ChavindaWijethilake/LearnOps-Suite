@@ -1,8 +1,8 @@
 {
-    "name": "@learnops/config",
+    "name": "@learnops/observability",
     "version": "1.0.0",
     "private": true,
-    "description": "LearnOps Suite - Configuration Layer",
+    "description": "LearnOps Suite - Observability",
     "main": "src/index.ts",
     "scripts": {
         "lint": "tsc --noEmit"

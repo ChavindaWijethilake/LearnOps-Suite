@@ -1,0 +1,25 @@
+{
+    "extends": "../../packages/config/tsconfig.json",
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "rootDir": "src",
+        "lib": [
+            "es2022"
+        ],
+        "target": "es2022",
+        "baseUrl": ".",
+        "paths": {
+            "@learnops/platform/*": [
+                "../../packages/platform/src/*"
+            ],
+            "@learnops/shared/*": [
+                "../../packages/shared/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "@learnops/platform",
+    "version": "1.0.0",
+    "private": true,
+    "description": "LearnOps Platform Core — Auth, RBAC, Audit, Notifications, Logging, Settings",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "@learnops/db": "workspace:*",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    }
+}
