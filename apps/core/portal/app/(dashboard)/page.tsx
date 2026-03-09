@@ -14,6 +14,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+// Mock Aggregate Data
+const aggregateStats = [
+  { label: 'Total Revenue', value: '$128,430', change: '+12.5%', source: 'Billing', icon: Activity, color: 'text-emerald-500' },
+  { label: 'Active Tickets', value: '42', change: '+5', source: 'Service', icon: AlertTriangle, color: 'text-rose-500' },
+  { label: 'Active Students', value: '1,240', change: '+8.4%', source: 'Learning', icon: CheckCircle, color: 'text-blue-500' },
+  { label: 'Avg. Session', value: '18m 42s', change: '-2m', source: 'Analytics', icon: Activity, color: 'text-amber-500' },
+];
+
 // Mock Data for Audit Logs
 const auditLogs = [
   { id: 1, timestamp: '2026-02-11 10:45:22', user: 'admin@learnops.com', action: 'Modified System Settings', ip: '192.168.1.10', status: 'Success' },
@@ -54,6 +62,32 @@ export default function DashboardPage() {
             System Operational
           </div>
         </div>
+      </div>
+
+      {/* Aggregate Metric Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {aggregateStats.map((stat) => (
+          <Card key={stat.label} className="bg-[#1e293b] border-[#334155] text-slate-200">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-slate-400">
+                {stat.label}
+              </CardTitle>
+              <stat.icon className={`h-4 w-4 ${stat.color}`} />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <p className="text-xs text-slate-500 mt-1">
+                <span className={stat.change.startsWith('+') ? 'text-emerald-500' : 'text-rose-500'}>
+                  {stat.change}
+                </span>{' '}
+                from last month
+              </p>
+              <div className="mt-3 inline-flex items-center rounded-full border border-[#334155] px-2.5 py-0.5 text-xs font-semibold text-slate-400">
+                {stat.source}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       {/* Main Content: Audit Log Table */}

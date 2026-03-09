@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    basePath: '/analytics',
     transpilePackages: ['@learnops/ui'],
     typescript: {
         ignoreBuildErrors: true,

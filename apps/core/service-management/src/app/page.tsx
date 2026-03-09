@@ -1,3 +1,5 @@
+'use client';
+
 import {
   LifeBuoy,
   Clock,
@@ -13,6 +15,8 @@ import {
   Zap,
   Server
 } from 'lucide-react';
+import { TicketsService } from '@learnops/api/src/service-management/tickets.service';
+import { useState } from 'react';
 
 const slaData = [
   { name: 'Mon', value: 98 },
@@ -39,6 +43,26 @@ const activeRequests = [
 ];
 
 export default function ServiceDashboard() {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleCreateTicket = () => {
+    setIsProcessing(true);
+    try {
+      TicketsService.createTicket({
+        userId: 'sys_admin_001',
+        title: 'Sev-1: Gateway Unresponsive',
+        description: 'Automated Sev-1 protocol initiated by Priority Support terminal.',
+        status: 'new',
+        priority: 'critical',
+        category: 'Infrastructure',
+      });
+      alert('Sev-1 Ticket created & event published successfully!');
+    } catch (error) {
+      console.error(error);
+    }
+    setIsProcessing(false);
+  };
+
   return (
     <div className="space-y-8 animate-slide-up pb-10">
       <div className="px-8 pt-8">
@@ -179,8 +203,12 @@ export default function ServiceDashboard() {
               <p className="text-sm text-slate-400 mb-6">
                 Direct line to Level 3 engineering for critical outages.
               </p>
-              <button className="w-full py-3 bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors">
-                Initiate Sev-1 Protocol
+              <button
+                onClick={handleCreateTicket}
+                disabled={isProcessing}
+                className="w-full py-3 bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors disabled:opacity-50"
+              >
+                {isProcessing ? 'Initiating...' : 'Initiate Sev-1 Protocol'}
               </button>
             </div>
           </section>

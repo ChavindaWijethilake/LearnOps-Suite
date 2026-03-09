@@ -29,6 +29,79 @@ model User {
   bookmarks       Bookmark[]
   comments        Comment[]
   resources       Resource[]
+  sessions        Session[]
+  notifications   Notification[]
+  tickets         Ticket[]
+  agentProfile    Agent?
+  payments        Payment[]
+  transactions    Transaction[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // INFO, WARNING, ERROR, SUCCESS
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  link      String?  // Optional link to related resource
+  createdAt DateTime @default(now())
+}
+
+// ===== Billing & Finance =====
+model Customer {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  company   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  invoices  Invoice[]
+}
+
+model Invoice {
+  id          String    @id @default(cuid())
+  customerId  String
+  customer    Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  amount      Float
+  status      String    @default("pending") // pending, paid, overdue, cancelled
+  dueDate     DateTime
+  issuedDate  DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  items       String?   // JSON representation of line items
+  payments    Payment[]
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  invoiceId String
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  amount    Float
+  method    String   // credit_card, bank_transfer, etc.
+  status    String   @default("completed") // pending, completed, failed
+  date      DateTime @default(now())
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  type        String   // charge, refund, adjustment
+  amount      Float
+  description String?
+  date        DateTime @default(now())
 }
 
 // ===== Audit Logging =====
@@ -65,6 +138,50 @@ model ServiceRequest {
   // Relations
   attachments Attachment[]
   comments    Comment[]
+}
+
+model Ticket {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agentId     String?
+  agent       Agent?     @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  title       String
+  description String
+  status      String     @default("new") // new, open, in_progress, resolved, closed
+  priority    String     @default("medium") // low, medium, high, critical
+  category    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  resolution  Resolution?
+  slas        SLA[]
+}
+
+model Agent {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department String
+  level     Int      @default(1) // 1=Tier 1, 2=Tier 2, 3=Tier 3
+  tickets   Ticket[]
+}
+
+model Resolution {
+  id          String   @id @default(cuid())
+  ticketId    String   @unique
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  summary     String
+  resolvedAt  DateTime @default(now())
+}
+
+model SLA {
+  id           String   @id @default(cuid())
+  ticketId     String
+  ticket       Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  type         String   // response_time, resolution_time
+  targetDate   DateTime
+  breached     Boolean  @default(false)
+  completedAt  DateTime?
 }
 
 model Attachment {

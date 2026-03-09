@@ -1,3 +1,5 @@
+'use client';
+
 import {
   CreditCard,
   ArrowUpRight,
@@ -14,6 +16,8 @@ import {
   Shield,
   Activity
 } from 'lucide-react';
+import { BillingService } from '@learnops/api/src/billing/billing.service';
+import { useState } from 'react';
 
 const revenueData = [
   { name: 'Jan', value: 65 },
@@ -72,6 +76,27 @@ const recentInvoices = [
 ];
 
 export default function BillingDashboard() {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleNewInvoice = () => {
+    setIsProcessing(true);
+    try {
+      BillingService.createInvoice({
+        customerId: 'cust_seed_001',
+        amount: Math.floor(Math.random() * 5000) + 500,
+        status: 'pending',
+        dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+        issuedDate: new Date().toISOString(),
+        items: JSON.stringify([{ description: 'Platform Services', quantity: 1, price: 500 }]),
+      });
+      // In a real app, we would refresh the data here
+      alert('Invoice created & event published successfully!');
+    } catch (error) {
+      console.error(error);
+    }
+    setIsProcessing(false);
+  };
+
   return (
     <div className="space-y-8 animate-fade-in pb-10">
       {/* Page Header */}
@@ -80,9 +105,13 @@ export default function BillingDashboard() {
           <h1 className="text-4xl font-black tracking-tight mb-2 text-slate-900">Financial Engine</h1>
           <p className="text-slate-500 font-medium">Real-time revenue orchestration.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)]">
+        <button
+          onClick={handleNewInvoice}
+          disabled={isProcessing}
+          className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-[4px_4px_0px_0px_rgba(15,23,42,0.1)] disabled:opacity-50"
+        >
           <Plus className="h-4 w-4" />
-          New Invoice
+          {isProcessing ? 'Processing' : 'New Invoice'}
         </button>
       </div>
 

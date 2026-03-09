@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Bell, User, LogOut } from 'lucide-react';
 
 import { useAuth } from '@/components/auth/auth-provider';
+import { PortalSwitcher } from './portal-switcher';
 
 const TopNav = () => {
     const { logout } = useAuth();
@@ -12,9 +13,10 @@ const TopNav = () => {
         <header className="fixed top-0 left-0 right-0 h-16 bg-[#0F172A] border-b border-[#1F2937] z-50 flex items-center justify-between px-6">
             <div className="flex items-center gap-4">
                 {/* Logo or Brand Name could go here */}
-                <Link href="/" className="text-xl font-bold text-[#E5E7EB] tracking-tight">
+                <Link href="/" className="text-xl font-bold text-[#E5E7EB] tracking-tight mr-4">
                     Command Center
                 </Link>
+                <PortalSwitcher />
             </div>
 
             <div className="flex items-center gap-4">

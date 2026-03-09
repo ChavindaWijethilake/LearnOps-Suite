@@ -6,6 +6,7 @@
 import { InvoiceRepository, CustomerRepository, type Invoice, type Customer } from '@learnops/db/src/repositories';
 import { LocalStorageAdapter } from '@learnops/db/src/adapters';
 import { createInvoiceSchema, createCustomerSchema } from '@learnops/db/src/schemas';
+import { eventBus } from '@learnops/shared/events';
 
 const adapter = new LocalStorageAdapter();
 const invoiceRepo = new InvoiceRepository(adapter);
@@ -24,11 +25,32 @@ export const BillingService = {
 
     createInvoice(data: Omit<Invoice, 'id'>): Invoice {
         const validated = createInvoiceSchema.parse(data);
-        return invoiceRepo.create(validated as Omit<Invoice, 'id'>);
+        const invoice = invoiceRepo.create(validated as Omit<Invoice, 'id'>);
+
+        eventBus.publish('invoice.created', {
+            invoiceId: invoice.id,
+            customerId: invoice.customer,
+            amount: typeof invoice.amount === 'string' ? parseFloat(invoice.amount.replace(/[^0-9.-]+/g, "")) : invoice.amount,
+        }, 'billing');
+
+        return invoice;
     },
 
     payInvoice(id: string): Invoice | null {
-        return invoiceRepo.markAsPaid(id);
+        const invoice = invoiceRepo.markAsPaid(id);
+        if (invoice) {
+            eventBus.publish('invoice.paid', {
+                invoiceId: invoice.id,
+                amount: typeof invoice.amount === 'string' ? parseFloat(invoice.amount.replace(/[^0-9.-]+/g, "")) : invoice.amount,
+            }, 'billing');
+
+            // also publish payment.received
+            eventBus.publish('payment.received', {
+                invoiceId: invoice.id,
+                amount: typeof invoice.amount === 'string' ? parseFloat(invoice.amount.replace(/[^0-9.-]+/g, "")) : invoice.amount,
+            }, 'billing');
+        }
+        return invoice;
     },
 
     getInvoicesByCustomer(customerId: string): Invoice[] {
