@@ -155,17 +155,17 @@ export default function ResourceCommandCenter() {
           {/* Personalized */}
           <NavLabel>Personalized</NavLabel>
           {[
-            { icon: Bookmark, label: 'Saved Resources', id: 'Saved', href: '/saved' },
-            { icon: Clock, label: 'Recently Accessed', id: 'Recent', href: '/recent' },
-            { icon: Sparkles, label: 'Recommended', id: 'Recommended', href: '/recommended' },
-            { icon: Upload, label: 'Submit Material', id: 'Submit', href: '/submit' },
+            { icon: Bookmark, label: 'Saved Resources', id: 'Saved', href: '/resource-center/saved' },
+            { icon: Clock, label: 'Recently Accessed', id: 'Recent', href: '/resource-center/recent' },
+            { icon: Sparkles, label: 'Recommended', id: 'Recommended', href: '/resource-center/recommended' },
+            { icon: Upload, label: 'Submit Material', id: 'Submit', href: '/resource-center/submit' },
           ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
         </nav>
 
         {/* Sidebar Footer: Settings */}
         <div className="p-8 mt-auto border-t border-white/5">
           {[
-            { icon: Settings, label: 'Settings', id: 'Settings', href: '/settings' },
+            { icon: Settings, label: 'Settings', id: 'Settings', href: '/resource-center/settings' },
           ].map((item) => <SidebarLink key={item.id} item={item} activeNav={activeNav} setActiveNav={setActiveNav} />)}
         </div>
       </aside>
@@ -540,11 +540,11 @@ export default function ResourceCommandCenter() {
           ───────────────────────────────────────── */}
           <SectionBlock title="Browse by Resource Type" subtitle="Explore resources organized by content format.">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-              <NavCard href="/resources/text" icon={FileText} label="Text Resources" count={142} accent="#10B981" />
-              <NavCard href="/resources/video" icon={Video} label="Video Resources" count={87} accent="#6366F1" />
-              <NavCard href="/resources/audio" icon={Mic} label="Audio Resources" count={34} accent="#F59E0B" />
-              <NavCard href="/resources/presentations" icon={Presentation} label="Presentations" count={56} accent="#EC4899" />
-              <NavCard href="/resources/downloads" icon={Download} label="Downloadables" count={45} accent="#14B8A6" />
+              <NavCard href="/resource-center/resources/text" icon={FileText} label="Text Resources" count={142} accent="#10B981" />
+              <NavCard href="/resource-center/resources/video" icon={Video} label="Video Resources" count={87} accent="#6366F1" />
+              <NavCard href="/resource-center/resources/audio" icon={Mic} label="Audio Resources" count={34} accent="#F59E0B" />
+              <NavCard href="/resource-center/resources/presentations" icon={Presentation} label="Presentations" count={56} accent="#EC4899" />
+              <NavCard href="/resource-center/resources/downloads" icon={Download} label="Downloadables" count={45} accent="#14B8A6" />
             </div>
           </SectionBlock>
 
@@ -553,12 +553,12 @@ export default function ResourceCommandCenter() {
           ───────────────────────────────────────── */}
           <SectionBlock title="Academic Archives" subtitle="Browse past academic materials by type.">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-              <NavCard href="/archives/past-papers" icon={FileText} label="Past Papers" count={312} accent="#EF4444" />
-              <NavCard href="/archives/past-coursework" icon={BookOpen} label="Past Coursework" count={198} accent="#F97316" />
-              <NavCard href="/archives/coursework-topics" icon={List} label="Coursework Topics" count={89} accent="#8B5CF6" />
-              <NavCard href="/archives/sample-projects" icon={FolderOpen} label="Sample Projects" count={67} accent="#06B6D4" />
-              <NavCard href="/archives/final-year-projects" icon={GraduationCap} label="Final Year Projects" count={145} accent="#10B981" />
-              <NavCard href="/archives/assignments" icon={ClipboardList} label="Assignments Archive" count={234} accent="#D946EF" />
+              <NavCard href="/resource-center/archives/past-papers" icon={FileText} label="Past Papers" count={312} accent="#EF4444" />
+              <NavCard href="/resource-center/archives/past-coursework" icon={BookOpen} label="Past Coursework" count={198} accent="#F97316" />
+              <NavCard href="/resource-center/archives/coursework-topics" icon={List} label="Coursework Topics" count={89} accent="#8B5CF6" />
+              <NavCard href="/resource-center/archives/sample-projects" icon={FolderOpen} label="Sample Projects" count={67} accent="#06B6D4" />
+              <NavCard href="/resource-center/archives/final-year-projects" icon={GraduationCap} label="Final Year Projects" count={145} accent="#10B981" />
+              <NavCard href="/resource-center/archives/assignments" icon={ClipboardList} label="Assignments Archive" count={234} accent="#D946EF" />
             </div>
           </SectionBlock>
 
@@ -567,11 +567,11 @@ export default function ResourceCommandCenter() {
           ───────────────────────────────────────── */}
           <SectionBlock title="Project Repository" subtitle="Discover student and faculty projects across disciplines.">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-              <NavCard href="/projects/student" icon={User} label="Student Projects" count={78} accent="#10B981" />
-              <NavCard href="/projects/group" icon={Layers} label="Group Projects" count={45} accent="#6366F1" />
-              <NavCard href="/projects/capstone" icon={Award} label="Capstone Projects" count={34} accent="#F59E0B" />
-              <NavCard href="/projects/research" icon={Microscope} label="Research Projects" count={23} accent="#EC4899" />
-              <NavCard href="/projects/open-source" icon={Github} label="Open Source" count={18} accent="#14B8A6" />
+              <NavCard href="/resource-center/projects/student" icon={User} label="Student Projects" count={78} accent="#10B981" />
+              <NavCard href="/resource-center/projects/group" icon={Layers} label="Group Projects" count={45} accent="#6366F1" />
+              <NavCard href="/resource-center/projects/capstone" icon={Award} label="Capstone Projects" count={34} accent="#F59E0B" />
+              <NavCard href="/resource-center/projects/research" icon={Microscope} label="Research Projects" count={23} accent="#EC4899" />
+              <NavCard href="/resource-center/projects/open-source" icon={Github} label="Open Source" count={18} accent="#14B8A6" />
             </div>
           </SectionBlock>
 
@@ -580,16 +580,16 @@ export default function ResourceCommandCenter() {
           ───────────────────────────────────────── */}
           <SectionBlock title="Additional Resources" subtitle="Essential academic and career materials.">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-              <NavCard href="/materials/course-materials" icon={BookOpen} label="Course Materials" count={210} accent="#10B981" />
-              <NavCard href="/materials/faculty-resources" icon={GraduationCap} label="Faculty Resources" count={56} accent="#6366F1" />
-              <NavCard href="/materials/exam-guidelines" icon={ClipboardCheck} label="Exam Guidelines" count={32} accent="#EF4444" />
-              <NavCard href="/materials/marking-schemes" icon={CheckSquare} label="Marking Schemes" count={89} accent="#F59E0B" />
-              <NavCard href="/materials/reference-books" icon={BookMarked} label="Reference Books" count={167} accent="#8B5CF6" />
-              <NavCard href="/materials/study-plans" icon={Calendar} label="Study Plans" count={45} accent="#06B6D4" />
-              <NavCard href="/materials/revision" icon={RotateCcw} label="Revision Materials" count={134} accent="#D946EF" />
-              <NavCard href="/materials/lab-manuals" icon={FlaskConical} label="Lab Manuals" count={78} accent="#14B8A6" />
-              <NavCard href="/materials/internship" icon={Briefcase} label="Internship Resources" count={34} accent="#F97316" />
-              <NavCard href="/materials/research-publications" icon={FileSearch} label="Research Publications" count={56} accent="#3B82F6" />
+              <NavCard href="/resource-center/materials/course-materials" icon={BookOpen} label="Course Materials" count={210} accent="#10B981" />
+              <NavCard href="/resource-center/materials/faculty-resources" icon={GraduationCap} label="Faculty Resources" count={56} accent="#6366F1" />
+              <NavCard href="/resource-center/materials/exam-guidelines" icon={ClipboardCheck} label="Exam Guidelines" count={32} accent="#EF4444" />
+              <NavCard href="/resource-center/materials/marking-schemes" icon={CheckSquare} label="Marking Schemes" count={89} accent="#F59E0B" />
+              <NavCard href="/resource-center/materials/reference-books" icon={BookMarked} label="Reference Books" count={167} accent="#8B5CF6" />
+              <NavCard href="/resource-center/materials/study-plans" icon={Calendar} label="Study Plans" count={45} accent="#06B6D4" />
+              <NavCard href="/resource-center/materials/revision" icon={RotateCcw} label="Revision Materials" count={134} accent="#D946EF" />
+              <NavCard href="/resource-center/materials/lab-manuals" icon={FlaskConical} label="Lab Manuals" count={78} accent="#14B8A6" />
+              <NavCard href="/resource-center/materials/internship" icon={Briefcase} label="Internship Resources" count={34} accent="#F97316" />
+              <NavCard href="/resource-center/materials/research-publications" icon={FileSearch} label="Research Publications" count={56} accent="#3B82F6" />
             </div>
           </SectionBlock>
 
@@ -612,9 +612,10 @@ function NavLabel({ children }: { children: React.ReactNode }) {
 
 function SidebarLink({ item, activeNav, setActiveNav }: { item: { icon: React.ElementType; label: string; id: string; href: string }; activeNav: string; setActiveNav: (v: string) => void }) {
   const isActive = activeNav === item.id;
+  const fullHref = item.href.startsWith('http') ? item.href : `/resource-center${item.href}`;
   return (
     <Link
-      href={item.href}
+      href={fullHref}
       onClick={() => setActiveNav(item.id)}
       className="w-full relative flex items-center gap-4 px-6 py-3 transition-all duration-300"
       style={{

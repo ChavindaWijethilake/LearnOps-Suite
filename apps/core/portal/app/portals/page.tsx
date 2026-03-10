@@ -30,12 +30,23 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/components/auth/auth-provider';
 
+import { Role, isAtLeast, parseRole } from '@learnops/platform';
+import { eventBus, type EventRecord } from '@learnops/shared/events';
+
+// -- Helpers --
+const formatEventToActivity = (event: EventRecord | any) => ({
+    id: event.id,
+    type: event.type.split('.')[0] === 'invoice' ? 'warning' :
+        event.type.split('.')[0] === 'course' ? 'success' :
+            event.type.split('.')[0] === 'student' ? 'info' : 'neutral',
+    title: event.type.replace('.', ' ').toUpperCase(),
+    desc: `${event.module.toUpperCase()}: ${JSON.stringify(event.payload)}`,
+    time: new Date(event.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+});
+
 // -- Mock Data --
 const initialActivity = [
-    { id: 1, type: 'success', title: 'Assignment Submitted', desc: 'Advanced Algorithms', time: '2 hrs ago' },
-    { id: 2, type: 'info', title: 'Payment Received', desc: 'Spring Semester Tuition', time: '1 day ago' },
-    { id: 3, type: 'warning', title: 'Library Book Due', desc: 'Introduction to AI', time: '2 days ago' },
-    { id: 4, type: 'neutral', title: 'New Announcement', desc: 'Campus maintenance scheduled', time: '3 days ago' },
+    { id: 1, type: 'success', title: 'PLATFORM INITIALIZED', desc: 'Secure connection established', time: 'Startup' },
 ];
 
 const initialModules = [
@@ -47,7 +58,7 @@ const initialModules = [
         icon: Shield,
         color: 'from-indigo-500 to-indigo-600',
         meta: 'Secure Admin Link',
-        roles: ['admin', 'super-admin']
+        roles: [Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'academic',
@@ -57,7 +68,7 @@ const initialModules = [
         icon: GraduationCap,
         color: 'from-emerald-500 to-emerald-600',
         meta: 'Active • Last accessed today',
-        roles: ['student', 'professor']
+        roles: [Role.STUDENT, Role.PROFESSOR]
     },
     {
         id: 'professor',
@@ -67,17 +78,17 @@ const initialModules = [
         icon: User,
         color: 'from-blue-500 to-blue-600',
         meta: 'Faculty Access',
-        roles: ['professor']
+        roles: [Role.PROFESSOR]
     },
     {
         id: 'billing',
         title: 'Billing & Finance',
         desc: 'Tuition payments, invoices, financial statements',
-        href: '/billing',
+        href: 'http://localhost:3001',
         icon: CreditCard,
         color: 'from-violet-500 to-violet-600',
         meta: 'Next due: Mar 01',
-        roles: ['student']
+        roles: [Role.STUDENT, Role.ADMIN, Role.SUPER_ADMIN]
     },
     {
         id: 'account',
@@ -87,7 +98,17 @@ const initialModules = [
         icon: Settings,
         color: 'from-slate-500 to-slate-600',
         meta: 'Profile 100% complete',
-        roles: ['student', 'professor']
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
+    },
+    {
+        id: 'docs',
+        title: 'System Documentation',
+        desc: 'Operational manuals, API references, and security protocols',
+        href: '/documentation',
+        icon: FileText,
+        color: 'from-cyan-500 to-cyan-600',
+        meta: 'V2.4.0 Stable',
+        roles: [Role.STUDENT, Role.PROFESSOR, Role.ADMIN, Role.SUPER_ADMIN]
     }
 ];
 
@@ -106,6 +127,33 @@ export default function PortalDashboard() {
 
     useEffect(() => {
         setMounted(true);
+
+        // Load recent events on mount
+        const recent = eventBus.getRecentEvents(10).map(formatEventToActivity);
+        if (recent.length > 0) {
+            setRecentActivity(recent);
+        }
+
+        // Subscribe to all domain events
+        const eventTypes = [
+            'student.enrolled', 'invoice.created', 'invoice.paid',
+            'course.completed', 'user.login', 'ticket.created'
+        ];
+
+        const unsubscribers = eventTypes.map(type =>
+            eventBus.subscribe(type as any, (payload) => {
+                const newActivity = formatEventToActivity({
+                    id: Date.now(),
+                    type,
+                    payload,
+                    timestamp: Date.now(),
+                    module: type.split('.')[0]
+                });
+                setRecentActivity(prev => [newActivity, ...prev].slice(0, 10));
+            })
+        );
+
+        return () => unsubscribers.forEach(unsub => unsub());
     }, []);
 
     // Filter modules based on user role
@@ -253,7 +301,7 @@ export default function PortalDashboard() {
                 {/* Navigation (Blank top, System at bottom) */}
                 <nav className="flex-1 py-8 px-4 flex flex-col gap-2">
                     {/* Admin Direct Access */}
-                    {(user?.role === 'admin' || user?.role === 'super-admin') && (
+                    {user?.role && isAtLeast(user.role, Role.ADMIN) && (
                         <>
                             <div className={`px-4 text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 ${isSidebarCollapsed ? 'text-center' : ''}`}>
                                 {isSidebarCollapsed ? 'ADM' : 'Administration'}

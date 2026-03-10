@@ -22,8 +22,10 @@ import {
     Bell,
     ChevronRight,
     Briefcase,
-    Shield
+    Shield,
+    ArrowLeft
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ProfessorPortalPage() {
     const [activeTab, setActiveTab] = useState<'overview' | 'courses' | 'roster' | 'grading'>('overview');
@@ -32,6 +34,10 @@ export default function ProfessorPortalPage() {
     useEffect(() => {
         setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     }, []);
+
+    const handleAction = (action: string) => {
+        alert(`Faculty Protocol Engaged: ${action}`);
+    };
 
     // -- Mock Data --
 
@@ -77,6 +83,9 @@ export default function ProfessorPortalPage() {
                 <header className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
                     <div>
                         <div className="flex items-center gap-3 mb-2">
+                            <Link href="/portals" className="p-2 bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-all rounded-lg group">
+                                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                            </Link>
                             <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
                                 <Briefcase className="w-5 h-5 text-white" />
                             </div>
@@ -95,8 +104,11 @@ export default function ProfessorPortalPage() {
                             <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest text-right">Local Time</p>
                         </div>
                         <div className="h-10 w-px bg-white/10 hidden md:block"></div>
-                        <button className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-white transition-all relative">
-                            <Bell className="w-5 h-5" />
+                        <button
+                            onClick={() => handleAction('Notifications')}
+                            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-white transition-all relative group"
+                        >
+                            <Bell className="w-5 h-5 group-hover:scale-110 transition-transform" />
                             <span className="absolute top-2 right-2.5 w-2 h-2 bg-rose-500 rounded-full border border-[#0F172A]"></span>
                         </button>
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 border border-white/10 flex items-center justify-center">
@@ -152,7 +164,12 @@ export default function ProfessorPortalPage() {
                                     <div className="p-8 bg-white/3 border border-white/5 rounded-[32px] h-full">
                                         <div className="flex items-center justify-between mb-8">
                                             <h3 className="text-xl font-bold text-white tracking-tight">Today's Schedule</h3>
-                                            <button className="text-[10px] font-black text-indigo-400 uppercase tracking-widest hover:text-indigo-300">View Full Calendar</button>
+                                            <button
+                                                onClick={() => handleAction('Full Calendar Access')}
+                                                className="text-[10px] font-black text-indigo-400 uppercase tracking-widest hover:text-indigo-300 border-b border-indigo-400/30 hover:border-indigo-400 pb-0.5 transition-all text-left"
+                                            >
+                                                View Full Calendar
+                                            </button>
                                         </div>
                                         <div className="space-y-6">
                                             {schedule.map((item) => (
@@ -177,7 +194,10 @@ export default function ProfessorPortalPage() {
                                                                 </p>
                                                             </div>
                                                             {item.status !== 'Completed' && (
-                                                                <button className="px-5 py-2.5 bg-white/5 hover:bg-indigo-500 hover:text-white text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                                                                <button
+                                                                    onClick={() => handleAction(`${item.status === 'In Progress' ? 'Classroom Launch' : 'Material Preparation'}: ${item.course}`)}
+                                                                    className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg ${item.status === 'In Progress' ? 'bg-indigo-500 text-white hover:bg-indigo-400 shadow-indigo-500/20' : 'bg-white/5 text-slate-300 hover:bg-white/10'}`}
+                                                                >
                                                                     {item.status === 'In Progress' ? 'Launch Classroom' : 'Prepare Material'}
                                                                 </button>
                                                             )}
@@ -215,7 +235,10 @@ export default function ProfessorPortalPage() {
                                                 </div>
                                             ))}
                                         </div>
-                                        <button className="w-full mt-6 py-3 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all">
+                                        <button
+                                            onClick={() => handleAction('Task Management Central')}
+                                            className="w-full mt-6 py-3 border-2 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500 hover:text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[4px_4px_0_0_rgba(99,102,241,0.1)]"
+                                        >
                                             View Task Manager
                                         </button>
                                     </div>
@@ -285,7 +308,10 @@ export default function ProfessorPortalPage() {
                                             <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Next Milestone</p>
                                             <p className="text-xs font-bold text-emerald-400 mt-1">{course.nextDue}</p>
                                         </div>
-                                        <button className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl transition-all flex items-center gap-2">
+                                        <button
+                                            onClick={() => handleAction(`Course Management Protocol: ${course.id}`)}
+                                            className="px-6 py-3 bg-white/5 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl transition-all flex items-center gap-2 shadow-lg hover:shadow-indigo-500/20"
+                                        >
                                             Manage <ChevronRight className="w-3 h-3" />
                                         </button>
                                     </div>
@@ -293,7 +319,10 @@ export default function ProfessorPortalPage() {
                             ))}
 
                             {/* Add New Course Card */}
-                            <button className="p-8 bg-white/2 border border-dashed border-white/10 hover:border-indigo-500/50 hover:bg-indigo-500/5 rounded-[32px] flex flex-col items-center justify-center text-center group transition-all min-h-[300px]">
+                            <button
+                                onClick={() => handleAction('New Course Module Initialization')}
+                                className="p-8 bg-white/2 border border-dashed border-white/10 hover:border-indigo-500/50 hover:bg-indigo-500/5 rounded-[32px] flex flex-col items-center justify-center text-center group transition-all min-h-[300px]"
+                            >
                                 <div className="w-16 h-16 rounded-full bg-white/5 group-hover:bg-indigo-500 group-hover:scale-110 flex items-center justify-center transition-all mb-4">
                                     <Plus className="w-8 h-8 text-slate-400 group-hover:text-white" />
                                 </div>
@@ -352,9 +381,9 @@ export default function ProfessorPortalPage() {
                                                 <td className="px-8 py-5 text-sm font-bold text-slate-300">{student.course}</td>
                                                 <td className="px-8 py-5">
                                                     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${student.status === 'Excelling' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                                            student.status === 'At Risk' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' :
-                                                                student.status === 'Needs Support' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
-                                                                    'bg-slate-500/10 text-slate-400 border border-slate-500/20'
+                                                        student.status === 'At Risk' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' :
+                                                            student.status === 'Needs Support' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                                                                'bg-slate-500/10 text-slate-400 border border-slate-500/20'
                                                         }`}>
                                                         {student.status}
                                                     </span>

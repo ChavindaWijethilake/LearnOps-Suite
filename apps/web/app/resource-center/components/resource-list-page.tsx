@@ -88,7 +88,7 @@ export default function ResourceListPage({
             <div className="relative z-10 max-w-7xl mx-auto px-8 py-10">
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-2">
-                    <Link href="/" className="flex items-center gap-2 text-sm text-slate-500 hover:text-emerald-400 transition-colors" style={{ borderRadius: '8px', padding: '6px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <Link href="/resource-center" className="flex items-center gap-2 text-sm text-slate-500 hover:text-emerald-400 transition-colors" style={{ borderRadius: '8px', padding: '6px 12px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.05)' }}>
                         <ArrowLeft className="w-4 h-4" /> Back
                     </Link>
                 </div>

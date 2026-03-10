@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import {
   BookOpen,
   Clock,
@@ -11,6 +14,8 @@ import {
   Target,
   GraduationCap
 } from 'lucide-react';
+import { CoursesService } from '@learnops/api/src/learning/courses.service';
+import { cn } from '@/lib/utils';
 
 const myCourses = [
   { id: 1, title: 'Advanced React Patterns', progress: 65, instructor: 'Sarah Drasner', duration: '12h 30m', image: 'bg-blue-500', category: 'Frontend' },
@@ -19,12 +24,24 @@ const myCourses = [
 ];
 
 const recommended = [
-  { id: 4, title: 'Cloud Native DevOps', rating: 4.8, students: '1.2k', level: 'Intermediate', image: 'bg-teal-500', category: 'DevOps' },
-  { id: 5, title: 'Data Science with Python', rating: 4.9, students: '3.5k', level: 'Beginner', image: 'bg-amber-500', category: 'Data' },
-  { id: 6, title: 'Cybersecurity Fundamentals', rating: 4.7, students: '850', level: 'Advanced', image: 'bg-indigo-500', category: 'Security' },
+  { id: 4, courseId: 'cloud-native-devops', title: 'Cloud Native DevOps', rating: 4.8, students: '1.2k', level: 'Intermediate', image: 'bg-teal-500', category: 'DevOps' },
+  { id: 5, courseId: 'data-science-python', title: 'Data Science with Python', rating: 4.9, students: '3.5k', level: 'Beginner', image: 'bg-amber-500', category: 'Data' },
+  { id: 6, courseId: 'cybersecurity-fundamentals', title: 'Cybersecurity Fundamentals', rating: 4.7, students: '850', level: 'Advanced', image: 'bg-indigo-500', category: 'Security' },
 ];
 
 export default function LearningDashboard() {
+  const [enrolling, setEnrolling] = useState<string | null>(null);
+
+  const handleEnroll = (courseId: string) => {
+    setEnrolling(courseId);
+    try {
+      CoursesService.enrollStudent(courseId, 'student_demo_001');
+      alert(`Successfully enrolled in ${courseId}! Invoicing event published.`);
+    } catch (e) {
+      console.error(e);
+    }
+    setTimeout(() => setEnrolling(null), 1000);
+  };
   return (
     <div className="space-y-12 animate-fade-in pb-20">
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b pb-8 bg-background p-8">
@@ -147,8 +164,12 @@ export default function LearningDashboard() {
                         </div>
                       </div>
                     </div>
-                    <button className="self-end md:self-center p-3 border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                      <ArrowRight className="w-5 h-5" />
+                    <button
+                      onClick={() => handleEnroll(course.courseId)}
+                      disabled={enrolling === course.courseId}
+                      className="self-end md:self-center p-3 border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all disabled:opacity-50"
+                    >
+                      {enrolling === course.courseId ? '...' : <ArrowRight className="w-5 h-5" />}
                     </button>
                   </div>
                 ))}

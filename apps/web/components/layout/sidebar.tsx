@@ -23,6 +23,7 @@ const navItems = [
         title: 'Monitoring',
         items: [
             { href: '/status', label: 'System Overview', icon: Activity },
+            { href: '/resource-center', label: 'Resource Hub', icon: FileText },
             { href: '/command-center/logs', label: 'Live Logs', icon: FileText },
             { href: '/command-center/alerts', label: 'Alert Config', icon: Bell },
         ]

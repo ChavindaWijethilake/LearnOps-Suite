@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-app="portal">
+    <html lang="en" data-app="portal" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
           {children}

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { Role, isAtLeast, parseRole } from '@learnops/platform';
 
 // Secret key for JWT signing/verification - should match the one in API routes
 const JWT_SECRET = new TextEncoder().encode(process.env.NEXTAUTH_SECRET || 'supersecretkey123');
@@ -41,15 +42,16 @@ export async function middleware(request: NextRequest) {
     try {
         // Verify token
         const { payload } = await jwtVerify(token, JWT_SECRET);
+        const roleStr = payload.role as string;
+        const role = parseRole(roleStr);
 
         // Add user info to headers for easier access in server components/API
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', payload.sub as string);
-        requestHeaders.set('x-user-role', payload.role as string);
+        requestHeaders.set('x-user-role', role);
 
         // Specific role-based redirects
-        const role = payload.role as string;
-        const isAdmin = role === 'admin' || role === 'super-admin';
+        const isAdmin = isAtLeast(role, Role.ADMIN);
 
         // Redirect admins from portals hub or root to admin dashboard
         if (isAdmin && (pathname === '/portals' || pathname === '/')) {

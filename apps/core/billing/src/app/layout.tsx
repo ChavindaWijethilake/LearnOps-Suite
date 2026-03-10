@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { SharedLayout } from '@learnops/ui';
+import { BillingEvents } from '@/components/events/billing-events';
 import {
   LayoutDashboard,
   FileText,
@@ -43,6 +44,7 @@ export default function RootLayout({
           appName="Billing Nexus"
           navItems={navItems}
         >
+          <BillingEvents />
           {children}
         </SharedLayout>
       </body>
