@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { User, Shield, GraduationCap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Role } from '@learnops/shared';
+import { Role } from '@learnops/platform';
 
 interface RoleSelectorProps {
     selectedRole: Role;

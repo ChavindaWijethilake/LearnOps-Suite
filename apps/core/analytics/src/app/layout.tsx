@@ -13,6 +13,7 @@ import {
   Menu,
   ArrowLeft
 } from 'lucide-react';
+import { AnalyticsEvents } from '../components/events/analytics-events';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -115,6 +116,7 @@ export default function RootLayout({
             {/* Page Content */}
             <main className="flex-1 overflow-y-auto p-6 lg:p-8">
               <div className="max-w-[1400px] mx-auto animate-fade-in">
+                <AnalyticsEvents />
                 {children}
               </div>
             </main>

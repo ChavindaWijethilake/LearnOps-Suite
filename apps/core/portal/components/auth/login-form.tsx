@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Loader2 } from 'lucide-react';
-import { Role } from '@learnops/shared';
+import { Role } from '@learnops/platform';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -51,7 +51,7 @@ export function LoginForm({ allowedRoles }: LoginFormProps) {
             if (user.role.toUpperCase() === 'ADMIN' || user.role.toUpperCase() === 'SUPER_ADMIN') {
                 router.push('/admin');
             } else {
-                router.push('/');
+                router.push('/portals');
             }
         }
     }, [user, authLoading, router, mounted]);

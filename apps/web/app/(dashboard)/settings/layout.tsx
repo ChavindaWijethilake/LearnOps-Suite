@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -51,6 +51,14 @@ function SettingsFooter() {
             setIsSaving(false);
         }
     };
+
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
 
     return (
         <>
@@ -123,6 +131,12 @@ function SettingsFooter() {
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
         <SettingsProvider>
             <div className="max-w-[1400px] mx-auto py-6 space-y-6 animate-fade-in min-h-[calc(100vh-120px)] flex flex-col">
@@ -134,7 +148,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                     </Link>
                     <ChevronRight className="w-3 h-3" />
                     <Link href="/settings" className="hover:text-emerald-500 transition-colors">Settings</Link>
-                    {pathname && settingsNav.find(item => pathname.startsWith(item.href)) && (
+                    {mounted && pathname && settingsNav.find(item => pathname.startsWith(item.href)) && (
                         <>
                             <ChevronRight className="w-3 h-3" />
                             <span className="text-emerald-500">{settingsNav.find(item => pathname.startsWith(item.href))?.label}</span>

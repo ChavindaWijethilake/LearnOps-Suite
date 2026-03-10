@@ -26,6 +26,7 @@ import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useAuth } from '@/components/auth/auth-provider';
+import { Role } from '@learnops/platform';
 
 const services = [
     { name: 'Student Portal', id: 'student-portal', status: 'Operational', latency: 42, errorRate: 0.02, uptime: 99.98, icon: Globe },
@@ -42,7 +43,7 @@ export default function StatusPage() {
     const [mounted, setMounted] = useState(false);
     const [health, setHealth] = useState<any>(null);
     const { user } = useAuth();
-    const isSuperAdmin = user?.role === 'super-admin';
+    const isSuperAdmin = user?.role === Role.SUPER_ADMIN;
 
     useEffect(() => {
         setMounted(true);

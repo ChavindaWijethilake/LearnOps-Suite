@@ -53,10 +53,14 @@ export async function POST(request: Request) {
         }
 
         // TEMPORARY MOCK LOGIC for "dev" task
-        let role = body.role || 'student';
-        if (!body.role && email.includes('prof')) role = 'professor';
-        if (!body.role && email.includes('super')) role = 'super-admin';
-        if (!body.role && email.includes('admin')) role = 'admin';
+        const { Role, parseRole } = await import('@learnops/platform');
+
+        let roleInput = body.role || 'student';
+        if (!body.role && email.includes('prof')) roleInput = 'professor';
+        if (!body.role && email.includes('super')) roleInput = 'super-admin';
+        if (!body.role && email.includes('admin')) roleInput = 'admin';
+
+        const role = parseRole(roleInput);
 
         user = {
             id: 'mock-id-' + Math.random().toString(36).substring(7),

@@ -9,12 +9,17 @@ import {
     Mail,
     Briefcase,
     CheckCircle2,
-    Shield
+    Shield,
+    Terminal,
+    AlertTriangle,
+    Clock,
+    Zap
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SupportRequestPage() {
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,24 +28,31 @@ export default function SupportRequestPage() {
         message: ''
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
+
+        // Protocol Sync
+        await new Promise(resolve => setTimeout(resolve, 1800));
+
+        setIsSubmitting(false);
         setSubmitted(true);
     };
 
     if (submitted) {
         return (
-            <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-6 text-slate-200 selection:bg-emerald-500/30 font-sans">
-                <div className="max-w-md w-full bg-slate-900 border border-emerald-500/20 p-12 rounded-[40px] text-center space-y-8 animate-in zoom-in-95 duration-500 shadow-2xl shadow-emerald-500/10">
-                    <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="min-h-screen bg-[#0F172A] flex items-center justify-center p-6 text-slate-200 selection:bg-indigo-500/30 font-sans">
+                <div className="max-w-md w-full bg-slate-900 border-2 border-emerald-500/30 p-12 text-center space-y-8 animate-in zoom-in-95 duration-500 shadow-[0_0_50px_-12px_rgba(16,185,129,0.2)]">
+                    <div className="relative mx-auto w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                         <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+                        <div className="absolute inset-0 bg-emerald-500/20 blur-xl animate-pulse" />
                     </div>
                     <div className="space-y-4">
-                        <h1 className="text-3xl font-black text-white tracking-tight leading-none">Protocol Transferred</h1>
-                        <p className="text-slate-400 font-medium">Your support ticket has been logged in the system. A technician will respond within 4 academic hours.</p>
+                        <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic leading-none">Ticket <span className="text-emerald-500">Logged</span>.</h1>
+                        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 leading-loose">Support protocol successfully initialized. Academic SLA verification complete. Dispatch ETA: {'<'} 4 Hours.</p>
                     </div>
-                    <Link href="/portals" className="block w-full py-4 bg-emerald-500 text-[#0F172A] font-black text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-emerald-400 transition-all">
-                        Return to Command Center
+                    <Link href="/portals" className="block w-full py-5 bg-emerald-600 text-white font-black text-[10px] uppercase tracking-[0.3em] hover:bg-emerald-500 transition-all shadow-[4px_4px_0_0_rgba(16,185,129,0.2)] active:translate-y-0.5">
+                        Return to Control Nexus
                     </Link>
                 </div>
             </div>
@@ -48,109 +60,118 @@ export default function SupportRequestPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0F172A] text-slate-200 selection:bg-emerald-500/30 font-sans p-6 md:p-12 overflow-x-hidden">
-            {/* Background Glows */}
-            <div className="fixed top-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-            <div className="fixed bottom-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] translate-x-1/2 translate-y-1/2 pointer-events-none" />
+        <div className="min-h-screen bg-[#0F172A] text-slate-200 selection:bg-indigo-500/30 font-sans p-6 md:p-12 overflow-x-hidden">
+            {/* Structural Accents */}
+            <div className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 opacity-50 z-50" />
+            <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
 
-            <div className="max-w-5xl mx-auto space-y-12 relative z-10">
-                {/* Back Link */}
-                <Link href="/portals" className="group inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-slate-500 hover:text-white transition-colors">
+            <div className="max-w-6xl mx-auto space-y-12 relative z-10 animate-fade-in">
+                <Link href="/portals" className="group inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-indigo-400 transition-colors">
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                    Abort to Portals
+                    Cancel Uplink
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-                    {/* LHS: Manifesto */}
-                    <div className="lg:col-span-5 space-y-10 py-10">
-                        <div className="space-y-6">
-                            <div className="inline-flex items-center gap-3 px-4 py-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-none text-[10px] font-black uppercase tracking-[0.2em]">
-                                <MessageSquare className="w-4 h-4" />
-                                Support Transmission
+                    <div className="lg:col-span-5 space-y-12 py-6">
+                        <header className="space-y-6">
+                            <div className="inline-flex items-center gap-3 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]">
+                                <Terminal className="w-4 h-4" />
+                                Support Transmission Protocol
                             </div>
-                            <h1 className="text-6xl font-black tracking-tighter text-white leading-[0.9]">
-                                Submit <span className="text-blue-500">Query</span>.
+                            <h1 className="text-7xl font-black tracking-tighter text-white leading-[0.85] uppercase italic">
+                                Request <span className="text-indigo-500">Assistance</span>.
                             </h1>
-                            <p className="text-xl text-slate-400 font-medium leading-relaxed">
-                                Our support infrastructure is engineered for rapid resolution. Direct your technical or academic queries to our dedicated response units.
+                            <p className="text-sm font-medium leading-relaxed text-slate-500 border-l-2 border-slate-800 pl-6 uppercase tracking-wider">
+                                Direct interaction with our technical response units. Priority queues are managed by the automated triage engine.
                             </p>
-                        </div>
+                        </header>
 
-                        <div className="space-y-6 pt-10">
+                        <div className="grid grid-cols-1 gap-4">
                             {[
-                                { label: 'Response Target', value: '< 4hrs', icon: Shield },
-                                { label: 'Active Nodes', value: 'Global', icon: Briefcase },
-                                { label: 'Encryption', value: 'AES-256', icon: User },
+                                { label: 'SLA Response', value: '< 4h Academic', icon: Clock, color: 'text-emerald-400' },
+                                { label: 'Active Clusters', value: 'Multi-Node', icon: Briefcase, color: 'text-indigo-400' },
+                                { label: 'Security Level', value: 'Level 5 (Enc)', icon: Shield, color: 'text-purple-400' },
                             ].map((stat, i) => (
-                                <div key={i} className="flex items-center gap-5 p-5 bg-white/2 border border-white/5 rounded-2xl group hover:bg-white/5 transition-all">
-                                    <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                                        <stat.icon className="w-5 h-5 text-slate-400 group-hover:text-white" />
+                                <div key={i} className="flex items-center gap-5 p-6 bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all group">
+                                    <div className={`w-12 h-12 bg-slate-800 border border-slate-700 flex items-center justify-center group-hover:scale-105 transition-all ${stat.color}`}>
+                                        <stat.icon className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none mb-1">{stat.label}</p>
-                                        <p className="text-sm font-bold text-white tracking-widest">{stat.value}</p>
+                                        <p className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em] mb-1">{stat.label}</p>
+                                        <p className="text-sm font-bold text-white tracking-widest uppercase italic">{stat.value}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
+
+                        <div className="p-6 bg-rose-500/5 border border-rose-500/20 flex gap-4 items-start">
+                            <AlertTriangle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-[10px] font-bold text-rose-500/80 uppercase tracking-widest leading-relaxed">
+                                CRITICAL: Use high priority only for total system failures or security breaches. Frivolous high-priority tickets may result in protocol suspension.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* RHS: Form */}
                     <div className="lg:col-span-7">
-                        <div className="bg-slate-900 border border-white/10 rounded-[40px] p-12 shadow-2xl shadow-blue-500/5 relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                        <div className="bg-slate-900 border-2 border-slate-800 p-8 md:p-12 relative overflow-hidden shadow-2xl">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rotate-45 translate-x-16 -translate-y-16" />
 
-                            <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Legal Name</label>
+                            <form onSubmit={handleSubmit} className="relative z-10 space-y-10">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Legal Entity Identification</label>
                                         <input
                                             required
                                             type="text"
-                                            className="w-full px-6 py-5 bg-white/3 border border-white/5 focus:bg-white/5 focus:border-blue-500/50 focus:outline-none transition-all rounded-2xl font-bold text-white placeholder:text-slate-700"
-                                            placeholder="John Academic"
+                                            className="w-full bg-slate-950 border border-slate-800 p-4 text-sm font-black text-white uppercase tracking-widest focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-800 italic"
+                                            placeholder="Requester Name"
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                         />
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Auth Email</label>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Secure Return Address</label>
                                         <input
                                             required
                                             type="email"
-                                            className="w-full px-6 py-5 bg-white/3 border border-white/5 focus:bg-white/5 focus:border-blue-500/50 focus:outline-none transition-all rounded-2xl font-bold text-white placeholder:text-slate-700"
-                                            placeholder="john@learnops.local"
+                                            className="w-full bg-slate-950 border border-slate-800 p-4 text-sm font-black text-white uppercase tracking-widest focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-800 italic"
+                                            placeholder="address@secure.node"
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         />
                                     </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Query Category</label>
-                                    <select
-                                        className="w-full px-6 py-5 bg-white/3 border border-white/5 focus:bg-white/5 focus:border-blue-500/50 focus:outline-none transition-all rounded-2xl font-bold text-slate-300 appearance-none cursor-pointer"
-                                        value={formData.subject}
-                                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                    >
-                                        <option className="bg-slate-900 border-none">Technical Support</option>
-                                        <option className="bg-slate-900 border-none">Academic Records</option>
-                                        <option className="bg-slate-900 border-none">Billing Inquiries</option>
-                                        <option className="bg-slate-900 border-none">System Access</option>
-                                    </select>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Triage Classification</label>
+                                    <div className="relative">
+                                        <select
+                                            className="w-full bg-slate-950 border border-slate-800 p-4 text-sm font-black text-white uppercase tracking-widest appearance-none cursor-pointer focus:outline-none focus:border-indigo-500 transition-all italic"
+                                            value={formData.subject}
+                                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                        >
+                                            <option>Technical Support</option>
+                                            <option>Academic Records</option>
+                                            <option>Billing Inquiries</option>
+                                            <option>System Access</option>
+                                        </select>
+                                        <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-600">
+                                            <Zap className="w-4 h-4 fill-slate-800" />
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Response Priority</label>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Response Priority Vector</label>
                                     <div className="grid grid-cols-3 gap-4">
                                         {['Low', 'Medium', 'Critical'].map((p) => (
                                             <button
                                                 key={p}
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, priority: p })}
-                                                className={`py-3 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all ${formData.priority === p
-                                                        ? 'bg-blue-500 border-blue-600 text-[#0F172A]'
-                                                        : 'bg-white/2 border-white/5 text-slate-500 hover:bg-white/5'
+                                                className={`py-4 border-2 text-[10px] font-black uppercase tracking-widest transition-all ${formData.priority === p
+                                                    ? p === 'Critical' ? 'bg-rose-500 border-rose-600 text-white shadow-[0_0_20px_rgba(244,63,94,0.3)]' : 'bg-indigo-500 border-indigo-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]'
+                                                    : 'bg-slate-950 border-slate-800 text-slate-600 hover:border-slate-700'
                                                     }`}
                                             >
                                                 {p}
@@ -159,13 +180,13 @@ export default function SupportRequestPage() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Transmission Content</label>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Transmission Payload</label>
                                     <textarea
                                         required
-                                        rows={5}
-                                        className="w-full px-6 py-5 bg-white/3 border border-white/5 focus:bg-white/5 focus:border-blue-500/50 focus:outline-none transition-all rounded-3xl font-medium text-white placeholder:text-slate-700 resize-none"
-                                        placeholder="Detail the technical or administrative block..."
+                                        rows={6}
+                                        className="w-full bg-slate-950 border border-slate-800 p-6 text-sm font-medium text-slate-300 tracking-wide focus:outline-none focus:border-indigo-500 transition-all resize-none border-l-4"
+                                        placeholder="Detailed log of the requested assistance..."
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                     ></textarea>
@@ -173,10 +194,11 @@ export default function SupportRequestPage() {
 
                                 <button
                                     type="submit"
-                                    className="w-full py-6 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black uppercase tracking-[0.3em] rounded-2xl transition-all shadow-xl shadow-blue-900/40 flex items-center justify-center gap-4 group"
+                                    disabled={isSubmitting}
+                                    className="w-full py-6 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black uppercase tracking-[0.5em] transition-all flex items-center justify-center gap-4 group active:translate-y-0.5 shadow-[4px_4px_0_0_rgba(79,70,229,0.3)] disabled:opacity-50"
                                 >
-                                    Initiate Transmission
-                                    <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                    {isSubmitting ? 'Syncing Protocol...' : 'Initiate Uplink'}
+                                    {!isSubmitting && <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
                                 </button>
                             </form>
                         </div>
